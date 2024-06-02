@@ -49,7 +49,7 @@ def disk_partitioning():
         swap_disk_size = 4
         user_disk_size = disk_size - efi_disk_size - system_disk_size - swap_disk_size
 
-        own_partitioning = ia_selection(
+        confirm_partitioning = ia_selection(
             question=f"\nContinue with the following partitioning:\n"
                      f"   {GREEN}{BOLD}EFI:{CRESET} {efi_disk_size}G\n"
                      f"   {GREEN}{BOLD}System:{CRESET} {system_disk_size.__round__()}G\n"
@@ -58,13 +58,69 @@ def disk_partitioning():
             options=["Yes", "No"]
         )
 
+        if not confirm_partitioning:
+            disk_partitioning()
+
         return {
             "disk": {
                 disk: {
-                    "efi_disk_size": efi_disk_size,
-                    "system_disk_size": system_disk_size,
-                    "user_disk_size": user_disk_size,
-                    "swap_disk_size": swap_disk_size
+                    "efi": {
+                        "block": None,
+                        "size": efi_disk_size
+                    },
+                    "system": {
+                        "block": None,
+                        "size": system_disk_size
+                    },
+                    "user": {
+                        "block": None,
+                        "size": user_disk_size
+                    },
+                    "swap": {
+                        "block": None,
+                        "size": swap_disk_size
+                    }
                 }
             }
         }, disk
+
+    else:
+        existing_partition = ia_selection(
+            question=f"\nDoes your hard disk already have a partitioning scheme that is suitable for StrawberryOS?",
+            options=["Yes", "No"]
+        )
+
+        if existing_partition:
+            print("Please enter the following partitions with the correct block device to continue the partitioning.\n")
+
+            efi_disk = input(f"EFI disk (e.g. {CYAN}/dev/sda1{CRESET}): ")
+            system_disk = input(f"System disk (e.g. {CYAN}/dev/sda2{CRESET}): ")
+            user_disk = input(f"User disk (e.g. {CYAN}/dev/sda3{CRESET}): ")
+            swap_disk = input(f"Swap disk (e.g. {CYAN}/dev/sda4{CRESET}): ")
+
+            return {
+                "disk": {
+                    disk: {
+                        "efi": {
+                            "block": efi_disk,
+                            "size": None
+                        },
+                        "system": {
+                            "block": system_disk,
+                            "size": None
+                        },
+                        "user": {
+                            "block": user_disk,
+                            "size": None
+                        },
+                        "swap": {
+                            "block": swap_disk,
+                            "size": None
+                        }
+                    }
+                }
+            }, disk
+
+        else:
+            print("not supported")
+            disk_partitioning()
