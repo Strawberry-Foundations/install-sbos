@@ -33,5 +33,6 @@ class Runner:
                 result = subprocess.run(run_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                         text=True)
                 return result.stdout
+
         except subprocess.CalledProcessError as e:
             return f"Command '{run_command}' failed with error:\n{e.stderr}"
