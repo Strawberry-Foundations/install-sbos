@@ -24,9 +24,9 @@ class Runner:
     def run(self, command: str):
         try:
             if self.show_logs:
-                command = subprocess.run(command, shell=True)
+                _command = subprocess.run(command, shell=True)
 
-                if command.returncode != 0:
+                if _command.returncode != 0:
                     print(f"{YELLOW}{BOLD}Something went wrong while installing StrawberryOS ...{CRESET}")
                     sys.exit(1)
             else:
