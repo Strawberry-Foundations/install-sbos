@@ -9,7 +9,10 @@ from sbos_installer.steps.user import setup_user
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 
-print(f"{GREEN}{BOLD}Welcome to StrawberryOS Installer!\n{CRESET}Thanks for installing StrawberryOS on your computer.\n")
+version = "0.1.12"
+
+print(f"{GREEN}{BOLD}Welcome to StrawberryOS Installer v{version}!\n{CRESET}Thanks for installing StrawberryOS on "
+      f"your computer.\n")
 
 try:
     input("Press Enter to continue the installation ... \n")
