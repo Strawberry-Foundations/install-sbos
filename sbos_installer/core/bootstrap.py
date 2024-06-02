@@ -4,8 +4,6 @@ from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
 
-import sys
-
 
 def bootstrap(install_packages: list):
     show_logs = parse_bool(ia_selection(
@@ -28,11 +26,7 @@ def bootstrap(install_packages: list):
 
     runner.run("echo test")
 
-    runner.run(
-        f"""/usr/sbin/debootstrap \
-                    --include={init_package} trixie \
-                    {location} https://deb.debian.org/debian"""
-    )
+    runner.run(f"/usr/sbin/debootstrap --include={init_package} trixie {location} https://deb.debian.org/debian")
 
     print("Installing additional packages ...")
 
