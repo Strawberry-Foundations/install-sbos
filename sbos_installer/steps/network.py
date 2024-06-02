@@ -65,6 +65,9 @@ def setup_network():
             print(f"Internet connection is {GREEN}{BOLD}available{CRESET}")
         else:
             print(f"{YELLOW}{BOLD}Internet connection is {RED}not {YELLOW}available")
+            if "en" in connected_interface:
+                print(f"{YELLOW}{BOLD}No active internet connection is available. Please check your connection.{CRESET}")
+                sys.exit(1)
 
         if "wl" in connected_interface:
             print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks...")
