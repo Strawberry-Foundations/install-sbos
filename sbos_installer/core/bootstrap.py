@@ -26,7 +26,9 @@ def bootstrap(install_packages: list):
         "This may take some time. Get yourself a coffee in the meantime!"
     )
 
-    command = runner.run(
+    runner.run("echo test")
+
+    runner.run(
         f"""/usr/sbin/debootstrap \
                     --include={init_package} trixie \
                     {location} https://deb.debian.org/debian"""
