@@ -3,7 +3,7 @@ from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
 
 import subprocess
-
+import os
 
 def get_block_devices():
     block = []
@@ -27,6 +27,20 @@ def get_block_devices():
                 all_blocks.update({f"/dev/{name}": {"size": size, "type": device_type}})
 
     return block, block_size, all_blocks
+
+
+def get_block_device_size_in_gb(device_path):
+    if not os.path.exists(device_path):
+        raise FileNotFoundError(f"The device {device_path} does not exist.")
+
+    try:
+        with open(device_path, 'rb') as device:
+            device.seek(0, os.SEEK_END)
+            size = device.tell()
+            size_gb = size / (1024 ** 3)
+            return size_gb
+    except Exception as e:
+        raise RuntimeError(f"Failed to get the size of the device {device_path}. Error: {e}")
 
 
 def disk_partitioning():
@@ -103,19 +117,19 @@ def disk_partitioning():
                     disk: {
                         "efi": {
                             "block": efi_disk,
-                            "size": None
+                            "size": get_block_device_size_in_gb(efi_disk)
                         },
                         "system": {
                             "block": system_disk,
-                            "size": None
+                            "size": get_block_device_size_in_gb(system_disk)
                         },
                         "user": {
                             "block": user_disk,
-                            "size": None
+                            "size": get_block_device_size_in_gb(user_disk)
                         },
                         "swap": {
                             "block": swap_disk,
-                            "size": None
+                            "size": get_block_device_size_in_gb(swap_disk)
                         }
                     }
                 }
