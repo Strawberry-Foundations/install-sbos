@@ -68,7 +68,7 @@ try:
     run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
     bootstrap(packages)
-    setup_initramfs(install_data['disk'][disk]['data']['block'])
+    setup_initramfs(install_data['disk'][disk]['user']['block'])
 
 
 except KeyboardInterrupt:
