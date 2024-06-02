@@ -59,7 +59,7 @@ def connect_to_wifi(ssid, password):
     try:
         subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid, 'password', password], check=True)
 
-        print(f"{GREEN}Successfully connected with {ssid}{CRESET}")
+        print(f"Successfully {GREEN}connected{CRESET} with {CYAN}{ssid}{CRESET}")
     except subprocess.CalledProcessError as e:
         print(f"{RED}{BOLD}Error connecting to {ssid}: {e}{CRESET}")
 
