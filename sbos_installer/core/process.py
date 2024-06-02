@@ -1,5 +1,8 @@
+from sbos_installer.utils.colors import *
+
 import subprocess
 import os
+import sys
 
 
 def run(command):
@@ -18,13 +21,14 @@ class Runner:
     def __init__(self, show_logs: bool):
         self.show_logs = show_logs
 
-    def run(self, command):
+    def run(self, command: str):
         try:
             if self.show_logs:
                 command = subprocess.run(command, shell=True)
+
                 if command.returncode != 0:
-                    print(f"Something went wrong while executing '{command}' ...")
-                    exit(1)
+                    print(f"{YELLOW}{BOLD}Something went wrong while installing StrawberryOS ...{CRESET}")
+                    sys.exit(1)
             else:
                 result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                         text=True)
