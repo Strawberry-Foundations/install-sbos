@@ -32,18 +32,11 @@ def bootstrap(install_packages: list):
                     {location} https://deb.debian.org/debian"""
     )
 
-    if command.returncode != 0:
-        print(f"{RED}{BOLD}Something went wrong while installing StrawberryOS ...{CRESET}")
-        sys.exit(1)
-
     print("Installing additional packages ...")
 
     i = 1
     for package in packages:
         command = runner.run(binder + " apt install -y " + package_list.get(package))
-
-        if command.returncode != 0:
-            print(f"Failed to install package {package} ...")
 
         i += 1
         print("")
