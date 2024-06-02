@@ -9,7 +9,7 @@ from sbos_installer.steps.user import setup_user
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 
-version = "0.1.12"
+version = "0.1.13"
 
 print(f"{GREEN}{BOLD}Welcome to StrawberryOS Installer v{version}!\n{CRESET}Thanks for installing StrawberryOS on "
       f"your computer.\n")
