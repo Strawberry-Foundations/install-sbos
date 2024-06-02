@@ -4,21 +4,18 @@ from sbos_installer.cli.parser import parse_bool
 from getpass import getpass
 
 import sys
+import os
 import socket
 import subprocess
 
 
-def check_internet_connection():
-    try:
-        socket.create_connection(("strawberryfoundations.xyz", 80), timeout=5)
-        return True
-    except OSError:
-        return False
-
-
 def get_network_interfaces():
-    result = subprocess.run(['ip', 'link'], capture_output=True, text=True)
-    interfaces = [line.split(": ")[1].split("@")[0] for line in result.stdout.splitlines() if ": " in line]
+    """Get a list of all network interfaces, excluding virtual interfaces."""
+    virtual_interfaces_prefixes = ('docker', 'veth', 'br-', 'lo', 'virbr', 'vmnet', 'vboxnet')
+    interfaces = []
+    for interface in os.listdir('/sys/class/net/'):
+        if not interface.startswith(virtual_interfaces_prefixes):  # Exclude virtual interfaces
+            interfaces.append(interface)
     return interfaces
 
 
@@ -30,7 +27,17 @@ def get_connected_interface():
     return None
 
 
+def check_internet_connection():
+    """Check if the machine is connected to the internet."""
+    try:
+        socket.create_connection(("strawberryfoundations.xyz", 80), timeout=5)
+        return True
+    except OSError:
+        return False
+
+
 def scan_wifi_networks():
+    """List available Wi-Fi networks."""
     result = subprocess.run(['nmcli', '-t', '-f', 'SSID,FREQ', 'dev', 'wifi'], capture_output=True, text=True)
     networks = result.stdout.splitlines()
     ssids = []
@@ -40,9 +47,11 @@ def scan_wifi_networks():
         ssids.append(ssid)
         freq = int(str(freq).replace(" MHz", "").strip())
         if freq < 3000:
-            freqs.append("[2.4 GHz]")
+            freqs.append(f"{YELLOW}[2.4 GHz]{RESET}")
         else:
-            freqs.append("[5 GHz]")
+            freqs.append(f"{GREEN}[5 GHz]{RESET}")
+
+    ssids.extend(["+ Add Wi-Fi"])
     return ssids, freqs
 
 
@@ -56,7 +65,19 @@ def connect_to_wifi(ssid, password):
 
 def setup_network():
     print(f"\n{GREEN}{BOLD} -- Setup network --{CRESET}")
+
+    interfaces = get_network_interfaces()
     connected_interface = get_connected_interface()
+
+    if len(interfaces) > 1:
+        connected_interface = ia_selection(
+            question=f"Multiple network interfaces are available. Which one do you want to use?",
+            options=interfaces
+        )
+        print("")
+    else:
+        if connected_interface == "":
+            connected_interface = interfaces[0]
 
     if connected_interface:
         print(f"You are connected to {CYAN}{connected_interface}{CRESET}")
@@ -74,7 +95,17 @@ def setup_network():
             wifi_networks, wifi_freqs = scan_wifi_networks()
 
             if wifi_networks:
-                ssid = ia_selection("Available Wi-Fi networks", options=wifi_networks, flags=wifi_freqs)
+                ssid = ia_selection(f"\nAvailable {CYAN}Wi-Fi{CRESET} networks", options=wifi_networks, flags=wifi_freqs)
+
+                _input = True
+                while _input:
+                    if ssid == "+ Add Wi-Fi":
+                        ssid = input("\nSSID: ")
+                        if ssid.strip() == "":
+                            print(f"{YELLOW}{BOLD}SSID cannot be empty{CRESET}")
+                        else:
+                            _input = False
+
                 show_password = parse_bool(ia_selection(
                     question=f"\nDo you want the Wi-Fi password to be shown?",
                     options=["No", "Yes"]
