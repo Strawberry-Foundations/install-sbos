@@ -5,6 +5,7 @@ from sbos_installer.utils.colors import *
 import subprocess
 import os
 
+
 def get_block_devices():
     block = []
     block_size = []
