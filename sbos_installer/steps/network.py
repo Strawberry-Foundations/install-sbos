@@ -133,6 +133,7 @@ def setup_network():
                 ))
 
                 if force_wifi_connect:
+                    print("")
                     establish_wifi()
             else:
                 establish_wifi()
