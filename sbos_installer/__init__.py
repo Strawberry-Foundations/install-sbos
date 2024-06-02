@@ -14,7 +14,7 @@ from sbos_installer.steps.overview import overview
 
 import sys
 
-version = "0.1.14"
+version = "0.2.0"
 
 if not check_root_permissions():
     print(f"{BOLD}{RED}Requires root permissions{CRESET}")
