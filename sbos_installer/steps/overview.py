@@ -2,6 +2,8 @@ from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
 
+import sys
+
 
 def overview(data, disk):
     print(f"\n{GREEN}{BOLD} -- Install overview --{CRESET}")
@@ -25,3 +27,4 @@ def overview(data, disk):
 
     if not confirm:
         print(f"\n{YELLOW}Exiting installation process{CRESET}")
+        sys.exit()
