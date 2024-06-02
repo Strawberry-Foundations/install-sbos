@@ -1,3 +1,5 @@
+from sbos_installer.core.process import run
+from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.cli.selection import get_user_input, ia_selection
 from sbos_installer.utils.colors import *
 
@@ -52,6 +54,12 @@ try:
     install_data.update(disk_data)
 
     overview(install_data, disk)
+
+    run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
+    run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
+
+    bootstrap(packages)
+
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
