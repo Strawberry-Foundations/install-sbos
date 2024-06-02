@@ -65,6 +65,37 @@ def connect_to_wifi(ssid, password):
 
 
 def setup_network():
+    def establish_wifi():
+        print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks ...")
+        wifi_networks, wifi_freqs = scan_wifi_networks()
+
+        if wifi_networks:
+            ssid = ia_selection(f"\nAvailable {CYAN}Wi-Fi{CRESET} networks", options=wifi_networks, flags=wifi_freqs)
+
+            if ssid == "+ Add Wi-Fi":
+                _input = True
+                while _input:
+                    ssid = input("\nSSID: ")
+                    if ssid.strip() == "":
+                        print(f"{YELLOW}{BOLD}SSID cannot be empty{CRESET}")
+                    else:
+                        _input = False
+
+            show_password = parse_bool(ia_selection(
+                question=f"\nDo you want the Wi-Fi password to be shown?",
+                options=["No", "Yes"]
+            ))
+
+            if show_password:
+                password = input(f"\nPassword for {ssid}: ")
+            else:
+                password = getpass(f"\nPassword for {ssid}: ")
+
+            print(f"Connection to {CYAN}{ssid}{CRESET} is being established ...")
+            connect_to_wifi(ssid, password)
+
+        else:
+            print("No Wi-Fi networks found.")
     print(f"\n{GREEN}{BOLD} -- Setup network --{CRESET}")
 
     interfaces = get_network_interfaces()
@@ -83,7 +114,9 @@ def setup_network():
     if connected_interface:
         print(f"You are connected to {CYAN}{connected_interface}{CRESET}")
 
-        if check_internet_connection():
+        connection_available = check_internet_connection()
+
+        if connection_available:
             print(f"Internet connection is {GREEN}{BOLD}available{CRESET}")
         else:
             print(f"{YELLOW}{BOLD}Internet connection is {RED}not {YELLOW}available{CRESET}")
@@ -92,36 +125,17 @@ def setup_network():
                 sys.exit(1)
 
         if "wl" in connected_interface:
-            print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks ...")
-            wifi_networks, wifi_freqs = scan_wifi_networks()
-
-            if wifi_networks:
-                ssid = ia_selection(f"\nAvailable {CYAN}Wi-Fi{CRESET} networks", options=wifi_networks, flags=wifi_freqs)
-
-                if ssid == "+ Add Wi-Fi":
-                    _input = True
-                    while _input:
-                        ssid = input("\nSSID: ")
-                        if ssid.strip() == "":
-                            print(f"{YELLOW}{BOLD}SSID cannot be empty{CRESET}")
-                        else:
-                            _input = False
-
-                show_password = parse_bool(ia_selection(
-                    question=f"\nDo you want the Wi-Fi password to be shown?",
+            if connection_available:
+                force_wifi_connect = parse_bool(ia_selection(
+                    question=f"\nYour Wi-Fi connection already seems to be working. Would you still like to set up a "
+                             f"connection?",
                     options=["No", "Yes"]
                 ))
 
-                if show_password:
-                    password = input(f"\nPassword for {ssid}: ")
-                else:
-                    password = getpass(f"\nPassword for {ssid}: ")
-
-                print(f"Connection to {CYAN}{ssid}{CRESET} is being established ...")
-                connect_to_wifi(ssid, password)
-
+                if force_wifi_connect:
+                    establish_wifi()
             else:
-                print("No Wi-Fi networks found.")
+                establish_wifi()
 
         elif "en" in connected_interface:
             print(f"Connected via {CYAN}LAN{CRESET}")
