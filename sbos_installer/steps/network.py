@@ -77,7 +77,7 @@ def setup_network():
         )
         print("")
     else:
-        if connected_interface == "":
+        if not connected_interface:
             connected_interface = interfaces[0]
 
     if connected_interface:
