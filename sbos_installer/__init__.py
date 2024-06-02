@@ -1,5 +1,6 @@
-from sbos_installer.core.process import run
+from sbos_installer.core.process import run, check_root_permissions
 from sbos_installer.core.bootstrap import bootstrap
+from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import get_user_input, ia_selection
 from sbos_installer.utils.colors import *
 
@@ -11,10 +12,18 @@ from sbos_installer.steps.user import setup_user
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 
+import sys
+
 version = "0.1.14"
+
+if not check_root_permissions():
+    print(f"{BOLD}{RED}Requires root permissions{CRESET}")
+    sys.exit(1)
 
 print(f"{GREEN}{BOLD}Welcome to StrawberryOS Installer v{version}!\n{CRESET}Thanks for installing StrawberryOS on "
       f"your computer.\n")
+
+print(f"{YELLOW}{BOLD}Warning: The installer does currently not support BIOS/Legacy systems.{CRESET}\n")
 
 try:
     input("Press Enter to continue the installation ... \n")
@@ -59,6 +68,7 @@ try:
     run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
     bootstrap(packages)
+    setup_initramfs(install_data['disk'][disk]['data']['block'])
 
 
 except KeyboardInterrupt:
