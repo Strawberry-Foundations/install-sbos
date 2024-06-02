@@ -97,9 +97,9 @@ def setup_network():
             if wifi_networks:
                 ssid = ia_selection(f"\nAvailable {CYAN}Wi-Fi{CRESET} networks", options=wifi_networks, flags=wifi_freqs)
 
-                _input = True
-                while _input:
-                    if ssid == "+ Add Wi-Fi":
+                if ssid == "+ Add Wi-Fi":
+                    _input = True
+                    while _input:
                         ssid = input("\nSSID: ")
                         if ssid.strip() == "":
                             print(f"{YELLOW}{BOLD}SSID cannot be empty{CRESET}")
