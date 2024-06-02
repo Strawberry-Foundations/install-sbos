@@ -58,9 +58,10 @@ def scan_wifi_networks():
 def connect_to_wifi(ssid, password):
     try:
         subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid, 'password', password], check=True)
-        print(f"Successfully connected with {ssid}.")
+
+        print(f"{GREEN}Successfully connected with {ssid}{CRESET}")
     except subprocess.CalledProcessError as e:
-        print(f"Error connecting to {ssid}: {e}")
+        print(f"{RED}{BOLD}Error connecting to {ssid}: {e}{CRESET}")
 
 
 def setup_network():
@@ -91,7 +92,7 @@ def setup_network():
                 sys.exit(1)
 
         if "wl" in connected_interface:
-            print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks...")
+            print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks ...")
             wifi_networks, wifi_freqs = scan_wifi_networks()
 
             if wifi_networks:
@@ -116,6 +117,7 @@ def setup_network():
                 else:
                     password = getpass(f"\nPassword for {ssid}: ")
 
+                print(f"Connection to {CYAN}{ssid}{CRESET} is being established ...")
                 connect_to_wifi(ssid, password)
 
             else:
