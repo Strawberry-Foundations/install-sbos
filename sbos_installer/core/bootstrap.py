@@ -1,4 +1,4 @@
-from sbos_installer.core.packages import package_list
+from sbos_installer.core.packages import package_list, init_package
 from sbos_installer.core.process import Runner
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
@@ -28,7 +28,7 @@ def bootstrap(install_packages: list):
 
     command = runner.run(
         f"""/usr/sbin/debootstrap \
-                    --include={package_list["init"]} trixie \
+                    --include={init_package} trixie \
                     {location} https://deb.debian.org/debian"""
     )
 
