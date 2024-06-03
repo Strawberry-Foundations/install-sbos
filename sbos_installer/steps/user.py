@@ -72,7 +72,7 @@ def configure_users(user_data: dict):
 
     if len(user_data["users"]) > 1:
         print(f"{BOLD}{GREEN}Configuring additional user ...{CRESET}")
-        for username, password in user_data.items():
+        for username, password in user_data["users"].items():
             if username == "root":
                 continue
 
