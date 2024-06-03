@@ -28,8 +28,6 @@ def configure_bootloader(disk: str):
 
 
 def _configure_grub(disk: str):
-
-
     runner = Runner(True)
 
     _modify_grub_config("/mnt/etc/default/grub", 'GRUB_CMDLINE_LINUX=""', 'GRUB_CMDLINE_LINUX="overlay=yes"')
