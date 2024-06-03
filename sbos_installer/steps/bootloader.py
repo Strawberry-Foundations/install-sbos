@@ -1,6 +1,7 @@
 from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 
+
 def configure_bootloader():
     print(f"{BOLD}{GREEN}Configuring GRUB ...{CRESET}")
     with open("/mnt/etc/default/grub", "+") as _grub_default:
