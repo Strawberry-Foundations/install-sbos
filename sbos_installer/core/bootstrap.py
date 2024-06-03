@@ -26,13 +26,14 @@ def bootstrap(install_packages: list):
         "This may take some time. Get yourself a coffee in the meantime!"
     )
 
-    _i = "dbus,dbus-bin,dbus-daemon,dbus-session-bus-common,dbus-system-bus-common,dbus-user-session,libpam-systemd, apt-utils,apt-transport-https,ca-certificates,bash,bzip2,initramfs-tools-core,initramfs-tools,linux-image-amd64, busybox-static,network-manager,wget,curl"
+    install_args = f"""/usr/sbin/debootstrap \
+        --include={init_package} trixie \
+        {location} https://deb.debian.org/debian"""
 
-    command = subprocess.run(
-        f"""/usr/sbin/debootstrap \
-        --include={_i} trixie \
-        {location} https://deb.debian.org/debian""", shell=True
-    )
+    command = subprocess.run(args=install_args, shell=True)
+
+    print(command)
+    print(install_args)
 
     if command.returncode != 0:
         print(f"Something went wrong while installing StrawberryOS ...")
