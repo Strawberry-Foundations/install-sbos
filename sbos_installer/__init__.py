@@ -87,7 +87,7 @@ try:
 
     configure_timezone_system(region, city)
 
-    command = f'echo "root:{install_data["user"]["root"]}" | chpasswd'
+    command = f'echo "root:{install_data["users"]["root"]}" | chpasswd'
     subprocess.run(
         ['chroot', location, '/bin/bash', '-c', command],
         check=True,
