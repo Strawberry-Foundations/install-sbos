@@ -41,8 +41,12 @@ def _configure_grub(disk: str):
 
 def _configure_systemd_boot():
     runner = Runner(True)
+
     print(f"{BOLD}{GREEN}Installing systemd-boot ...{CRESET}")
+
+    runner.run(f"apt install -y systemd-boot")
     runner.run(f"bootctl --esp-path=/mnt/boot/efi install")
+
     print(f"{BOLD}{GREEN}Configuring systemd-boot ...{CRESET}")
     with open("/mnt/boot/loader/loader.conf", "w+") as _loader_conf:
         _loader_conf.write("default strawberryos.conf\n")
