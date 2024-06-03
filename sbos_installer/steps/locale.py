@@ -2,8 +2,6 @@ from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 
 import os
-import sys
-import subprocess
 
 
 def list_zoneinfo(path="/usr/share/zoneinfo"):
