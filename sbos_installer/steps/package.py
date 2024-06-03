@@ -22,6 +22,8 @@ def setup_packages():
             _packages = input("Provide additional packages [init,base]: ").split(",")
 
             for package in _packages:
+                if package == '':
+                    _flag = False
                 if package not in package_list:
                     print(f"{YELLOW}{BOLD}Package '{package}' is not available{CRESET}")
                 else:
