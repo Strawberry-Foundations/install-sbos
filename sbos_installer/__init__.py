@@ -16,7 +16,6 @@ from sbos_installer.steps.bootloader import configure_bootloader
 from sbos_installer.steps.general import configure_desktop
 
 import sys
-import subprocess
 
 version = "0.2.1"
 
