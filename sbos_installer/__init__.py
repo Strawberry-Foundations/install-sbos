@@ -9,7 +9,7 @@ from sbos_installer.steps.disk import disk_partitioning
 from sbos_installer.steps.hostname import setup_hostname
 from sbos_installer.steps.network import setup_network
 from sbos_installer.steps.locale import setup_timezone, configure_timezone_system
-from sbos_installer.steps.user import setup_user
+from sbos_installer.steps.user import setup_user, configure_users
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 from sbos_installer.steps.bootloader import configure_bootloader
@@ -78,8 +78,8 @@ try:
     if not DEV_FLAG_SKIP_INITRAMFS:
         setup_initramfs(install_data['disk'][disk]['user']['block'])
 
-    print(f" -- {GREEN}{BOLD} StrawberryOS base installation completed --{CRESET}")
-    print(f"{CYAN}{BOLD} Starting post-installation ... {CRESET}")
+    print(f"\n -- {GREEN}{BOLD} StrawberryOS base installation completed --{CRESET}")
+    print(f"{CYAN}{BOLD} Starting post-installation ... {CRESET}\n")
 
     runner.run(f"mount --bind /dev {location}/dev")
     runner.run(f"mount --bind /sys {location}/sys")
@@ -87,19 +87,15 @@ try:
 
     configure_timezone_system(region, city)
 
-    command = f'echo "root:{install_data["users"]["root"]}" | chpasswd'
-    subprocess.run(
-        ['chroot', location, '/bin/bash', '-c', command],
-        check=True,
-        text=True,
-        capture_output=True
-    )
+    configure_users(user_setup)
 
     configure_bootloader(disk)
 
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
+
+    print(f"\n -- {GREEN}{BOLD} StrawberryOS post installation completed --{CRESET}")
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
