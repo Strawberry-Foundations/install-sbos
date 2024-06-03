@@ -1,18 +1,8 @@
 import atexit
-import json
 import termios
 import tty
-from getpass import getpass
 import sys
 from itertools import zip_longest
-
-
-def get_user_input() -> dict:
-    while True:
-        distro_name = ia_selection("Which Linux distribution (flavor) would you like to use?",
-                                   options=["Fedora", "Debian", "Ubuntu", "Pop!_OS", "Arch", "Generic ISO"],
-                                   flags=[f"~GB (recommended)"])
-        skip_de_selection = False
 
 
 class KeyGetter:
