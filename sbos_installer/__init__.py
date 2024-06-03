@@ -86,11 +86,12 @@ try:
 
     configure_timezone_system(region, city)
 
-    command = subprocess.run(f"chroot {location} passwd", shell=True)
+    command = subprocess.run(f'chroot {location} "echo "root:{install_data['users']['root']}" | chpasswd"', shell=True)
 
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
+
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
