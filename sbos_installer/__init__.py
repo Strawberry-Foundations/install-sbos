@@ -3,6 +3,7 @@ from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils.colors import *
+from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS
 
 from sbos_installer.steps.disk import disk_partitioning
 from sbos_installer.steps.hostname import setup_hostname
@@ -11,7 +12,7 @@ from sbos_installer.steps.locale import setup_timezone, configure_timezone_syste
 from sbos_installer.steps.user import setup_user
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
-from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS
+from sbos_installer.steps.bootloader import configure_bootloader
 
 import sys
 import subprocess
@@ -97,6 +98,8 @@ try:
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
+
+    configure_bootloader(disk)
 
 
 except KeyboardInterrupt:
