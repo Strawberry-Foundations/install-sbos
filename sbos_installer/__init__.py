@@ -86,7 +86,13 @@ try:
 
     configure_timezone_system(region, city)
 
-    command = subprocess.run(f'chroot {location} "echo "root:{install_data["users"]["root"]}" | chpasswd"', shell=True)
+    command = f'echo "root:{install_data["user"]["root"]}" | chpasswd'
+    subprocess.run(
+        ['chroot', location, '/bin/bash', '-c', command],
+        check=True,
+        text=True,
+        capture_output=True
+    )
 
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
