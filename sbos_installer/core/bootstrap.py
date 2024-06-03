@@ -32,9 +32,6 @@ def bootstrap(install_packages: list):
 
     command = subprocess.run(args=install_args, shell=True)
 
-    print(command)
-    print(install_args)
-
     if command.returncode != 0:
         print(f"Something went wrong while installing StrawberryOS ...")
         sys.exit(1)
