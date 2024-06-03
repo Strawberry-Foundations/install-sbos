@@ -95,12 +95,11 @@ try:
         capture_output=True
     )
 
+    configure_bootloader(disk)
+
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
-
-    configure_bootloader(disk)
-
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
