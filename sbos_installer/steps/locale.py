@@ -1,3 +1,4 @@
+from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 
 import os
@@ -63,3 +64,20 @@ def setup_timezone():
     city = setup_city(region)
 
     return region, city
+
+
+def configure_timezone_system(region: str, city: str):
+    location = "/mnt"
+    runner = Runner(False)
+
+    print(f"{BOLD}{GREEN}Configuring timezone ...{CRESET}")
+
+    runner.run(f"mount --bind /dev {location}/dev")
+    runner.run(f"mount --bind /sys {location}/sys")
+    runner.run(f"mount --bind /proc {location}/proc")
+
+    runner.run(f"chroot {location} ln -sf /usr/share/zoneinfo/{region}/{city} /etc/localtime")
+
+    runner.run(f"umount {location}/dev")
+    runner.run(f"umount {location}/sys")
+    runner.run(f"umount {location}/proc")
