@@ -2,6 +2,7 @@ from sbos_installer.core.packages import package_list, init_package
 from sbos_installer.core.process import Runner
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
+from sbos_installer.utils.colors import *
 
 import subprocess
 import sys
@@ -22,8 +23,8 @@ def bootstrap(install_packages: list):
     packages.extend(install_packages)
 
     print(
-        "\nThe installation program will now start the bootstrap process. "
-        "This may take some time. Get yourself a coffee in the meantime!"
+        f"\n{CYAN}{BOLD}The installation program will now start the bootstrap process. "
+        f"This may take some time. Get yourself a coffee in the meantime!{CRESET}"
     )
 
     install_args = f"""/usr/sbin/debootstrap \
@@ -32,7 +33,7 @@ def bootstrap(install_packages: list):
 
     runner.run(install_args)
 
-    print("Installing additional packages ...")
+    print(f"\n{GREEN}{BOLD}Installing additional packages ...{CRESET}")
 
     i = 1
     for package in packages:
@@ -41,17 +42,17 @@ def bootstrap(install_packages: list):
         i += 1
         print("")
 
-    print(f"Cleaning up system ...")
+    print(f"\n{MAGENTA}{BOLD}Cleaning up system ...{CRESET}")
     runner.run(binder + " apt update")
     runner.run(binder + " apt upgrade -y")
     runner.run(binder + " apt clean all")
     runner.run(binder + " apt autoclean")
     runner.run(binder + " apt autoremove -y")
 
-    print(f"Installing StrawberryOS utils ...")
+    print(f"\n{GREEN}{BOLD}Installing StrawberryOS utils ...{CRESET}")
 
     runner.run(
-        binder + "wget https://raw.githubusercontent.com/Strawberry-Foundations/sbos-scripts/main/update-utils -O "
+        binder + " wget https://raw.githubusercontent.com/Strawberry-Foundations/sbos-scripts/main/update-utils -O "
                  "/usr/local/bin/update-utils",
     )
 
