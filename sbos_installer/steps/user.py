@@ -60,7 +60,7 @@ def setup_user():
 
 
 def configure_users(user_data: dict):
-    print(f"{BOLD}{GREEN}Configuring users ...{CRESET}")
+    print(f"{BOLD}{GREEN}Configuring root user ...{CRESET}")
     command = f'echo "root:{user_data["users"]["root"]}" | chpasswd'
 
     subprocess.run(
@@ -69,3 +69,27 @@ def configure_users(user_data: dict):
         text=True,
         capture_output=True
     )
+
+    if len(user_data["users"]) > 1:
+        print(f"{BOLD}{GREEN}Configuring additional user ...{CRESET}")
+        for username, password in user_data.items():
+            if username == "root":
+                continue
+
+            command = f'useradd -m -G sudo -s /bin/bash {username}'
+
+            subprocess.run(
+                ['chroot', '/mnt', '/bin/bash', '-c', command],
+                check=True,
+                text=True,
+                capture_output=True
+            )
+
+            command = f'echo "{username}:{user_data["users"][username]}" | chpasswd'
+
+            subprocess.run(
+                ['chroot', '/mnt', '/bin/bash', '-c', command],
+                check=True,
+                text=True,
+                capture_output=True
+            )
