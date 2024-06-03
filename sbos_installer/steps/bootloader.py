@@ -4,6 +4,16 @@ from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 
 
+def _modify_grub_config(file_path, search_string, replace_string):
+    with open(file_path, 'r') as file:
+        content = file.read()
+
+    modified_content = content.replace(search_string, replace_string)
+
+    with open(file_path, 'w') as file:
+        file.write(modified_content)
+
+
 def configure_bootloader(disk: str):
     selection = parse_bool(ia_selection(
         question="What bootloader would you like to use?",
@@ -18,14 +28,7 @@ def configure_bootloader(disk: str):
 
 
 def _configure_grub(disk: str):
-    def _modify_grub_config(file_path, search_string, replace_string):
-        with open(file_path, 'r') as file:
-            content = file.read()
 
-        modified_content = content.replace(search_string, replace_string)
-
-        with open(file_path, 'w') as file:
-            file.write(modified_content)
 
     runner = Runner(True)
 
