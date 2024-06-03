@@ -22,10 +22,10 @@ def setup_initramfs(data_block_device):
     print(f"\n{GREEN}{BOLD}Downloading initramfs tools ...{CRESET}")
     runner.run("wget https://github.com/Strawberry-Foundations/sbos-scripts/archive/refs/heads/main.tar.gz")
 
-    print(f"\n{GREEN}{BOLD}Extracting initramfs tools ...{CRESET}")
+    print(f"{GREEN}{BOLD}Extracting initramfs tools ...{CRESET}")
     runner.run("tar xfz main.tar.gz")
 
-    print(f"\n{GREEN}{BOLD}Patching initramfs init script ...{CRESET}")
+    print(f"{GREEN}{BOLD}Patching initramfs init script ...{CRESET}")
 
     with open(f"{os.getcwd()}/sbos-scripts-main/overlay-init", "r") as _initramfs_script:
         initramfs_init = _initramfs_script.read()
@@ -35,7 +35,7 @@ def setup_initramfs(data_block_device):
     with open(f"{os.getcwd()}/sbos-scripts-main/overlay-init", "w") as _initramfs_script:
         _initramfs_script.write(patched_initramfs_init)
 
-    print(f"\n{GREEN}{BOLD}Installing initramfs-tools to {location}")
+    print(f"{GREEN}{BOLD}Installing initramfs-tools to {location}")
 
     runner.run(f"mv sbos-scripts-main/overlay-hook {location}/etc/initramfs-tools/hooks/overlay")
     runner.run(f"mv sbos-scripts-main/overlay-init {location}/etc/initramfs-tools/scripts/init-bottom/overlay")
@@ -52,4 +52,4 @@ def setup_initramfs(data_block_device):
     runner.run(f"rm -rf sbos-scripts-main")
     runner.run(f"rm -rf main.tar* ")
 
-    print(f"\n{CYAN}{BOLD}Finished initramfs configuration{CRESET}")
+    print(f"{CYAN}{BOLD}Finished initramfs configuration{CRESET}")
