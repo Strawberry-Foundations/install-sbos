@@ -67,7 +67,7 @@ try:
     run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
     run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
-    bootstrap(packages)
+    # bootstrap(packages)
     setup_initramfs(install_data['disk'][disk]['user']['block'])
 
 
