@@ -30,11 +30,7 @@ def bootstrap(install_packages: list):
         --include={init_package} trixie \
         {location} https://deb.debian.org/debian"""
 
-    command = subprocess.run(args=install_args, shell=True)
-
-    if command.returncode != 0:
-        print(f"Something went wrong while installing StrawberryOS ...")
-        sys.exit(1)
+    runner.run(install_args)
 
     print("Installing additional packages ...")
 
