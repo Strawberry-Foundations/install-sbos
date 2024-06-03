@@ -12,7 +12,7 @@ def configure_bootloader(disk: str):
     )
 
     if selection == "systemd-boot":
-        _configure_systemd_boot(disk)
+        _configure_systemd_boot()
     else:
         _configure_grub(disk)
 
@@ -28,7 +28,7 @@ def _configure_grub(disk: str):
     runner.run(f"grub-install --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot/ --bootloader-id=StrawberryOS {disk}")
     runner.run(f"chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg")
 
-def _configure_systemd_boot(disk: str):
+def _configure_systemd_boot():
     runner = Runner(True)
     print(f"{BOLD}{GREEN}Installing systemd-boot ...{CRESET}")
     runner.run(f"bootctl --path=/mnt/boot/efi install")
