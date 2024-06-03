@@ -18,12 +18,18 @@ def configure_bootloader(disk: str):
 
 
 def _configure_grub(disk: str):
+    def _modify_grub_config(file_path, search_string, replace_string):
+        with open(file_path, 'r') as file:
+            content = file.read()
+
+        modified_content = content.replace(search_string, replace_string)
+
+        with open(file_path, 'w') as file:
+            file.write(modified_content)
+
     runner = Runner(True)
-    print(f"{BOLD}{GREEN}Configuring GRUB ...{CRESET}")
-    with open("/mnt/etc/default/grub", "w+") as _grub_default:
-        _content = _grub_default.read()
-        _content = _content.replace('GRUB_CMDLINE_LINUX=""', 'GRUB_CMDLINE_LINUX="overlay=yes"')
-        _grub_default.write(_content)
+
+    _modify_grub_config("/mnt/etc/default/grub", 'GRUB_CMDLINE_LINUX=""', 'GRUB_CMDLINE_LINUX="overlay=yes"')
 
     print(f"{BOLD}{GREEN}Installing GRUB ...{CRESET}")
     runner.run(
