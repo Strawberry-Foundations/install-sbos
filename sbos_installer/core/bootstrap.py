@@ -4,6 +4,7 @@ from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 
 import subprocess
+import sys
 
 
 def bootstrap(install_packages: list):
@@ -25,15 +26,17 @@ def bootstrap(install_packages: list):
         "This may take some time. Get yourself a coffee in the meantime!"
     )
 
+    _i = "dbus,dbus-bin,dbus-daemon,dbus-session-bus-common,dbus-system-bus-common,dbus-user-session,libpam-systemd, apt-utils,apt-transport-https,ca-certificates,bash,bzip2,initramfs-tools-core,initramfs-tools,linux-image-amd64, busybox-static,network-manager,wget,curl"
+
     command = subprocess.run(
         f"""/usr/sbin/debootstrap \
-        --include={init_package} trixie \
+        --include={_i} trixie \
         {location} https://deb.debian.org/debian""", shell=True
     )
 
     if command.returncode != 0:
         print(f"Something went wrong while installing StrawberryOS ...")
-        exit(1)
+        sys.exit(1)
 
     print("Installing additional packages ...")
 
