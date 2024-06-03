@@ -11,6 +11,7 @@ from sbos_installer.steps.locale import setup_timezone
 from sbos_installer.steps.user import setup_user
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
+from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS
 
 import sys
 
@@ -67,8 +68,10 @@ try:
     run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
     run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
-    # bootstrap(packages)
-    setup_initramfs(install_data['disk'][disk]['user']['block'])
+    if not DEV_FLAG_SKIP_BOOTSTRAP:
+        bootstrap(packages)
+    if not DEV_FLAG_SKIP_INITRAMFS:
+        setup_initramfs(install_data['disk'][disk]['user']['block'])
 
 
 except KeyboardInterrupt:
