@@ -93,6 +93,8 @@ try:
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
 
+    # todo: configure /etc/os-release correctly
+
     print(f"\n -- {GREEN}{BOLD} StrawberryOS post installation completed --{CRESET}")
 
 except KeyboardInterrupt:
