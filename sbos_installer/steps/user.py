@@ -57,3 +57,15 @@ def setup_user():
         }
 
     return user_setup
+
+
+def configure_users(user_data: dict):
+    print(f"{BOLD}{GREEN}Configuring users ...{CRESET}")
+    command = f'echo "root:{user_data["users"]["root"]}" | chpasswd'
+
+    subprocess.run(
+        ['chroot', '/mnt', '/bin/bash', '-c', command],
+        check=True,
+        text=True,
+        capture_output=True
+    )
