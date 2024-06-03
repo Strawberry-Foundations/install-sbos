@@ -15,10 +15,10 @@ def _modify_grub_config(file_path, search_string, replace_string):
 
 
 def configure_bootloader(disk: str):
-    selection = parse_bool(ia_selection(
+    selection = ia_selection(
         question="What bootloader would you like to use?",
         options=["GRUB", "systemd-boot"],
-        flags=["(Recommended)", "(Experimental support)", ])
+        flags=["(Recommended)", "(Experimental support)", ]
     )
 
     if selection == "systemd-boot":
