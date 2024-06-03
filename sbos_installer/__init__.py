@@ -73,6 +73,8 @@ try:
     if not DEV_FLAG_SKIP_INITRAMFS:
         setup_initramfs(install_data['disk'][disk]['user']['block'])
 
+    print(f" -- {GREEN}{BOLD} StrawberryOS base installation completed --{CRESET}")
+
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
