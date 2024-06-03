@@ -74,6 +74,7 @@ try:
         setup_initramfs(install_data['disk'][disk]['user']['block'])
 
     print(f" -- {GREEN}{BOLD} StrawberryOS base installation completed --{CRESET}")
+    print(f"{CYAN}{BOLD} Starting post-installation ... {CRESET}")
 
 
 except KeyboardInterrupt:
