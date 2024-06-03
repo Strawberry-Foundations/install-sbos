@@ -1,4 +1,4 @@
-from sbos_installer.core.process import run, check_root_permissions
+from sbos_installer.core.process import run, check_root_permissions, Runner
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import ia_selection
@@ -7,13 +7,14 @@ from sbos_installer.utils.colors import *
 from sbos_installer.steps.disk import disk_partitioning
 from sbos_installer.steps.hostname import setup_hostname
 from sbos_installer.steps.network import setup_network
-from sbos_installer.steps.locale import setup_timezone
+from sbos_installer.steps.locale import setup_timezone, configure_timezone_system
 from sbos_installer.steps.user import setup_user
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS
 
 import sys
+import subprocess
 
 version = "0.2.1"
 
@@ -27,6 +28,9 @@ print(f"{GREEN}{BOLD}Welcome to StrawberryOS Installer v{version}!\n{CRESET}Than
 print(f"{YELLOW}{BOLD}Warning: The installer does currently not support BIOS/Legacy systems.{CRESET}\n")
 
 try:
+    runner = Runner(False)
+    location = "/mnt"
+
     input("Press Enter to continue the installation ... \n")
 
     """
@@ -76,6 +80,17 @@ try:
     print(f" -- {GREEN}{BOLD} StrawberryOS base installation completed --{CRESET}")
     print(f"{CYAN}{BOLD} Starting post-installation ... {CRESET}")
 
+    runner.run(f"mount --bind /dev {location}/dev")
+    runner.run(f"mount --bind /sys {location}/sys")
+    runner.run(f"mount --bind /proc {location}/proc")
+
+    configure_timezone_system(region, city)
+
+    command = subprocess.run(f"chroot {location} passwd", shell=True)
+
+    runner.run(f"umount {location}/dev")
+    runner.run(f"umount {location}/sys")
+    runner.run(f"umount {location}/proc")
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
