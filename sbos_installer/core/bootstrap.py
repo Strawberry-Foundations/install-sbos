@@ -59,4 +59,4 @@ def bootstrap(install_packages: list):
     runner.run(binder + " chmod a+x /usr/local/bin/update-utils")
     runner.run(binder + " update-utils")
 
-    print(f"Finished bootstrap of base system")
+    print(f"\n{CYAN}{BOLD}Finished bootstrap of base system{CRESET}")
