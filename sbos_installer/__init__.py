@@ -1,7 +1,7 @@
 from sbos_installer.core.process import run, check_root_permissions
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
-from sbos_installer.cli.selection import get_user_input, ia_selection
+from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils.colors import *
 
 from sbos_installer.steps.disk import disk_partitioning
@@ -14,7 +14,7 @@ from sbos_installer.steps.overview import overview
 
 import sys
 
-version = "0.2.0"
+version = "0.2.1"
 
 if not check_root_permissions():
     print(f"{BOLD}{RED}Requires root permissions{CRESET}")
