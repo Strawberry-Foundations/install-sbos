@@ -13,6 +13,7 @@ from sbos_installer.steps.user import setup_user, configure_users
 from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 from sbos_installer.steps.bootloader import configure_bootloader
+from sbos_installer.steps.general import configure_desktop
 
 import sys
 import subprocess
@@ -42,7 +43,7 @@ try:
     * User setup (root password, additional user ...) (todo: add groups, login shell)
     * Disk setup
     * Package selection (base, base-dev, python3, utils, ...)
-    * (Bootloader)
+    * Bootloader
     * Additional steps (graphical user interface)
     """
 
@@ -52,8 +53,6 @@ try:
     user_setup = setup_user()               # Setup user
     disk_data, disk = disk_partitioning()   # Setup disk
     packages = setup_packages()             # Setup packages
-    # ... bootloader
-    # ... additional steps
 
     install_data = {
         "hostname": hostname,
@@ -85,11 +84,10 @@ try:
     runner.run(f"mount --bind /sys {location}/sys")
     runner.run(f"mount --bind /proc {location}/proc")
 
-    configure_timezone_system(region, city)
-
-    configure_users(user_setup)
-
-    configure_bootloader(disk)
+    configure_timezone_system(region, city)     # Configure timezone
+    configure_users(user_setup)                 # Configure users
+    configure_bootloader(disk)                  # Install & configure bootloader
+    configure_desktop()                         # Install desktop
 
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
