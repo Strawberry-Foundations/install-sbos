@@ -92,7 +92,7 @@ try:
     runner.run("chroot /mnt somgr update")      # Update StrawberryOS and lock system
 
     with open("/mnt/root/.bashrc", "a") as _file:
-        _file.write("PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
+        _file.write(r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
 
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
