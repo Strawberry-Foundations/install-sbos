@@ -3,7 +3,7 @@ from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils.colors import *
-from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS, DEV_FLAG_SKIP_POST_SETUP
+from sbos_installer.dev import *
 
 from sbos_installer.steps.disk import disk_partitioning
 from sbos_installer.steps.hostname import setup_hostname
@@ -17,7 +17,7 @@ from sbos_installer.steps.general import configure_desktop
 
 import sys
 
-version = "1.0.4"
+version = "1.0.5"
 
 if not check_root_permissions():
     print(f"{BOLD}{RED}Requires root permissions{CRESET}")
@@ -30,6 +30,29 @@ print(f"{YELLOW}{BOLD}Warning: The installer does not currently support BIOS/leg
 print(f"{YELLOW}{BOLD}Warning: The installer does not currently support automatic disk partitioning.{CRESET}\n")
 
 try:
+    args = sys.argv[1:]
+
+    if '--enable-dev' in args:
+        ENABLE_DEV_MODE = True
+
+    if any(arg.startswith('-f') and 'DEV_FLAG_SKIP_BOOTSTRAP' in arg for arg in args):
+        DEV_FLAG_SKIP_BOOTSTRAP = True
+
+    if any(arg.startswith('-f') and 'DEV_FLAG_SKIP_INITRAMFS' in arg for arg in args):
+        DEV_FLAG_SKIP_INITRAMFS = True
+
+    if any(arg.startswith('-f') and 'DEV_FLAG_SKIP_DISK_INPUT' in arg for arg in args):
+        DEV_FLAG_SKIP_DISK_INPUT = True
+
+    if any(arg.startswith('-f') and 'DEV_FLAG_SKIP_POST_SETUP' in arg for arg in args):
+        DEV_FLAG_SKIP_POST_SETUP = True
+
+    if DEV_FLAG_DEV_MODE:
+        DEV_FLAG_SKIP_BOOTSTRAP = True
+        DEV_FLAG_SKIP_INITRAMFS = True
+        DEV_FLAG_SKIP_DISK_INPUT = True
+        DEV_FLAG_SKIP_POST_SETUP = True
+
     runner = Runner(False)
     location = "/mnt"
 
