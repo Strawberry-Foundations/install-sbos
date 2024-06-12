@@ -84,10 +84,11 @@ try:
     runner.run(f"mount --bind /sys {location}/sys")
     runner.run(f"mount --bind /proc {location}/proc")
 
-    configure_timezone_system(region, city)  # Configure timezone
-    configure_users(user_setup)  # Configure users
-    configure_bootloader(disk)  # Install & configure bootloader
-    configure_desktop()  # Install desktop
+    if not DEV_FLAG_SKIP_POST_SETUP:
+        configure_timezone_system(region, city)  # Configure timezone
+        configure_users(user_setup)  # Configure users
+        configure_bootloader(disk)  # Install & configure bootloader
+        configure_desktop()  # Install desktop
 
     runner.run("chroot /mnt somgr update")  # Update StrawberryOS and lock system
 
