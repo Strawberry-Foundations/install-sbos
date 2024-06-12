@@ -3,7 +3,7 @@ from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils.colors import *
-from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS
+from sbos_installer.dev import DEV_FLAG_SKIP_BOOTSTRAP, DEV_FLAG_SKIP_INITRAMFS, DEV_FLAG_SKIP_POST_SETUP
 
 from sbos_installer.steps.disk import disk_partitioning
 from sbos_installer.steps.hostname import setup_hostname
