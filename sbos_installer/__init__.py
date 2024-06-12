@@ -47,12 +47,12 @@ try:
     * Additional steps (graphical user interface)
     """
 
-    hostname = setup_hostname()             # Setup hostname
-    net_stat = setup_network()              # Setup network
-    region, city = setup_timezone()         # Setup timezone
-    user_setup = setup_user()               # Setup user
-    disk_data, disk = disk_partitioning()   # Setup disk
-    packages = setup_packages()             # Setup packages
+    hostname = setup_hostname()  # Setup hostname
+    net_stat = setup_network()  # Setup network
+    region, city = setup_timezone()  # Setup timezone
+    user_setup = setup_user()  # Setup user
+    disk_data, disk = disk_partitioning()  # Setup disk
+    packages = setup_packages()  # Setup packages
 
     install_data = {
         "hostname": hostname,
@@ -84,12 +84,12 @@ try:
     runner.run(f"mount --bind /sys {location}/sys")
     runner.run(f"mount --bind /proc {location}/proc")
 
-    configure_timezone_system(region, city)     # Configure timezone
-    configure_users(user_setup)                 # Configure users
-    configure_bootloader(disk)                  # Install & configure bootloader
-    configure_desktop()                         # Install desktop
+    configure_timezone_system(region, city)  # Configure timezone
+    configure_users(user_setup)  # Configure users
+    configure_bootloader(disk)  # Install & configure bootloader
+    configure_desktop()  # Install desktop
 
-    runner.run("chroot /mnt somgr update")      # Update StrawberryOS and lock system
+    runner.run("chroot /mnt somgr update")  # Update StrawberryOS and lock system
 
     with open("/mnt/root/.bashrc", "a") as _file:
         _file.write(r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
@@ -97,7 +97,6 @@ try:
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
-
 
     # todo: configure /etc/os-release correctly
 
