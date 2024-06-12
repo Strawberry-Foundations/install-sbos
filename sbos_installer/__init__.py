@@ -89,11 +89,15 @@ try:
     configure_bootloader(disk)                  # Install & configure bootloader
     configure_desktop()                         # Install desktop
 
-    runner.run("chroot /mnt somgr update")      # Update StrawberryOS and lock system packages
+    runner.run("chroot /mnt somgr update")      # Update StrawberryOS and lock system
+
+    with open("/mnt/root/.bashrc", "a") as _file:
+        _file.write("PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
 
     runner.run(f"umount {location}/dev")
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
+
 
     # todo: configure /etc/os-release correctly
 
