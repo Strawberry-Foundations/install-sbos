@@ -38,6 +38,8 @@ def _configure_grub(disk: str):
         f"grub-install --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot/ --bootloader-id=StrawberryOS {disk}")
     runner.run(f"chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg")
 
+    _modify_grub_config("/mnt/boot/grub/grub.cfg", 'GNU/Linux', '(Chocolate Crisps)')
+
 
 def _configure_systemd_boot():
     runner = Runner(True)
