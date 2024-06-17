@@ -113,8 +113,6 @@ try:
         configure_bootloader(disk)  # Install & configure bootloader
         configure_desktop()  # Install desktop
 
-    runner.run("chroot /mnt somgr update")  # Update StrawberryOS and lock system
-
     run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} /mnt/user")
     run(f"mkdir /mnt/user/data/root")
     run(f"cp /mnt/root/.bashrc /mnt/user/data/root")
