@@ -53,7 +53,7 @@ try:
         DEV_FLAG_SKIP_DISK_INPUT = True
         DEV_FLAG_SKIP_POST_SETUP = True
 
-    runner = Runner(False)
+    runner = Runner(True)
     location = "/mnt"
 
     input("Press Enter to continue the installation ... \n")
