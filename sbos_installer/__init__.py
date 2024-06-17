@@ -127,7 +127,6 @@ try:
         _file.write(r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
         _file.write("\n")
 
-    # todo: Add another PS1 variable for root in user space
     # todo: Add StrawberryOS recovery (custom initramfs?)
 
     runner.run(f"cp /etc/os-release /mnt/etc/os-release")
