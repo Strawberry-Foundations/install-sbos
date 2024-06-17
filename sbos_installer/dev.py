@@ -9,7 +9,7 @@ DEV_FLAG_SKIP_INITRAMFS = False
 DEV_FLAG_SKIP_POST_SETUP = False
 
 if '--enable-dev' in args:
-    ENABLE_DEV_MODE = True
+    DEV_FLAG_DEV_MODE = True
 
 if any(arg.startswith('-f') and 'DEV_FLAG_SKIP_BOOTSTRAP' in arg for arg in args):
     DEV_FLAG_SKIP_BOOTSTRAP = True
