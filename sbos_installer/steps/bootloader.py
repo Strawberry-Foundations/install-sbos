@@ -1,4 +1,3 @@
-from sbos_installer.cli.parser import parse_bool
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.core.process import Runner
 from sbos_installer.utils import modify_file_entry
