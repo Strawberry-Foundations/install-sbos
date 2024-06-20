@@ -96,7 +96,6 @@ try:
     # Mount userspace & copy root's .bashrc from systemspace to userspace
     run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} /mnt/user")
     run(f"mkdir -p /mnt/user/data/root")
-    run(f"mkdir -p /mnt/user/data/etc")
     run(f"cp /mnt/root/.bashrc /mnt/user/data/root")
 
     # Modify root's userspace PS1 variable
@@ -109,7 +108,7 @@ try:
         _file.write(r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
         _file.write("\n")
 
-    with open("/mnt/user/data/etc/issue", 'w') as file:
+    with open("/mnt/etc/issue", 'w') as file:
         file.write(r"StrawberryOS Chocolate Crisps \n \l")
 
     # todo: Add StrawberryOS recovery (custom initramfs?)
