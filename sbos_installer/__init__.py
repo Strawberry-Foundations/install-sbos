@@ -109,7 +109,8 @@ try:
         _file.write("\n")
 
     with open("/mnt/etc/issue", 'w') as file:
-        file.write(r"StrawberryOS Chocolate Crisps \n \l")
+        file.write(r"StrawberryOS Chocolate Crisps \n \l"
+                   r"")
 
     # todo: Add StrawberryOS recovery (custom initramfs?)
 
