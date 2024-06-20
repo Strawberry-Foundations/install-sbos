@@ -17,7 +17,7 @@ from sbos_installer.steps.general import configure_desktop
 
 import sys
 
-version = "1.0.9"
+version = "1.0.10"
 
 if not check_root_permissions():
     print(f"{BOLD}{RED}Requires root permissions{CRESET}")
