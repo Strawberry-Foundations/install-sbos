@@ -95,7 +95,7 @@ try:
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
     run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} /mnt/user")
-    run(f"mkdir /mnt/user/data/root")
+    run(f"mkdir -p /mnt/user/data/root")
     run(f"cp /mnt/root/.bashrc /mnt/user/data/root")
 
     # Modify root's userspace PS1 variable
