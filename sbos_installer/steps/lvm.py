@@ -3,7 +3,7 @@ from sbos_installer.utils.colors import *
 
 
 def get_partition_suffix(device):
-    if "nvme" in device:
+    if "nvme" in device or "mmcblk" in device:
         return "p"
     return ""
 
