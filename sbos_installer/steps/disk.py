@@ -123,26 +123,58 @@ def disk_partitioning():
                     options=["EFI", "Swap", "System", "Done"],
                     flags=[f"({disk}{suffix}1)", f"({disk}{suffix}2)", "(/dev/strawberryos/system)"]
                 )
+                print()
 
                 match modify_partition:
                     case "EFI":
                         while True:
-                            efi_size = parse_size(input(f"Input new EFI disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
-                            if efi_size:
+                            _size = parse_size(
+                                input(f"Input new EFI disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
+                            if _size:
+                                efi_disk_size = _size
                                 break
-                        print(f"EFI disk size is now {GREEN}{BOLD}{efi_size / 1024}G{CRESET} ({GREEN}{BOLD}{efi_size}M{CRESET})")
+                        print(
+                            f"EFI disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})")
+                        continue
 
                     case "Swap":
                         while True:
-                            swap_size = parse_size(input(f"Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
-                            if swap_size:
+                            _size = parse_size(
+                                input(f"Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
+                            if _size:
+                                swap_disk_size = _size
                                 break
-                        print(f"Swap disk size is now {GREEN}{BOLD}{swap_size / 1024}G{CRESET} ({GREEN}{BOLD}{swap_size}M{CRESET})")
+                        print(
+                            f"Swap disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})")
+                        continue
 
                     case "System":
                         print(f"{YELLOW}{BOLD}Currently not supported")
+
                     case "Done":
-                        break
+                        return {
+                            "disk": {
+                                "custom_partitioning": False,
+                                disk: {
+                                    "efi": {
+                                        "block": f"{disk}{suffix}1",
+                                        "size": efi_disk_size
+                                    },
+                                    "system": {
+                                        "block": "/dev/strawberryos/system",
+                                        "size": system_disk_size
+                                    },
+                                    "user": {
+                                        "block": "/dev/strawberryos/user",
+                                        "size": user_disk_size
+                                    },
+                                    "swap": {
+                                        "block": f"{disk}{suffix}2",
+                                        "size": swap_disk_size
+                                    }
+                                }
+                            }
+                        }, disk
 
         else:
             continue_installation = parse_bool(ia_selection(
