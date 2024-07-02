@@ -77,7 +77,7 @@ try:
     if not disk_data["disk"]["custom_partitioning"]:
         configure_lvm(disk)
 
-        run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
+        run(f"mount --mkdir /dev/strawberryos/system /mnt")
         run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
     else:
