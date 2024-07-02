@@ -10,12 +10,6 @@ def get_partition_suffix(device):
     return ""
 
 
-def set_partition_type(device, partition_number, partition_type):
-    runner = Runner(True)
-    command = f"echo -e 't\\n{partition_number}\\n{partition_type}\\nw' | fdisk {device}"
-    runner.run(command)
-
-
 def configure_lvm(device):
     runner = Runner(True)
     suffix = get_partition_suffix(device)
@@ -25,10 +19,6 @@ def configure_lvm(device):
     runner.run(f"parted -s -a optimal {device} mkpart primary fat32 1MiB 513MiB")
     runner.run(f"parted -s -a optimal {device} mkpart primary linux-swap 513MiB 2561MiB")
     runner.run(f"parted -s -a optimal {device} mkpart primary 2561MiB 100%")
-
-    set_partition_type(device, 1, 'c')
-    set_partition_type(device, 2, '82')
-    set_partition_type(device, 3, '8e')
 
     runner.run(f"sync")
     time.sleep(0.5)
