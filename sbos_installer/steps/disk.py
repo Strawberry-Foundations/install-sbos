@@ -53,9 +53,9 @@ def disk_partitioning():
 
     if DEV_FLAG_SKIP_DISK_INPUT:
         efi_disk = "/dev/sda1"
-        system_disk = "/dev/sda2"
-        user_disk = "/dev/sda4"
-        swap_disk = "/dev/sda3"
+        system_disk = "/dev/strawberryos/system"
+        user_disk = "/dev/strawberryos/user"
+        swap_disk = "/dev/sda2"
 
         return {
             "disk": {
