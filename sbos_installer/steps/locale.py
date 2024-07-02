@@ -10,7 +10,7 @@ def list_zoneinfo(path="/usr/share/zoneinfo"):
 
         timezones = [entry for entry in entries if os.path.isdir(os.path.join(path, entry))]
 
-        formatted_output = ' '.join(timezones)
+        formatted_output = f' {GRAY}{BOLD}-{CRESET} '.join(timezones)
 
         return formatted_output
     except Exception as e:
@@ -22,43 +22,60 @@ def setup_timezone():
     print(f"\n{GREEN}{BOLD} -- Timezone configuration --{CRESET}")
 
     def setup_region():
-        _region = input("Which region are you in? (? for list) [Europe]: ")
-        if _region == "?":
-            print(list_zoneinfo(path="/usr/share/zoneinfo"))
-            setup_region()
-        elif _region.strip() == "":
-            _region = "Europe"
+        region_input = "Europe"
 
-        if not os.path.exists(f"/usr/share/zoneinfo/{_region}"):
-            print(f"{YELLOW}{BOLD}Region '{_region}' does not exists{CRESET}")
-            setup_region()
+        while True:
+            _region_input = input("Which region are you in? (? for list) [Europe]: ")
 
-        return _region
+            if _region_input == "?":
+                print(list_zoneinfo(path="/usr/share/zoneinfo"))
+                continue
+
+            elif _region_input.strip() == "":
+                region_input = "Europe"
+                break
+
+            else:
+                if not os.path.exists(f"/usr/share/zoneinfo/{_region_input}"):
+                    print(f"{YELLOW}{BOLD}Region '{_region_input}' does not exists{CRESET}")
+                    continue
+                region_input = _region_input
+                break
+
+        return region_input
 
     def setup_city(_region):
-        _city = input("Which city are you in? (? for list) [Berlin]: ")
-        if _city == "?":
-            try:
-                entries = os.listdir(f"/usr/share/zoneinfo/{_region}")
+        city_input = "Berlin"
 
-                timezones = [entry for entry in entries if os.path.isfile(os.path.join(f"/usr/share/zoneinfo/{_region}", entry))]
+        while True:
+            _city_input = input("Which city are you in? (? for list) [Berlin]: ")
 
-                formatted_output = ' '.join(timezones)
+            if _city_input == "?":
+                try:
+                    entries = os.listdir(f"/usr/share/zoneinfo/{_region}")
 
-                print(formatted_output)
-            except Exception as e:
-                print(f"{YELLOW}{BOLD}Error occurred while listing timezones: {e}{CRESET}")
-                return ""
+                    timezones = [entry for entry in entries if os.path.isfile(os.path.join(f"/usr/share/zoneinfo/{_region}", entry))]
 
-            setup_city(_region)
-        elif _city.strip() == "":
-            _city = "Berlin"
+                    formatted_output = ' '.join(timezones)
 
-        if not os.path.exists(f"/usr/share/zoneinfo/{_region}/{_city}"):
-            print(f"{YELLOW}{BOLD}City '{_city}' does not exists{CRESET}")
-            setup_city(_region)
+                    print(formatted_output)
+                except Exception as e:
+                    print(f"{YELLOW}{BOLD}Error occurred while listing timezones: {e}{CRESET}")
+                    return ""
 
-        return _city
+                continue
+            elif _city_input.strip() == "":
+                city_input = "Berlin"
+                break
+
+            else:
+                if not os.path.exists(f"/usr/share/zoneinfo/{_region}/{_city_input}"):
+                    print(f"{YELLOW}{BOLD}City '{_city_input}' does not exists{CRESET}")
+                    continue
+                city_input = _city_input
+                break
+
+        return city_input
 
     region = setup_region()
     city = setup_city(region)
