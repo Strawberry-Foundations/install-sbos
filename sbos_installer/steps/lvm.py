@@ -1,6 +1,8 @@
 from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 
+import time
+
 
 def get_partition_suffix(device):
     if "nvme" in device or "mmcblk" in device:
@@ -17,6 +19,9 @@ def configure_lvm(device):
     runner.run(f"parted -s -a optimal {device} mkpart primary fat32 1MiB 513MiB")
     runner.run(f"parted -s -a optimal {device} mkpart primary linux-swap 513MiB 2561MiB")
     runner.run(f"parted -s -a optimal {device} mkpart primary 2561MiB 100%")
+
+    runner.run(f"sync")
+    time.sleep(0.5)
 
     print(f"\n{GREEN}{BOLD}Formatting base partitions ...{CRESET}")
     runner.run(f"mkfs.fat -F 32 {device}{suffix}1")
