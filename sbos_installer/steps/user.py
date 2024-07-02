@@ -43,10 +43,18 @@ def setup_user():
             else:
                 pw = False
 
+        add_to_sudo = parse_bool(ia_selection(
+            question=f"\nWould you like to add '{CYAN}{BOLD}{username}{CRESET}' to the »{GREEN} sudo {CRESET}« group?",
+            options=["Yes", "No"])
+        )
+
         user_setup = {
             "users": {
                 "root": root_password,
-                username: password
+                username: {
+                    "password": password,
+                    "root_user": add_to_sudo
+                }
             }
         }
     else:
@@ -85,7 +93,7 @@ def configure_users(user_data: dict):
                 capture_output=True
             )
 
-            command = f'echo "{username}:{user_data["users"][username]}" | chpasswd'
+            command = f'echo "{username}:{user_data["users"]["password"][username]}" | chpasswd'
 
             subprocess.run(
                 ['chroot', '/mnt', '/bin/bash', '-c', command],
