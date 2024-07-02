@@ -2,6 +2,7 @@ from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
 from sbos_installer.dev import DEV_FLAG_SKIP_DISK_INPUT
+from sbos_installer.steps.lvm import get_partition_suffix
 
 import subprocess
 import os
@@ -107,24 +108,26 @@ def disk_partitioning():
         if not confirm_partitioning:
             disk_partitioning()
 
+        suffix = get_partition_suffix(disk)
+
         return {
             "disk": {
                 "custom_partitioning": True,
                 disk: {
                     "efi": {
-                        "block": None,
+                        "block": f"/dev/{disk}{suffix}1",
                         "size": efi_disk_size
                     },
                     "system": {
-                        "block": None,
+                        "block": "/dev/strawberryos/system",
                         "size": system_disk_size
                     },
                     "user": {
-                        "block": None,
+                        "block": "/dev/strawberryos/user",
                         "size": user_disk_size
                     },
                     "swap": {
-                        "block": None,
+                        "block": f"/dev/{disk}{suffix}2",
                         "size": swap_disk_size
                     }
                 }
