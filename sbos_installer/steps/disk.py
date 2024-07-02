@@ -140,7 +140,7 @@ def disk_partitioning():
                     case "Swap":
                         while True:
                             _size = parse_size(
-                                input(f"Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
+                                input(f"Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}2{CRESET}) size: "))
                             if _size:
                                 swap_disk_size = _size
                                 break
