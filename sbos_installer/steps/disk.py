@@ -117,7 +117,7 @@ def disk_partitioning():
         wipe_disk = parse_bool(ia_selection(
             question=f"\nErase your hard disk before continuing? [{disk}] (Required if data is still present)",
             options=["Yes", "No"],
-            flags=[f"{YELLOW}{BOLD}(ALL DATA WILL BE DELETED!){CRESET}", ""]
+            flags=[f"{GRAY}({YELLOW}{BOLD}ALL DATA WILL BE DELETED!{CRESET}{GRAY}){CRESET}", ""]
         ))
 
         if wipe_disk:
