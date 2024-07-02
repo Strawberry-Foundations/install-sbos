@@ -74,6 +74,8 @@ try:
 
     overview(install_data, disk)
 
+    print(disk_data["disk"]["custom_partitioning"])
+
     if not disk_data["disk"]["custom_partitioning"]:
         configure_lvm(disk)
 
