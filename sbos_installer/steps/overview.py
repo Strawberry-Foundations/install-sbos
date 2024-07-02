@@ -17,10 +17,10 @@ def overview(data, disk):
     for user in data["users"]:
         print(f"{GRAY}{BOLD}    * {CYAN}{user}{CRESET}")
     print(f"{GRAY}{BOLD}* {CYAN}Disk:{CRESET} {disk}")
-    print(f"{GRAY}{BOLD}    * {CYAN}EFI on {CYAN}{disk_data['efi']['block']}{CRESET}: {disk_data['efi']['size']:.2f}G{CRESET}")
-    print(f"{GRAY}{BOLD}    * {CYAN}System on {CYAN}{disk_data['system']['block']}{CRESET}: {disk_data['system']['size']:.2f}G{CRESET}")
-    print(f"{GRAY}{BOLD}    * {CYAN}User on {CYAN}{disk_data['user']['block']}{CRESET}: {disk_data['user']['size']:.2f}G{CRESET}")
-    print(f"{GRAY}{BOLD}    * {CYAN}Swap on {CYAN}{disk_data['swap']['block']}{CRESET}: {disk_data['swap']['size']:.2f}G{CRESET}")
+    print(f"{GRAY}{BOLD}    * {CYAN}EFI on {CYAN}{disk_data['efi']['block']}{CRESET}: {disk_data['efi']['size'] / 1024}G{CRESET}")
+    print(f"{GRAY}{BOLD}    * {CYAN}System on {CYAN}{disk_data['system']['block']}{CRESET}: {disk_data['system']['size'] / 1024}G{CRESET}")
+    print(f"{GRAY}{BOLD}    * {CYAN}User on {CYAN}{disk_data['user']['block']}{CRESET}: {disk_data['user']['size'] / 1024}G{CRESET}")
+    print(f"{GRAY}{BOLD}    * {CYAN}Swap on {CYAN}{disk_data['swap']['block']}{CRESET}: {disk_data['swap']['size'] / 1024}G{CRESET}")
     print(f"{GRAY}{BOLD}* {CYAN}Packages:{CRESET} {', '.join(data['packages'])}")
 
     confirm = parse_bool(ia_selection("\nDo you want to continue?", options=["Yes", "No"]))
