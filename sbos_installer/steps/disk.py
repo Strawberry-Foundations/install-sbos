@@ -99,7 +99,7 @@ def disk_partitioning():
 
         efi_disk_size = 0.512
         system_disk_size = 10
-        swap_disk_size = 4
+        swap_disk_size = 2
         user_disk_size = disk_size - efi_disk_size - system_disk_size - swap_disk_size
 
         confirm_partitioning = parse_bool(ia_selection(
@@ -152,10 +152,10 @@ def disk_partitioning():
         existing_partition = parse_bool(ia_selection(
             question=f"\nDoes your disk already have a partitioning scheme that is suitable for StrawberryOS?\n"
                      f"A suitable partitioning scheme should look like this:\n"
-                     f"EFI disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}FAT32{CRESET})\n"
-                     f"Swap disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}Linux swap{CRESET})\n"
-                     f"System disk on {CYAN}{BOLD}/dev/lvmgroup/system{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n"
-                     f"User disk on {CYAN}{BOLD}/dev/lvmgroup/user{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n",
+                     f"   EFI disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}FAT32{CRESET})\n"
+                     f"   Swap disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}Linux swap{CRESET})\n"
+                     f"   System disk on {CYAN}{BOLD}/dev/lvmgroup/system{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n"
+                     f"   User disk on {CYAN}{BOLD}/dev/lvmgroup/user{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n",
             options=["Yes", "No"]
         ))
 
