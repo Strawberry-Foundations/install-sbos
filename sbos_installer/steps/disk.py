@@ -102,51 +102,67 @@ def disk_partitioning():
         swap_disk_size = 2
         user_disk_size = disk_size - efi_disk_size - system_disk_size - swap_disk_size
 
-        confirm_partitioning = parse_bool(ia_selection(
-            question=f"\nContinue with the following partitioning:\n"
-                     f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size}G\n"
-                     f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size}G\n"
-                     f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size.__round__()}G\n"
-                     f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size.__round__()}G",
-            options=["Yes", "No"]
+        print(f"\nPartition scheme for StrawberryOS\n"
+              f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size}G\n"
+              f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size}G\n"
+              f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size.__round__()}G\n"
+              f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size.__round__()}G"
+              )
+
+        modify_disk_setup = parse_bool(ia_selection(
+            question=f"\nModify partition scheme?",
+            options=["No", "Yes"],
         ))
 
-        if not confirm_partitioning:
-            disk_partitioning()
+        if modify_disk_setup:
+            modify_partition = ia_selection(
+                question=f"\nWhich partition do you want to modify?",
+                options=["EFI", "Swap", "System"],
+                flags=[f"({disk}{suffix}1)", f"({disk}{suffix}2)", "(/dev/strawberryos/system)"]
+            )
+        else:
+            continue_installation = parse_bool(ia_selection(
+                question=f"\nContinue installation? (Wipes all data on the selected disk)",
+                options=["Yes", "No"],
+            ))
 
-        wipe_disk = parse_bool(ia_selection(
-            question=f"\nErase your hard disk before continuing? [{disk}] (Required if data is still present)",
-            options=["Yes", "No"],
-            flags=[f"{GRAY}({YELLOW}{BOLD}ALL DATA WILL BE DELETED!{CRESET}{GRAY}){CRESET}", ""]
-        ))
+            if continue_installation:
+                wipe_disk = parse_bool(ia_selection(
+                    question=f"\nErase your hard disk before continuing? [{disk}] (Required if data is still present)",
+                    options=["Yes", "No"],
+                    flags=[f"{GRAY}({YELLOW}{BOLD}ALL DATA WILL BE DELETED!{CRESET}{GRAY}){CRESET}", ""]
+                ))
 
-        if wipe_disk:
-            runner = Runner(True)
-            runner.run(f"dd if=/dev/zero of={disk} bs=512 count=1")
+                if wipe_disk:
+                    runner = Runner(True)
+                    runner.run(f"dd if=/dev/zero of={disk} bs=512 count=1")
 
-        return {
-            "disk": {
-                "custom_partitioning": False,
-                disk: {
-                    "efi": {
-                        "block": f"{disk}{suffix}1",
-                        "size": efi_disk_size
-                    },
-                    "system": {
-                        "block": "/dev/strawberryos/system",
-                        "size": system_disk_size
-                    },
-                    "user": {
-                        "block": "/dev/strawberryos/user",
-                        "size": user_disk_size
-                    },
-                    "swap": {
-                        "block": f"{disk}{suffix}2",
-                        "size": swap_disk_size
+                return {
+                    "disk": {
+                        "custom_partitioning": False,
+                        disk: {
+                            "efi": {
+                                "block": f"{disk}{suffix}1",
+                                "size": efi_disk_size
+                            },
+                            "system": {
+                                "block": "/dev/strawberryos/system",
+                                "size": system_disk_size
+                            },
+                            "user": {
+                                "block": "/dev/strawberryos/user",
+                                "size": user_disk_size
+                            },
+                            "swap": {
+                                "block": f"{disk}{suffix}2",
+                                "size": swap_disk_size
+                            }
+                        }
                     }
-                }
-            }
-        }, disk
+                }, disk
+
+            else:
+                disk_partitioning()
 
     else:
         existing_partition = parse_bool(ia_selection(
