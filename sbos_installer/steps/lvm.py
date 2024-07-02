@@ -1,4 +1,4 @@
-from sbos_installer.core.process import Runner
+from sbos_installer.core.process import Runner, run
 from sbos_installer.utils.colors import *
 
 import time
@@ -8,6 +8,12 @@ def get_partition_suffix(device):
     if "nvme" in device or "mmcblk" in device:
         return "p"
     return ""
+
+
+def set_partition_type(device, partition_number, partition_type):
+    runner = Runner(True)
+    command = f"echo -e 't\\n{partition_number}\\n{partition_type}\\nw' | fdisk {device}"
+    runner.run(command)
 
 
 def configure_lvm(device):
@@ -20,6 +26,10 @@ def configure_lvm(device):
     runner.run(f"parted -s -a optimal {device} mkpart primary linux-swap 513MiB 2561MiB")
     runner.run(f"parted -s -a optimal {device} mkpart primary 2561MiB 100%")
 
+    set_partition_type(device, 1, 'c')
+    set_partition_type(device, 2, '82')
+    set_partition_type(device, 3, '8e')
+
     runner.run(f"sync")
     time.sleep(0.5)
 
@@ -28,7 +38,7 @@ def configure_lvm(device):
     runner.run(f"mkswap {device}{suffix}2")
 
     print(f"\n{GREEN}{BOLD}Creating LVM group ...{CRESET}")
-    runner.run(f"pvcreate {device}{suffix}3")
+    runner.run(f"pvcreate {device}{suffix}3 -ff -y ")
     runner.run(f"vgcreate strawberryos {device}{suffix}3")
     runner.run(f"lvcreate -L 10G -n system strawberryos")
     runner.run(f"lvcreate -l 100%FREE -n user strawberryos")
