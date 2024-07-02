@@ -59,6 +59,7 @@ def disk_partitioning():
 
         return {
             "disk": {
+                "custom_partitioning": False,
                 disk: {
                     "efi": {
                         "block": efi_disk,
@@ -108,6 +109,7 @@ def disk_partitioning():
 
         return {
             "disk": {
+                "custom_partitioning": True,
                 disk: {
                     "efi": {
                         "block": None,
@@ -145,6 +147,7 @@ def disk_partitioning():
 
             return {
                 "disk": {
+                    "custom_partitioning": True,
                     disk: {
                         "efi": {
                             "block": efi_disk,
