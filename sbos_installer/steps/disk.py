@@ -48,11 +48,6 @@ def get_block_device_size_in_gb(device_path):
 
 
 def disk_partitioning():
-    print(f"\n{GREEN}{BOLD} -- Disk partitioning --{CRESET}")
-    block, block_size, all_blocks = get_block_devices()
-
-    disk = ia_selection("Select the disk you want to use for Strawberry OS", options=block, flags=block_size)
-
     if DEV_FLAG_SKIP_DISK_INPUT:
         efi_disk = "/dev/sda1"
         system_disk = "/dev/strawberryos/system"
@@ -62,7 +57,7 @@ def disk_partitioning():
         return {
             "disk": {
                 "custom_partitioning": False,
-                disk: {
+                "/dev/sda": {
                     "efi": {
                         "block": efi_disk,
                         "size": get_block_device_size_in_gb(efi_disk)
@@ -81,15 +76,22 @@ def disk_partitioning():
                     }
                 }
             }
-        }, disk
+        }, "/dev/sda"
 
-    own_partitioning = ia_selection(
-        question=f"\nWould you like to create your own partitioning for {disk}?",
-        options=["No", "Yes"],
-        flags=["", "(Only for experts)"]
-    )
+    print(f"\n{GREEN}{BOLD} -- Disk partitioning --{CRESET}")
+    block, block_size, all_blocks = get_block_devices()
 
-    if not parse_bool(own_partitioning):
+    disk = ia_selection("Select the disk you want to use for Strawberry OS", options=block, flags=block_size)
+
+    guided_disk_setup = parse_bool(ia_selection(
+        question=f"\nUse guided LVM disk setup?",
+        options=["Yes", "No"],
+        flags=[f"({GREEN}Recommended{CRESET})", f"({YELLOW}Only for experts{CRESET})"]
+    ))
+
+    if guided_disk_setup:
+        suffix = get_partition_suffix(disk)
+
         disk_size = float(str(all_blocks[disk]["size"]).strip("G").replace(",", "."))
 
         efi_disk_size = 0.512
@@ -99,20 +101,18 @@ def disk_partitioning():
 
         confirm_partitioning = parse_bool(ia_selection(
             question=f"\nContinue with the following partitioning:\n"
-                     f"   {GREEN}{BOLD}EFI:{CRESET} {efi_disk_size}G\n"
-                     f"   {GREEN}{BOLD}System:{CRESET} {system_disk_size.__round__()}G\n"
-                     f"   {GREEN}{BOLD}User:{CRESET} {user_disk_size.__round__()}G\n"
-                     f"   {GREEN}{BOLD}Swap:{CRESET} {swap_disk_size}G",
+                     f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size}G\n"
+                     f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size}G"
+                     f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size.__round__()}G\n"
+                     f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size.__round__()}G\n",
             options=["Yes", "No"]
         ))
 
         if not confirm_partitioning:
             disk_partitioning()
 
-        suffix = get_partition_suffix(disk)
-
         wipe_disk = parse_bool(ia_selection(
-            question=f"\nWould you like to completely erase your hard disk first? [{disk}] (Required if data is still present)",
+            question=f"\nErase your hard disk before continuing? [{disk}] (Required if data is still present)",
             options=["Yes", "No"],
             flags=[f"{YELLOW}{BOLD}(ALL DATA WILL BE DELETED!){CRESET}", ""]
         ))
@@ -146,10 +146,10 @@ def disk_partitioning():
         }, disk
 
     else:
-        existing_partition = ia_selection(
-            question=f"\nDoes your hard disk already have a partitioning scheme that is suitable for StrawberryOS?",
+        existing_partition = parse_bool(ia_selection(
+            question=f"\nDoes your disk already have a partitioning scheme that is suitable for StrawberryOS?",
             options=["Yes", "No"]
-        )
+        ))
 
         if existing_partition:
             print("Please enter the following partitions with the correct block device to continue the partitioning.\n")
@@ -184,5 +184,5 @@ def disk_partitioning():
             }, disk
 
         else:
-            print("not supported")
+            print(f"{YELLOW}{BOLD}Custom disk setup for non-suitable disks is currently not supported.{CRESET}")
             disk_partitioning()
