@@ -6,6 +6,7 @@ from sbos_installer.utils.colors import *
 from sbos_installer.dev import *
 
 from sbos_installer.steps.disk import disk_partitioning
+from sbos_installer.steps.lvm import configure_lvm
 from sbos_installer.steps.hostname import setup_hostname
 from sbos_installer.steps.network import setup_network
 from sbos_installer.steps.locale import setup_timezone, configure_timezone_system
@@ -73,8 +74,15 @@ try:
 
     overview(install_data, disk)
 
-    run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
-    run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
+    if not disk_data["disk"]["custom_partitioning"]:
+        configure_lvm(disk)
+
+        run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
+        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
+
+    else:
+        run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
+        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
     if not DEV_FLAG_SKIP_BOOTSTRAP:
         bootstrap(packages)
