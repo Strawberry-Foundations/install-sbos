@@ -1,5 +1,6 @@
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
+from sbos_installer.cli.input import parse_size
 from sbos_installer.utils.colors import *
 from sbos_installer.dev import DEV_FLAG_SKIP_DISK_INPUT
 from sbos_installer.steps.lvm import get_partition_suffix
@@ -95,18 +96,19 @@ def disk_partitioning():
     if guided_disk_setup:
         suffix = get_partition_suffix(disk)
 
-        disk_size = float(str(all_blocks[disk]["size"]).strip("G").replace(",", "."))
+        disk_size_gb = float(str(all_blocks[disk]["size"]).strip("G").replace(",", "."))
+        disk_size_mb = int(disk_size_gb * 1024)
 
-        efi_disk_size = 0.512
-        system_disk_size = 10
-        swap_disk_size = 2
-        user_disk_size = disk_size - efi_disk_size - system_disk_size - swap_disk_size
+        efi_disk_size = 512
+        system_disk_size = 10240
+        swap_disk_size = 2048
+        user_disk_size = disk_size_mb - efi_disk_size - system_disk_size - swap_disk_size
 
         print(f"\nPartition scheme for StrawberryOS\n"
-              f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size}G\n"
-              f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size}G\n"
-              f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size.__round__()}G\n"
-              f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size.__round__()}G"
+              f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size / 1024}G ({efi_disk_size}M)\n"
+              f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size / 1024}G ({swap_disk_size}M)\n"
+              f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
+              f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"
               )
 
         modify_disk_setup = parse_bool(ia_selection(
@@ -115,11 +117,33 @@ def disk_partitioning():
         ))
 
         if modify_disk_setup:
-            modify_partition = ia_selection(
-                question=f"\nWhich partition do you want to modify?",
-                options=["EFI", "Swap", "System"],
-                flags=[f"({disk}{suffix}1)", f"({disk}{suffix}2)", "(/dev/strawberryos/system)"]
-            )
+            while True:
+                modify_partition = ia_selection(
+                    question=f"\nWhich partition do you want to modify?",
+                    options=["EFI", "Swap", "System", "Done"],
+                    flags=[f"({disk}{suffix}1)", f"({disk}{suffix}2)", "(/dev/strawberryos/system)"]
+                )
+
+                match modify_partition:
+                    case "EFI":
+                        while True:
+                            efi_size = parse_size(input(f"Input new EFI disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
+                            if efi_size:
+                                break
+                        print(f"EFI disk size is now {GREEN}{BOLD}{efi_size / 1024}G{CRESET} ({GREEN}{BOLD}{efi_size}M{CRESET})")
+
+                    case "Swap":
+                        while True:
+                            swap_size = parse_size(input(f"Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
+                            if swap_size:
+                                break
+                        print(f"Swap disk size is now {GREEN}{BOLD}{swap_size / 1024}G{CRESET} ({GREEN}{BOLD}{swap_size}M{CRESET})")
+
+                    case "System":
+                        print(f"{YELLOW}{BOLD}Currently not supported")
+                    case "Done":
+                        break
+
         else:
             continue_installation = parse_bool(ia_selection(
                 question=f"\nContinue installation? (Wipes all data on the selected disk)",
