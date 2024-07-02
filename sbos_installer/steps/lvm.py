@@ -5,9 +5,10 @@ import time
 
 
 def get_partition_suffix(device):
-    if "nvme" in device or "mmcblk" in device:
+    if any(device_type in device for device_type in ('nvme', 'mmcblk', 'nbd')):
         return "p"
-    return ""
+    else:
+        return ""
 
 
 def configure_lvm(device):
