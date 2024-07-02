@@ -292,3 +292,19 @@ def disk_partitioning():
         else:
             print(f"{YELLOW}{BOLD}Custom disk setup for non-suitable disks is currently not supported.{CRESET}")
             disk_partitioning()
+
+
+def configure_partitions(disk, disk_data):
+    disk_data = disk_data['disk'][disk]
+
+    efi_disk_size = disk_data["efi"]["size"] + 1
+    swap_disk_size = disk_data["swap"]["size"] + efi_disk_size
+
+    runner = Runner(True)
+
+    print(f"\n{GREEN}{BOLD}Creating partitions ...{CRESET}")
+    runner.run(f"parted -s {disk} mklabel gpt")
+    runner.run(f"parted -s -a optimal {disk} mkpart primary fat32 1MiB {efi_disk_size}MiB")
+    runner.run(f"parted -s -a optimal {disk} mkpart primary linux-swap {efi_disk_size}MiB {swap_disk_size}MiB")
+    runner.run(f"parted -s -a optimal {disk} mkpart primary {swap_disk_size}MiB 100%")
+    runner.run(f"sync")
