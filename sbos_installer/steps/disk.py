@@ -115,7 +115,7 @@ def disk_partitioning():
                 "custom_partitioning": True,
                 disk: {
                     "efi": {
-                        "block": f"/dev/{disk}{suffix}1",
+                        "block": f"{disk}{suffix}1",
                         "size": efi_disk_size
                     },
                     "system": {
@@ -127,7 +127,7 @@ def disk_partitioning():
                         "size": user_disk_size
                     },
                     "swap": {
-                        "block": f"/dev/{disk}{suffix}2",
+                        "block": f"{disk}{suffix}2",
                         "size": swap_disk_size
                     }
                 }
