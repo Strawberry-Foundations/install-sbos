@@ -155,9 +155,9 @@ def disk_partitioning():
             print("Please enter the following partitions with the correct block device to continue the partitioning\n")
 
             efi_disk = input(f"EFI disk (e.g. {CYAN}/dev/sda1{CRESET}): ")
-            system_disk = input(f"System disk (e.g. {CYAN}/dev/sda2{CRESET}): ")
-            user_disk = input(f"User disk (e.g. {CYAN}/dev/sda3{CRESET}): ")
-            swap_disk = input(f"Swap disk (e.g. {CYAN}/dev/sda4{CRESET}): ")
+            swap_disk = input(f"Swap disk (e.g. {CYAN}/dev/sda2{CRESET}): ")
+            system_disk = input(f"System disk (e.g. {CYAN}/dev/strawberryos/system{CRESET}): ")
+            user_disk = input(f"User disk (e.g. {CYAN}/dev/strawberryos/user{CRESET}): ")
 
             return {
                 "disk": {
