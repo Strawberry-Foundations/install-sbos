@@ -29,7 +29,7 @@ def setup_user():
     if new_user:
         uname = True
         while uname:
-            username = input("Enter username: ")
+            username = input(f"{CRESET}Enter username: ")
             if username.strip() == "":
                 print(f"{YELLOW}{BOLD}Username cannot be empty{CRESET}")
             else:
