@@ -3,6 +3,7 @@ from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
 from sbos_installer.dev import DEV_FLAG_SKIP_DISK_INPUT
 from sbos_installer.steps.lvm import get_partition_suffix
+from sbos_installer.core.process import Runner
 
 import subprocess
 import os
@@ -109,6 +110,16 @@ def disk_partitioning():
             disk_partitioning()
 
         suffix = get_partition_suffix(disk)
+
+        wipe_disk = parse_bool(ia_selection(
+            question=f"\nWould you like to completely erase your hard disk first? [{disk}] (Required if data is still present)",
+            options=["Yes", "No"],
+            flags=[f"{YELLOW}{BOLD}ALL DATA WILL BE DELETED!{CRESET}", ""]
+        ))
+
+        if wipe_disk:
+            runner = Runner(True)
+            runner.run(f"dd if=/dev/zero of={disk} bs=512 count=1")
 
         return {
             "disk": {
