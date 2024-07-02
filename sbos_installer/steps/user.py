@@ -53,7 +53,7 @@ def setup_user():
                 "root": root_password,
                 username: {
                     "password": password,
-                    "root_user": add_to_sudo
+                    "sudo_user": add_to_sudo
                 }
             }
         }
@@ -80,11 +80,15 @@ def configure_users(user_data: dict):
 
     if len(user_data["users"]) > 1:
         print(f"{BOLD}{GREEN}Configuring additional user ...{CRESET}")
+
         for username, password in user_data["users"].items():
             if username == "root":
                 continue
 
-            command = f'useradd -m -G sudo -s /bin/bash {username}'
+            if user_data["users"][username]["sudo_user"]:
+                command = f'useradd -m -G sudo -s /bin/bash {username}'
+            else:
+                command = f'useradd -m -s /bin/bash {username}'
 
             subprocess.run(
                 ['chroot', '/mnt', '/bin/bash', '-c', command],
