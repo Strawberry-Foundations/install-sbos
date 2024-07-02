@@ -26,8 +26,8 @@ if not check_root_permissions():
 print(f"{GREEN}{BOLD}Welcome to StrawberryOS Installer v{version}!\n{CRESET}Thanks for installing StrawberryOS on "
       f"your computer.\n")
 
-print(f"{YELLOW}{BOLD}Warning: The installer does not currently support BIOS/legacy systems.{CRESET}")
-print(f"{YELLOW}{BOLD}Warning: The installer does not currently support automatic disk partitioning.{CRESET}\n")
+print(f"{YELLOW}{BOLD}Warning: The installer does not support legacy BIOS systems.\n{CRESET}")
+# print(f"{YELLOW}{BOLD}Warning: The installer does not currently support automatic disk partitioning.{CRESET}\n")
 
 if DEV_FLAG_DEV_MODE:
     print(f"{YELLOW}{BOLD}Warning: Developer mode is enabled{CRESET}\n")
