@@ -97,7 +97,7 @@ def configure_users(user_data: dict):
                 capture_output=True
             )
 
-            command = f'echo "{username}:{user_data["users"]["password"][username]}" | chpasswd'
+            command = f'echo "{username}:{user_data["users"][username]["password"]}" | chpasswd'
 
             subprocess.run(
                 ['chroot', '/mnt', '/bin/bash', '-c', command],
