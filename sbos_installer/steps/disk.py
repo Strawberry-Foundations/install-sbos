@@ -105,9 +105,9 @@ def disk_partitioning():
         confirm_partitioning = parse_bool(ia_selection(
             question=f"\nContinue with the following partitioning:\n"
                      f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size}G\n"
-                     f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size}G"
+                     f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size}G\n"
                      f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size.__round__()}G\n"
-                     f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size.__round__()}G\n",
+                     f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size.__round__()}G",
             options=["Yes", "No"]
         ))
 
