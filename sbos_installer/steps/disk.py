@@ -90,18 +90,18 @@ def disk_partitioning():
         disk_size = float(str(all_blocks[disk]["size"]).strip("G").replace(",", "."))
 
         efi_disk_size = 0.512
-        system_disk_size = disk_size * 10 / 100
+        system_disk_size = 10
         swap_disk_size = 4
         user_disk_size = disk_size - efi_disk_size - system_disk_size - swap_disk_size
 
-        confirm_partitioning = ia_selection(
+        confirm_partitioning = parse_bool(ia_selection(
             question=f"\nContinue with the following partitioning:\n"
                      f"   {GREEN}{BOLD}EFI:{CRESET} {efi_disk_size}G\n"
                      f"   {GREEN}{BOLD}System:{CRESET} {system_disk_size.__round__()}G\n"
                      f"   {GREEN}{BOLD}User:{CRESET} {user_disk_size.__round__()}G\n"
                      f"   {GREEN}{BOLD}Swap:{CRESET} {swap_disk_size}G",
             options=["Yes", "No"]
-        )
+        ))
 
         if not confirm_partitioning:
             disk_partitioning()
