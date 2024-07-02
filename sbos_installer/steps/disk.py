@@ -112,7 +112,7 @@ def disk_partitioning():
 
         return {
             "disk": {
-                "custom_partitioning": True,
+                "custom_partitioning": False,
                 disk: {
                     "efi": {
                         "block": f"{disk}{suffix}1",
