@@ -152,7 +152,7 @@ def disk_partitioning():
         ))
 
         if existing_partition:
-            print("Please enter the following partitions with the correct block device to continue the partitioning.\n")
+            print("Please enter the following partitions with the correct block device to continue the partitioning\n")
 
             efi_disk = input(f"EFI disk (e.g. {CYAN}/dev/sda1{CRESET}): ")
             system_disk = input(f"System disk (e.g. {CYAN}/dev/sda2{CRESET}): ")
