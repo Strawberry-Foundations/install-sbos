@@ -152,39 +152,58 @@ def disk_partitioning():
                         print(f"{YELLOW}{BOLD}Currently not supported")
 
                     case "Done":
-                        return {
-                            "disk": {
-                                "custom_partitioning": False,
-                                disk: {
-                                    "efi": {
-                                        "block": f"{disk}{suffix}1",
-                                        "size": efi_disk_size
-                                    },
-                                    "system": {
-                                        "block": "/dev/strawberryos/system",
-                                        "size": system_disk_size
-                                    },
-                                    "user": {
-                                        "block": "/dev/strawberryos/user",
-                                        "size": user_disk_size
-                                    },
-                                    "swap": {
-                                        "block": f"{disk}{suffix}2",
-                                        "size": swap_disk_size
+                        continue_installation = parse_bool(ia_selection(
+                            question=f"\nContinue installation? (Deletes all data on the selected disk)",
+                            options=["Yes", "No"],
+                        ))
+
+                        if continue_installation:
+                            wipe_disk = parse_bool(ia_selection(
+                                question=f"\nCompletely erase your hard disk before continuing? [{disk}] (Required if data is still present)",
+                                options=["Yes", "No"],
+                                flags=[f"{GRAY}({YELLOW}{BOLD}ALL DATA WILL BE DELETED!{CRESET}{GRAY}){CRESET}", ""]
+                            ))
+
+                            if wipe_disk:
+                                runner = Runner(True)
+                                runner.run(f"dd if=/dev/zero of={disk} bs=512 count=1")
+
+                            return {
+                                "disk": {
+                                    "custom_partitioning": False,
+                                    disk: {
+                                        "efi": {
+                                            "block": f"{disk}{suffix}1",
+                                            "size": efi_disk_size
+                                        },
+                                        "system": {
+                                            "block": "/dev/strawberryos/system",
+                                            "size": system_disk_size
+                                        },
+                                        "user": {
+                                            "block": "/dev/strawberryos/user",
+                                            "size": user_disk_size
+                                        },
+                                        "swap": {
+                                            "block": f"{disk}{suffix}2",
+                                            "size": swap_disk_size
+                                        }
                                     }
                                 }
-                            }
-                        }, disk
+                            }, disk
+
+                        else:
+                            disk_partitioning()
 
         else:
             continue_installation = parse_bool(ia_selection(
-                question=f"\nContinue installation? (Wipes all data on the selected disk)",
+                question=f"\nContinue installation? (Deletes all data on the selected disk)",
                 options=["Yes", "No"],
             ))
 
             if continue_installation:
                 wipe_disk = parse_bool(ia_selection(
-                    question=f"\nErase your hard disk before continuing? [{disk}] (Required if data is still present)",
+                    question=f"\nCompletely erase your hard disk before continuing? [{disk}] (Required if data is still present)",
                     options=["Yes", "No"],
                     flags=[f"{GRAY}({YELLOW}{BOLD}ALL DATA WILL BE DELETED!{CRESET}{GRAY}){CRESET}", ""]
                 ))
