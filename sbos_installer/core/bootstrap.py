@@ -9,12 +9,7 @@ import sys
 
 
 def bootstrap(install_packages: list):
-    show_logs = parse_bool(ia_selection(
-        "The next step is to start the installation. Would you like to view the logs during the installation?",
-        options=["No", "Yes"]
-    ))
-
-    runner = Runner(show_logs)
+    runner = Runner(True)
 
     packages = ["base"]
     location = "/mnt"
