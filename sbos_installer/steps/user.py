@@ -50,7 +50,9 @@ def setup_user():
 
         user_setup = {
             "users": {
-                "root": root_password,
+                "root": {
+                    "password": root_password
+                },
                 username: {
                     "password": password,
                     "sudo_user": add_to_sudo
