@@ -9,8 +9,8 @@ def get_partition_suffix(device):
 
 
 def configure_lvm(device):
-    suffix = get_partition_suffix(device)
     runner = Runner(True)
+    suffix = get_partition_suffix(device)
 
     print(f"\n{GREEN}{BOLD}Creating partitions ...{CRESET}")
     runner.run(f"parted -s {device} mklabel gpt")
