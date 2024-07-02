@@ -149,7 +149,15 @@ def disk_partitioning():
                         continue
 
                     case "System":
-                        print(f"{YELLOW}{BOLD}Currently not supported")
+                        while True:
+                            _size = parse_size(
+                                input(f"Input new System disk ({CYAN}{BOLD}/dev/strawberryos/system{CRESET}) size: "))
+                            if _size:
+                                system_disk_size = _size
+                                break
+                        print(
+                            f"System disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})")
+                        continue
 
                     case "Done":
                         print(f"\nModified partition scheme for StrawberryOS\n"
