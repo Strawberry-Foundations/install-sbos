@@ -152,6 +152,13 @@ def disk_partitioning():
                         print(f"{YELLOW}{BOLD}Currently not supported")
 
                     case "Done":
+                        print(f"\nModified partition scheme for StrawberryOS\n"
+                              f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size / 1024}G ({efi_disk_size}M)\n"
+                              f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size / 1024}G ({swap_disk_size}M)\n"
+                              f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
+                              f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"
+                              )
+
                         continue_installation = parse_bool(ia_selection(
                             question=f"\nContinue installation? (Deletes all data on the selected disk)",
                             options=["Yes", "No"],
