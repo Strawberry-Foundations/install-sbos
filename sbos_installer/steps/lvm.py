@@ -19,8 +19,8 @@ def configure_lvm(device):
     runner.run(f"parted -s -a optimal {device} mkpart primary 2561MiB 100%")
 
     print(f"\n{GREEN}{BOLD}Formatting base partitions ...{CRESET}")
-    runner.run(f"mkfs.fat -F 32 /dev/{device}{suffix}1")
-    runner.run(f"mkswap /dev/{device}{suffix}2")
+    runner.run(f"mkfs.fat -F 32 {device}{suffix}1")
+    runner.run(f"mkswap {device}{suffix}2")
 
     print(f"\n{GREEN}{BOLD}Creating LVM group ...{CRESET}")
     runner.run(f"pvcreate {device}{suffix}3")
