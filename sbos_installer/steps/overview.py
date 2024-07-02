@@ -14,8 +14,14 @@ def overview(data, disk):
     print(f"{GRAY}{BOLD}* {CYAN}Network interface:{CRESET} {data['net_interface']}")
     print(f"{GRAY}{BOLD}* {CYAN}Timezone:{CRESET} {data['timezone']['region']}/{data['timezone']['city']}")
     print(f"{GRAY}{BOLD}* {CYAN}Users:{CRESET}")
+
     for user in data["users"]:
-        print(f"{GRAY}{BOLD}    * {CYAN}{user}{CRESET}")
+        suffix = ""
+        if user != "root":
+            if data["users"][f"{user}"]["sudo_user"]:
+                suffix = f"{CRESET}({YELLOW}sudo{CRESET})"
+        print(f"{GRAY}{BOLD}    * {CYAN}{user} {suffix}{CRESET}")
+
     print(f"{GRAY}{BOLD}* {CYAN}Disk:{CRESET} {disk}")
     print(f"{GRAY}{BOLD}    * {CYAN}EFI on {CYAN}{disk_data['efi']['block']}{CRESET}: "
           f"{disk_data['efi']['size'] / 1024}G ({disk_data['efi']['size']}M){CRESET}")
