@@ -86,7 +86,10 @@ def disk_partitioning():
     guided_disk_setup = parse_bool(ia_selection(
         question=f"\nUse guided LVM disk setup?",
         options=["Yes", "No"],
-        flags=[f"({GREEN}Recommended{CRESET})", f"({YELLOW}Only for experts{CRESET})"]
+        flags=[
+            f"{GRAY}({GREEN}Recommended{CRESET}{GRAY}){CRESET}",
+            f"{GRAY}({YELLOW}Only for experts{CRESET}{GRAY}){CRESET}"
+        ]
     ))
 
     if guided_disk_setup:
