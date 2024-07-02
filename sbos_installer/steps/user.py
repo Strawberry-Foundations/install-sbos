@@ -60,7 +60,9 @@ def setup_user():
     else:
         user_setup = {
             "users": {
-                "root": root_password,
+                "root": {
+                    "password": root_password
+                },
             }
         }
 
@@ -69,7 +71,7 @@ def setup_user():
 
 def configure_users(user_data: dict):
     print(f"{BOLD}{GREEN}Configuring root user ...{CRESET}")
-    command = f'echo "root:{user_data["users"]["root"]}" | chpasswd'
+    command = f'echo "root:{user_data["users"]["root"]["password"]}" | chpasswd'
 
     subprocess.run(
         ['chroot', '/mnt', '/bin/bash', '-c', command],
