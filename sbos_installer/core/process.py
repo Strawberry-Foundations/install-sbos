@@ -17,6 +17,10 @@ def check_root_permissions():
     return os.geteuid() == 0
 
 
+def check_uefi_capability():
+    return os.path.exists("/sys/firmware/efi/fw_platform_size")
+
+
 class Runner:
     def __init__(self, show_logs: bool):
         self.show_logs = show_logs
