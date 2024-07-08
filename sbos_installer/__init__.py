@@ -1,4 +1,4 @@
-from sbos_installer.core.process import run, check_root_permissions, Runner
+from sbos_installer.core.process import run, check_root_permissions, check_uefi_capability, Runner
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import ia_selection
@@ -22,7 +22,11 @@ import time
 version = "1.1.8"
 
 if not check_root_permissions():
-    print(f"{BOLD}{RED}Requires root permissions{CRESET}")
+    print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  Requires root permissions{CRESET}")
+    sys.exit(1)
+
+if not check_uefi_capability():
+    print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  The StrawberryOS Installer currently only supports UEFI-enabled computers{CRESET}")
     sys.exit(1)
 
 if DEV_FLAG_DEV_MODE:
@@ -32,7 +36,6 @@ print(f"""{GREEN}{BOLD}Welcome to the StrawberryOS Installer! (v{version})\n
 {CRESET}Thanks for installing StrawberryOS on your computer.
 The StrawberryOS Installer will guide you through the installation process.
 
-{YELLOW}{BOLD}! Please note that the installer does not support legacy BIOS systems !{CRESET}
 """)
 
 try:
