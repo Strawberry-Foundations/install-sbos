@@ -19,7 +19,7 @@ from sbos_installer.steps.general import configure_desktop
 import sys
 import time
 
-version = "1.1.7"
+version = "1.1.8"
 
 if not check_root_permissions():
     print(f"{BOLD}{RED}Requires root permissions{CRESET}")
