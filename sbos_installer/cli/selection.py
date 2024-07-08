@@ -1,11 +1,15 @@
+from itertools import zip_longest
+
 import atexit
 import termios
 import tty
 import sys
-from itertools import zip_longest
 
 
 class KeyGetter:
+    def __init__(self):
+        self.old_term = None
+
     def arm(self):
         self.old_term = termios.tcgetattr(sys.stdin)
         tty.setcbreak(sys.stdin)
