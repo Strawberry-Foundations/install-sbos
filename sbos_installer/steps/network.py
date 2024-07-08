@@ -30,7 +30,7 @@ def get_connected_interface():
 def check_internet_connection():
     """Check if the machine is connected to the internet."""
     try:
-        socket.create_connection(("strawberryfoundations.xyz", 80), timeout=5)
+        socket.create_connection(("strawberryfoundations.org", 80), timeout=5)
         return True
     except OSError:
         return False
