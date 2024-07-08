@@ -26,7 +26,7 @@ if not check_root_permissions():
     sys.exit(1)
 
 if not check_uefi_capability():
-    print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  The StrawberryOS Installer currently only supports UEFI-enabled computers{CRESET}")
+    print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  The StrawberryOS Installer currently only supports UEFI-capable computers{CRESET}")
     sys.exit(1)
 
 if DEV_FLAG_DEV_MODE:
