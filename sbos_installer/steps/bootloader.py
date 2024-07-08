@@ -1,5 +1,5 @@
-from sbos_installer.cli.selection import ia_selection
 from sbos_installer.core.process import Runner
+from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils import modify_file_entry
 from sbos_installer.utils.colors import *
 
