@@ -139,7 +139,7 @@ try:
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
 
-    print(f"\n -- {GREEN}{BOLD} StrawberryOS post installation completed --{CRESET}")
+    print(f"\n -- {GREEN}{BOLD} StrawberryOS post installation completed {CRESET}--")
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
