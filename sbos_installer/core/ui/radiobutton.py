@@ -11,6 +11,7 @@ class RadioButton:
         self.description = Padding(self.description_text, (0, 17))
         self.state = state
         self.group = group
+
         if group is not None:
             group.append(self)
 
@@ -22,7 +23,7 @@ class RadioButton:
 
     def build(self):
         marker = "(X)" if self.state else "( )"
-        return f"           {marker}   {self.label}\n\n                 ", self.description
+        return f"           {marker}   {self.label}\n", self.description
 
     def __str__(self):
         marker = "(X)" if self.state else "( )"
