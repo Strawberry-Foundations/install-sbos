@@ -8,6 +8,8 @@ from sbos_installer.dev import *
 
 from sbos_installer.core.ui.header import Header
 
+from sbos_installer.views.hostname import HostnameView
+
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
 from sbos_installer.steps.hostname import setup_hostname
@@ -72,7 +74,7 @@ try:
     * Additional steps (graphical user interface)
     """
 
-    hostname = setup_hostname()  # Setup hostname
+    hostname = HostnameView()  # Setup hostname
     net_stat = setup_network()  # Setup network
     region, city = setup_timezone()  # Setup timezone
     user_setup = setup_user()  # Setup user
