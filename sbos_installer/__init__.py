@@ -3,7 +3,10 @@ from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils.colors import *
+from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
+
+from sbos_installer.core.ui.header import Header
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
@@ -15,6 +18,9 @@ from sbos_installer.steps.package import setup_packages
 from sbos_installer.steps.overview import overview
 from sbos_installer.steps.bootloader import configure_bootloader
 from sbos_installer.steps.general import configure_desktop
+
+from rich.console import Console
+from rich.text import Text
 
 import sys
 import time
@@ -35,17 +41,24 @@ if not check_uefi_capability():
 if DEV_FLAG_DEV_MODE:
     print(f"{YELLOW}{BOLD}Warning: Developer mode is enabled{CRESET}")
 
-print(f"""{GREEN}{BOLD}Welcome to the StrawberryOS Installer! (v{version})\n
-{CRESET}Thanks for installing StrawberryOS on your computer.
-The StrawberryOS Installer will guide you through the installation process.
+clear_screen()
 
-""")
+Header("Welcome to the StrawberryOS Installer!")
+
+console = Console()
+
+console.print(f"""Thanks for installing StrawberryOS on your computer. 
+The StrawberryOS Installer will guide you through the installation process.""", justify="center")
+
 
 try:
     runner = Runner(True)
     location = "/mnt"
 
-    input("Press Enter to continue the installation ... \n")
+    console.print("\nPress Enter to continue the installation ...", justify="center")
+    console.show_cursor(False)
+    input("")
+    console.show_cursor(True)
 
     """
     -- Required Steps
