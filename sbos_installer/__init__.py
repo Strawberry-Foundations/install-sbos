@@ -8,6 +8,7 @@ from sbos_installer.dev import *
 
 from sbos_installer.core.ui.header import Header
 
+from sbos_installer.views.ostype import OSTypeView
 from sbos_installer.views.hostname import HostnameView
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
@@ -74,6 +75,7 @@ try:
     * Additional steps (graphical user interface)
     """
 
+    ostype = OSTypeView() # Choose which edition of StrawberryOS you want to install
     hostname = HostnameView()  # Setup hostname
     net_stat = setup_network()  # Setup network
     region, city = setup_timezone()  # Setup timezone
