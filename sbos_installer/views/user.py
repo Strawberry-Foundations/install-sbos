@@ -89,7 +89,7 @@ class UserView(Screen):
         _password_confirm = getpass(f"        Confirm password for {name}: ")
 
         if _password != _password_confirm:
-            self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Passwords does not match{CRESET}"), (0, 8)))
+            self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Passwords does not match{CRESET}\n"), (0, 8)))
             self.setup_password()
 
         return _password
