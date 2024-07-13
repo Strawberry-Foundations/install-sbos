@@ -35,7 +35,7 @@ class TimezoneView(Screen):
             _region_input = input(f"        Which region are you in? (? for list) [Europe]:  {GRAY}")
             print(CRESET)
             if _region_input == "?":
-                self.console.print(Padding(list_zoneinfo(path="/usr/share/zoneinfo"), (0, 8)))
+                self.console.print(Padding(Text.from_ansi(list_zoneinfo(path="/usr/share/zoneinfo")), (0, 8)))
                 continue
 
             elif _region_input.strip() == "":
@@ -68,7 +68,7 @@ class TimezoneView(Screen):
 
                     formatted_output = ' '.join(timezones)
 
-                    self.console.print(Padding(formatted_output), (0, 8))
+                    self.console.print(Padding(Text.from_ansi(formatted_output)), (0, 8))
                 except Exception as e:
                     self.console.print(Padding(
                         f"{YELLOW}{BOLD}Error occurred while listing timezones: {e}{CRESET}", (0, 8)
