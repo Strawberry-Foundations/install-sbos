@@ -1,4 +1,4 @@
-from sbos_installer.core.ui.select_button import ia_selection
+from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.utils.colors import *
