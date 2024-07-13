@@ -1,5 +1,3 @@
-import subprocess
-
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.core.ui.screen import Screen
@@ -13,6 +11,8 @@ from rich.padding import Padding
 from getpass import getpass
 
 import sys
+import subprocess
+import time
 
 
 class NetworkView(Screen):
@@ -88,8 +88,16 @@ class NetworkView(Screen):
                 self.console.print(Padding(Text.from_ansi(
                     f"{YELLOW}Unknown network interface{CRESET}"), (0, 8)
                 ))
+        else:
+            self.console.print(Padding(Text.from_ansi(
+                f"{YELLOW}{BOLD}No active network interface found. Setup cannot continue without a valid internet "
+                f"connection!{CRESET}"), (0, 8)
+            ))
+            sys.exit(1)
 
-        return ""
+        time.sleep(2)
+
+        return connected_interface
 
     def establish_wifi(self):
         self.console.print(Padding(Text.from_ansi(
