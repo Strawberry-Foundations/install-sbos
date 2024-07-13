@@ -30,10 +30,11 @@ class UserView(Screen):
         while True:
             root_password = self.setup_password()
             if root_password.strip() == "":
-                self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Password cannot be empty{CRESET}"), (0, 8)))
+                self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Password cannot be empty{CRESET}\n"), (0, 8)))
                 continue
             break
 
+        print()
         new_user = parse_bool(ia_selection("Do you want to create a new user?", options=["Yes", "No"], padding=8))
 
         if new_user:
@@ -41,7 +42,7 @@ class UserView(Screen):
             while _username:
                 username = input(f"        {CRESET}Enter username:  {GRAY}")
                 if username.strip() == "":
-                    self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Username cannot be empty{CRESET}"), (0, 8)))
+                    self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Username cannot be empty{CRESET}\n"), (0, 8)))
                 else:
                     _username = False
 
@@ -49,7 +50,7 @@ class UserView(Screen):
             while pw:
                 password = self.setup_password(name=username)
                 if password.strip() == "":
-                    self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Password cannot be empty{CRESET}"), (0, 8)))
+                    self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Password cannot be empty{CRESET}\n"), (0, 8)))
                 else:
                     pw = False
 
