@@ -9,13 +9,14 @@ class Screen:
     console = Console()
 
     def __init__(self, title, view):
+        self.val = None
         self.title = title
         self.view = view
 
         clear_screen()
         Header(self.title)
 
-        self.render()
+        self.val = self.render()
 
     def render(self):
-        self.view()
+        return self.view()
