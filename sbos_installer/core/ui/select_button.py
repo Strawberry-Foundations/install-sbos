@@ -78,7 +78,7 @@ def _draw_ia_selection(options: list, flags: list = None):
     __POINTED = f"       {BACK_WHITE}"
     __INDEX = 0
     __LENGTH = len(options)
-    __LENGTH_2 = len(options) + 6 + measure_text(options)
+    __LENGTH_2 = len(options) + (len(options) * 2) + measure_text(options)
     __ARROWS = __UP, _ = 65, 66
     __ENTER = 10
 
