@@ -17,7 +17,7 @@ class UserView(Screen):
 
     def render(self):
         self.console.print(Padding(
-            "User accounts are an important part of installing an operating system. "
+            "User accounts are an important part of the installation of the operating system. "
             "First enter a new root password, which is used for the root user.\n",
             (0, 8))
         )
