@@ -42,5 +42,4 @@ class OSTypeView(Screen):
             flags=["desktop", "desktop_sod", "server"]
         )
 
-        input()
-        return ""
+        return ostype_select
