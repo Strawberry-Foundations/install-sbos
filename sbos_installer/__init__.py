@@ -76,10 +76,10 @@ try:
     * Additional steps (graphical user interface)
     """
 
-    os_type = OSTypeView()  # Choose which edition of StrawberryOS you want to install
-    hostname = HostnameView()  # Setup hostname
-    net_stat = NetworkView()  # Setup network
-    region, city = TimezoneView()  # Setup timezone
+    os_type = OSTypeView().val  # Choose which edition of StrawberryOS you want to install
+    hostname = HostnameView().val  # Setup hostname
+    net_stat = NetworkView().val  # Setup network
+    region, city = TimezoneView().val  # Setup timezone
     user_setup = setup_user()  # Setup user
     disk_data, disk = disk_partitioning()  # Setup disk
     packages = setup_packages()  # Setup packages
