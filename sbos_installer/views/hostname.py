@@ -33,4 +33,6 @@ class HostnameView(Screen):
         if self.hostname.strip() == "":
             return "strawberryos"
 
+        print(CRESET)
+
         return self.hostname
