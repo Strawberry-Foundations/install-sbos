@@ -10,6 +10,7 @@ from sbos_installer.core.ui.header import Header
 
 from sbos_installer.views.ostype import OSTypeView
 from sbos_installer.views.hostname import HostnameView
+from sbos_installer.views.network import NetworkView
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
@@ -53,7 +54,6 @@ console = Console()
 console.print(f"""Thanks for installing StrawberryOS on your computer. 
 The StrawberryOS Installer will guide you through the installation process.""", justify="center")
 
-
 try:
     runner = Runner(True)
     location = "/mnt"
@@ -75,9 +75,9 @@ try:
     * Additional steps (graphical user interface)
     """
 
-    ostype = OSTypeView() # Choose which edition of StrawberryOS you want to install
+    os_type = OSTypeView()  # Choose which edition of StrawberryOS you want to install
     hostname = HostnameView()  # Setup hostname
-    net_stat = setup_network()  # Setup network
+    net_stat = NetworkView()  # Setup network
     region, city = setup_timezone()  # Setup timezone
     user_setup = setup_user()  # Setup user
     disk_data, disk = disk_partitioning()  # Setup disk
@@ -135,12 +135,14 @@ try:
 
     # Modify root's userspace PS1 variable
     with open("/mnt/user/data/root/.bashrc", "a") as _file:
-        _file.write(r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'")
+        _file.write(
+            r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'")
         _file.write("\n")
 
     # Modify root's systemspace PS1 variable
     with open("/mnt/root/.bashrc", "a") as _file:
-        _file.write(r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
+        _file.write(
+            r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
         _file.write("\n")
 
     with open("/mnt/etc/issue", 'w') as file:
