@@ -11,7 +11,6 @@ from itertools import zip_longest
 import sys
 
 
-
 def print_and_measure_text(text):
     console = Console()
     rich_text = Text.from_ansi(f"{GRAY}{text}{RESET}")
