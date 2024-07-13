@@ -63,39 +63,39 @@ def connect_to_wifi(ssid, password):
     except subprocess.CalledProcessError as e:
         print(f"{RED}{BOLD}Error connecting to {ssid}: {e}{CRESET}")
 
+def establish_wifi():
+    print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks ...")
+    wifi_networks, wifi_freqs = scan_wifi_networks()
+
+    if wifi_networks:
+        ssid = ia_selection(f"\nAvailable {CYAN}Wi-Fi{CRESET} networks", options=wifi_networks, flags=wifi_freqs)
+
+        if ssid == "+ Add Wi-Fi":
+            _input = True
+            while _input:
+                ssid = input("\nSSID: ")
+                if ssid.strip() == "":
+                    print(f"{YELLOW}{BOLD}SSID cannot be empty{CRESET}")
+                else:
+                    _input = False
+
+        show_password = parse_bool(ia_selection(
+            question=f"\nDo you want the Wi-Fi password to be shown?",
+            options=["No", "Yes"]
+        ))
+
+        if show_password:
+            password = input(f"\nPassword for {ssid}: ")
+        else:
+            password = getpass(f"\nPassword for {ssid}: ")
+
+        print(f"Connection to {CYAN}{ssid}{CRESET} is being established ...")
+        connect_to_wifi(ssid, password)
+
+    else:
+        print("No Wi-Fi networks found.")
 
 def setup_network():
-    def establish_wifi():
-        print(f"Connected via {CYAN}Wi-Fi{CRESET}. Search for available Wi-Fi networks ...")
-        wifi_networks, wifi_freqs = scan_wifi_networks()
-
-        if wifi_networks:
-            ssid = ia_selection(f"\nAvailable {CYAN}Wi-Fi{CRESET} networks", options=wifi_networks, flags=wifi_freqs)
-
-            if ssid == "+ Add Wi-Fi":
-                _input = True
-                while _input:
-                    ssid = input("\nSSID: ")
-                    if ssid.strip() == "":
-                        print(f"{YELLOW}{BOLD}SSID cannot be empty{CRESET}")
-                    else:
-                        _input = False
-
-            show_password = parse_bool(ia_selection(
-                question=f"\nDo you want the Wi-Fi password to be shown?",
-                options=["No", "Yes"]
-            ))
-
-            if show_password:
-                password = input(f"\nPassword for {ssid}: ")
-            else:
-                password = getpass(f"\nPassword for {ssid}: ")
-
-            print(f"Connection to {CYAN}{ssid}{CRESET} is being established ...")
-            connect_to_wifi(ssid, password)
-
-        else:
-            print("No Wi-Fi networks found.")
     print(f"\n{GREEN}{BOLD} -- Setup network --{CRESET}")
 
     interfaces = get_network_interfaces()
