@@ -42,7 +42,7 @@ class UserView(Screen):
             _username = True
             while _username:
                 username = input(f"        {CRESET}Enter username:  {GRAY}")
-                print(CRESET)
+                print(CRESET, end="")
                 if username.strip() == "":
                     self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Username cannot be empty{CRESET}"), (0, 8)))
                     print()
