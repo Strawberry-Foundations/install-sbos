@@ -1,7 +1,7 @@
 from sbos_installer.core.process import run, check_root_permissions, check_uefi_capability, Runner
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
-from sbos_installer.cli.selection import ia_selection
+from sbos_installer.core.ui.select_button import SelectButton, ia_selection
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
@@ -26,7 +26,6 @@ from sbos_installer.steps.bootloader import configure_bootloader
 from sbos_installer.steps.general import configure_desktop
 
 from rich.console import Console
-from rich.text import Text
 
 import sys
 import time
@@ -53,17 +52,51 @@ Header("Welcome to the StrawberryOS Installer!")
 
 console = Console()
 
-console.print(f"""Thanks for installing StrawberryOS on your computer. 
-The StrawberryOS Installer will guide you through the installation process.""", justify="center")
+console.print(
+    f"Thanks for choosing StrawberryOS!\n"
+    f"The StrawberryOS Installer will guide you through the installation process.\n",
+    justify="center"
+)
 
 try:
     runner = Runner(True)
     location = "/mnt"
 
-    console.print("\nPress Enter to continue the installation ...", justify="center")
     console.show_cursor(False)
-    input("")
+
+    group = []
+
+    SelectButton(
+        label=f"(->) Start installation",
+        description="Start with the installation of StrawberryOS",
+        group=group
+    )
+
+    SelectButton(
+        label=f"(>_) Open a console",
+        description="Open a console if you need to make changes beforehand. "
+                    "You can start the installer again using 'setup-strawberryos'",
+        group=group
+    )
+
+    setup = ia_selection(
+        question="",
+        options=group,
+        flags=["start", "console"]
+    )
+
     console.show_cursor(True)
+
+    if setup == "console":
+        clear_screen()
+
+        try:
+            with open("/etc/motd", 'r') as file:
+                print(file.read())
+        except:
+            pass
+
+        sys.exit(0)
 
     """
     -- Required Steps
