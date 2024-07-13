@@ -26,12 +26,12 @@ class KeyGetter:
         return ch
 
 
-def ia_selection(question: str, options: list = None, flags: list = None) -> str:
-    print(question)
-    return _draw_ia_selection(options, flags)
+def ia_selection(question: str, options: list = None, flags: list = None, padding: int = 0) -> str:
+    print(" " * padding + question)
+    return _draw_ia_selection(options, flags, padding)
 
 
-def _draw_ia_selection(options: list, flags: list = None):
+def _draw_ia_selection(options: list, flags: list = None, padding: int = 0):
     __UNPOINTED = " "
     __POINTED = ">"
     __INDEX = 0
@@ -45,9 +45,9 @@ def _draw_ia_selection(options: list, flags: list = None):
     def _choices_print():
         for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
             if i == __INDEX:
-                print(f" {__POINTED} {{0}}{option} {flag}{{1}}".format('\033[94m', '\033[0m'))
+                print(" " * padding + f" {__POINTED} {{0}}{option} {flag}{{1}}".format('\033[94m', '\033[0m'))
             else:
-                print(f" {__UNPOINTED} {option} {flag}")
+                print(" " * padding + f" {__UNPOINTED} {option} {flag}")
 
     def _choices_clear():
         print(f"\033[{__LENGTH}A\033[J", end='')
