@@ -79,10 +79,16 @@ try:
         group=group
     )
 
+    SelectButton(
+        label=f"(?) About StrawberryOS Installer",
+        description="Learn more about the new StrawberryOS Installer (NucleusV2)",
+        group=group
+    )
+
     setup = ia_selection(
         question="",
         options=group,
-        flags=["start", "console"]
+        flags=["start", "console", "about"]
     )
 
     console.show_cursor(True)
