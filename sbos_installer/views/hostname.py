@@ -19,7 +19,7 @@ class HostnameView(Screen):
             (0, 17))
         )
 
-        self.hostname = input(f"        Hostname:  ")
+        self.hostname = input(f"        Hostname:  {GRAY}")
 
     def render(self):
         self.console.print(Padding(
