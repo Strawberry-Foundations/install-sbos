@@ -88,12 +88,12 @@ def _draw_ia_selection(options: list, flags: list = None):
     def _choices_print():
         for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
             if i == __INDEX:
-                print(f" {__POINTED}{GRAY}{option.label}{CRESET}\n")
+                print(f" {__POINTED}{BLACK}[ {option.label} ]{CRESET}\n")
                 _len = print_and_measure_text(option.raw_description_text)
                 print()
 
             else:
-                print(f" {__UNPOINTED} {option.label}{CRESET}\n")
+                print(f" {__UNPOINTED} [ {option.label} ]{CRESET}\n")
                 _len = print_and_measure_text(option.raw_description_text)
                 print()
 
