@@ -24,7 +24,7 @@ class HostnameView(Screen):
     def render(self):
         self.console.print(Padding(
             "Enter the hostname for your new system.\n"
-            "The host name can consist of numbers, upper and lower case letters.\n",
+            "The hostname can consist of numbers, upper and lower case letters.\n",
             (0, 8))
         )
 
