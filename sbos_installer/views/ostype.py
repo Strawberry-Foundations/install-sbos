@@ -13,6 +13,7 @@ class OSTypeView(Screen):
 
     def render(self):
         self.console.print("StrawberryOS has different editions to choose from\n", justify="center")
+        self.console.show_cursor(False)
 
         group = []
 
@@ -41,5 +42,7 @@ class OSTypeView(Screen):
             options=group,
             flags=["desktop", "desktop_sod", "server"]
         )
+
+        self.console.show_cursor(True)
 
         return ostype_select
