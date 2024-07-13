@@ -80,11 +80,9 @@ class UserView(Screen):
                 }
             }
 
-        return user_setup
-
         print(CRESET)
 
-        return ""
+        return user_setup
 
     def setup_password(self, name="root"):
         _password = getpass(f"        Password for {name}: ")
