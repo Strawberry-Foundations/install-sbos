@@ -95,7 +95,7 @@ class NetworkView(Screen):
             ))
             sys.exit(1)
 
-        time.sleep(1.5)
+        time.sleep(1)
 
         return connected_interface
 
