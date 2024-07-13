@@ -42,7 +42,6 @@ class UserView(Screen):
             _username = True
             while _username:
                 username = input(f"        {CRESET}Enter username:  {GRAY}")
-                print(CRESET, end="")
                 if username.strip() == "":
                     self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Username cannot be empty{CRESET}"), (0, 8)))
                     print()
@@ -90,7 +89,7 @@ class UserView(Screen):
         return user_setup
 
     def setup_password(self, name="root"):
-        _password = getpass(f"        Password for {name}: ")
+        _password = getpass(f"{CRESET}        Password for {name}: ")
         _password_confirm = getpass(f"        Confirm password for {name}: ")
 
         if _password != _password_confirm:
