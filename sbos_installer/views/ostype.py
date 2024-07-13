@@ -1,4 +1,4 @@
-from sbos_installer.core.ui.radiobutton import RadioButton
+from sbos_installer.core.ui.select_button import SelectButton, ia_selection
 from sbos_installer.core.ui.screen import Screen
 
 from rich import print as rprint
@@ -16,35 +16,31 @@ class OSTypeView(Screen):
 
         group = []
 
-        btn_desktop = RadioButton(
+        SelectButton(
             label="StrawberryOS Desktop",
-            description="The standard version of StrawberryOS - With all the necessary tools from us"
-            "and a selection of desktops",
-            state=True,
+            description="The standard version of StrawberryOS - With all the necessary tools "
+                        "from us and a selection of desktops",
             group=group
         )
 
-        btn_desktop_sod = RadioButton(
+        SelectButton(
             label="StrawberryOS Desktop with Open Directory",
-            description="StrawberryOS with configured Open Directory. Useful for schools, workplaces,"
-            "and also the one or other private use",
-            state=False,
+            description="StrawberryOS with configured Open Directory. Useful for schools, workplaces, and "
+            "also the one or other private use",
             group=group
         )
 
-        btn_server = RadioButton(
+        SelectButton(
             label="StrawberryOS Server",
             description="A minimal environment of StrawberryOS without a desktop. Includes additional server utilities",
-            state=False,
             group=group
         )
 
-
-        for button in group:
-            btn, description = button.build()
-            rprint(btn)
-            rprint(description)
-            rprint(" " * 90)
+        ostype_select = ia_selection(
+            question="",
+            options=group,
+            flags=["desktop", "desktop_sod", "server"]
+        )
 
         input()
         return ""
