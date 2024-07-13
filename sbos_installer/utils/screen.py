@@ -26,3 +26,19 @@ def text_centered(text, bg_color):
 
     output = bg_color + ' ' * padding_left + f"{RESET}{WHITE}{BOLD}{text}{RESET}" + ' ' * padding_right + CRESET
     return output
+
+
+def set_cursor_position(row, col):
+    print(f"\033[{row};{col}H", end='')
+
+
+def set_background_color(row, col, length, color):
+    print(f"\033[{row};{col}H", end='')
+    print(f"\033[48;5;{color}m{' ' * length}\033[0m", end='')
+
+
+def input_with_background(row, col, length, bg_color, fg_color=0):
+    set_background_color(row, col, length, bg_color)
+    set_cursor_position(row, col)
+    text = input()
+    return text
