@@ -16,8 +16,8 @@ class HostnameView(Screen):
     def input(self):
         self.console.print(Padding(
             Text.from_ansi(f"{YELLOW}[!] {GRAY}'{GREEN}strawberryos{GRAY}' is automatically used if no input is made\n{CRESET}"),
-            (0, 17))
-        )
+            (0, 17)
+        ))
 
         self.hostname = input(f"        Hostname:  {GRAY}")
 
