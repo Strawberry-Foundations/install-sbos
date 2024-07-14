@@ -6,6 +6,7 @@ from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
+from sbos_installer.var import Vars
 
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
@@ -40,6 +41,7 @@ import sys
 import time
 
 console = Console()
+v = Vars()
 
 if not check_root_permissions():
     ErrorView(error_message="The Installer requires root permissions to continue.")
@@ -136,26 +138,26 @@ try:
     """
 
     # General installation config steps
-    os_type = OSTypeView().val  # Choose which edition of StrawberryOS you want to install
-    hostname = HostnameView().val  # Setup hostname
-    net_stat = NetworkView().val  # Setup network
-    region, city = TimezoneView().val  # Setup timezone
-    user_setup = UserView().val  # Setup user
-    disk_data, disk = DiskView().val  # Setup disk
-    packages = PackageView().val  # Setup packages
+    v.os_type = OSTypeView().val  # Choose which edition of StrawberryOS you want to install
+    v.hostname = HostnameView().val  # Setup hostname
+    v.net_stat = NetworkView().val  # Setup network
+    v.region, v.city = TimezoneView().val  # Setup timezone
+    v.user_setup = UserView().val  # Setup user
+    v.disk_data, disk = DiskView().val  # Setup disk
+    v.packages = PackageView().val  # Setup packages
 
     install_data = {
-        "hostname": hostname,
-        "net_interface": net_stat,
+        "hostname": v.hostname,
+        "net_interface": v.net_stat,
         "timezone": {
-            "region": region,
-            "city": city
+            "region": v.region,
+            "city": v.city
         },
-        "packages": packages
+        "packages": v.packages
     }
 
-    install_data.update(user_setup)
-    install_data.update(disk_data)
+    install_data.update(v.user_setup)
+    install_data.update(v.disk_data)
 
     # Show overview of installation config
     OverviewScreenView(install_data, disk)
@@ -164,7 +166,7 @@ try:
     Header("Creating disk partitions ...")
 
     # Create disk partitions and mount disk
-    if not disk_data["disk"]["custom_partitioning"]:
+    if not v.disk_data["disk"]["custom_partitioning"]:
         configure_partitions(disk, install_data)
         time.sleep(0.5)
         configure_lvm(disk, install_data)
@@ -180,7 +182,7 @@ try:
         clear_screen()
         Header("Installing base system ...")
 
-        bootstrap(packages)
+        bootstrap(v.packages)
         run("setfont")
     if not DEV_FLAG_SKIP_INITRAMFS:
         clear_screen()
@@ -201,12 +203,13 @@ try:
     if not DEV_FLAG_SKIP_POST_SETUP:
         clear_screen()
         Header("Configuring timezone ...")
-        configure_timezone_system(region, city)  # Configure timezone
+        configure_timezone_system(v.region, v.city)  # Configure timezone
         clear_screen()
         Header("Configuring users ...")
-        configure_users(user_setup)  # Configure users
+        configure_users(v.user_setup)  # Configure users
         BootloaderView(disk)  # Install & configure bootloader
-        DesktopView()  # Install desktop
+        if not v.os_type == "server":
+            DesktopView()  # Install desktop
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
     run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} /mnt/user")
