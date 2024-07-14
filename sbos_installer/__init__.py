@@ -85,11 +85,18 @@ try:
             group=group
         )
 
-        selection = ia_selection(
-            question="",
-            options=group,
-            flags=["start", "console", "about"]
-        )
+        try:
+            selection = ia_selection(
+                question="",
+                options=group,
+                flags=["start", "console", "about"]
+            )
+        except KeyboardInterrupt:
+            console.clear()
+            console.print(Text.from_ansi(
+                f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
+            ), justify="center")
+            console.show_cursor(True)
 
         console.show_cursor(True)
 
@@ -211,7 +218,7 @@ try:
 
 except KeyboardInterrupt:
     console.clear()
-    self.console.print(Text.from_ansi(
+    console.print(Text.from_ansi(
         f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
     ), justify="center")
     console.show_cursor(True)
