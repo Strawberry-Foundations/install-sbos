@@ -72,7 +72,6 @@ def setup_user():
 
 
 def configure_users(user_data: dict):
-    print(f"{BOLD}{GREEN}Configuring root user ...{CRESET}")
     command = f'echo "root:{user_data["users"]["root"]["password"]}" | chpasswd'
 
     subprocess.run(
@@ -83,7 +82,6 @@ def configure_users(user_data: dict):
     )
 
     if len(user_data["users"]) > 1:
-        print(f"{BOLD}{GREEN}Configuring additional user ...{CRESET}")
 
         for username, password in user_data["users"].items():
             if username == "root":
