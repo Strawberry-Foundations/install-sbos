@@ -17,7 +17,7 @@ class BootloaderView(Screen):
     def render(self):
         self.console.print(Padding(
             "The bootloader is important for starting the operating system.\n"
-            "Please select one of our available bootloaders\n",
+            "Please select one of our available bootloaders",
             (0, 8))
         )
 
