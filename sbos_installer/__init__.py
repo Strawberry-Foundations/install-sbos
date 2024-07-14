@@ -5,6 +5,7 @@ from sbos_installer.core.ui.select_button import SelectButton, ia_selection
 from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
+from sbos_installer.var import version
 from sbos_installer.dev import *
 
 from sbos_installer.views.about import AboutView
@@ -32,8 +33,6 @@ from rich.console import Console
 
 import sys
 import time
-
-version = "2.0.0"
 
 if not check_root_permissions():
     print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  Requires root permissions{CRESET}")
