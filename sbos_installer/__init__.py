@@ -47,63 +47,71 @@ if not check_uefi_capability():
 if DEV_FLAG_DEV_MODE:
     print(f"{YELLOW}{BOLD}Warning: Developer mode is enabled{CRESET}")
 
-clear_screen()
-
-Header("Welcome to the StrawberryOS Installer!")
-
-console = Console()
-
-console.print(
-    f"Thanks for choosing StrawberryOS!\n"
-    f"The StrawberryOS Installer will guide you through the installation process.\n",
-    justify="center"
-)
-
 try:
     runner = Runner(True)
     location = "/mnt"
 
-    console.show_cursor(False)
-
-    group = []
-
-    SelectButton(
-        label=f"(->) Start installation",
-        description="Start with the installation of StrawberryOS",
-        group=group
-    )
-
-    SelectButton(
-        label=f"(>_) Open a console",
-        description="Open a console if you need to make changes beforehand. "
-                    "You can start the installer again using 'setup-strawberryos'",
-        group=group
-    )
-
-    SelectButton(
-        label=f"(?) About StrawberryOS Installer",
-        description="Learn more about the new StrawberryOS Installer (NucleusV2)",
-        group=group
-    )
-
-    setup = ia_selection(
-        question="",
-        options=group,
-        flags=["start", "console", "about"]
-    )
-
-    console.show_cursor(True)
-
-    if setup == "console":
+    def _selection():
         clear_screen()
 
-        try:
-            with open("/etc/motd", 'r') as file:
-                print(file.read())
-        except:
-            pass
+        Header("Welcome to the StrawberryOS Installer!")
 
-        sys.exit(0)
+        console = Console()
+        console.show_cursor(False)
+
+        console.print(
+            f"Thanks for choosing StrawberryOS!\n"
+            f"The StrawberryOS Installer will guide you through the installation process.\n",
+            justify="center"
+        )
+
+        group = []
+
+        SelectButton(
+            label=f"(->) Start installation",
+            description="Start with the installation of StrawberryOS",
+            group=group
+        )
+
+        SelectButton(
+            label=f"(>_) Open a console",
+            description="Open a console if you need to make changes beforehand. "
+                        "You can start the installer again using 'setup-strawberryos'",
+            group=group
+        )
+
+        SelectButton(
+            label=f"(?) About StrawberryOS Installer",
+            description="Learn more about the new StrawberryOS Installer (NucleusV2)",
+            group=group
+        )
+
+        selection = ia_selection(
+            question="",
+            options=group,
+            flags=["start", "console", "about"]
+        )
+
+        console.show_cursor(True)
+
+        match selection:
+            case "console":
+                clear_screen()
+
+                try:
+                    with open("/etc/motd", 'r') as _file:
+                        print(_file.read())
+                except:
+                    pass
+
+                sys.exit(0)
+
+            case "about":
+                AboutView()
+                clear_screen()
+                _selection()
+
+    _selection()
 
     """
     -- Required Steps
