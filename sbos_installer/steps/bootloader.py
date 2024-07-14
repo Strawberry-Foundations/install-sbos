@@ -12,12 +12,12 @@ def configure_bootloader(disk: str):
     )
 
     if selection == "systemd-boot":
-        _configure_systemd_boot()
+        configure_systemd_boot()
     else:
-        _configure_grub(disk)
+        configure_grub(disk)
 
 
-def _configure_grub(disk: str):
+def configure_grub(disk: str):
     runner = Runner(True)
 
     modify_file_entry("/mnt/etc/default/grub", 'GRUB_CMDLINE_LINUX=""', 'GRUB_CMDLINE_LINUX="overlay=yes"')
@@ -31,7 +31,7 @@ def _configure_grub(disk: str):
     modify_file_entry("/mnt/boot/grub/grub.cfg", 'GNU/Linux', '(Chocolate Crisps)')
 
 
-def _configure_systemd_boot():
+def configure_systemd_boot():
     runner = Runner(True)
 
     print(f"{BOLD}{GREEN}Installing systemd-boot ...{CRESET}")
