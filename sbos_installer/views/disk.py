@@ -1,10 +1,11 @@
-from sbos_installer import DEV_FLAG_SKIP_DISK_INPUT, Runner
+from sbos_installer.core.ui.screen import Screen
+from sbos_installer.core.process import Runner
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
-from sbos_installer.core.ui.screen import Screen
 from sbos_installer.steps.disk import get_block_device_size_in_gb, get_block_devices
 from sbos_installer.steps.lvm import get_partition_suffix
 from sbos_installer.utils.colors import *
+from sbos_installer.dev import DEV_FLAG_SKIP_DISK_INPUT
 
 from rich.text import Text
 from rich.padding import Padding
