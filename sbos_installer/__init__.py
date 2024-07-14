@@ -180,6 +180,7 @@ try:
         Header("Installing base system ...")
 
         bootstrap(packages)
+        run("setfont")
     if not DEV_FLAG_SKIP_INITRAMFS:
         clear_screen()
         Header("Installing & configuring Initramfs ...")
