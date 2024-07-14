@@ -13,6 +13,7 @@ def run(command):
         return f"Command '{command}' failed with error:\n{e.stderr}"
 
 
+
 def check_root_permissions():
     return os.geteuid() == 0
 
