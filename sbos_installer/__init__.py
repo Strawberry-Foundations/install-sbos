@@ -13,6 +13,7 @@ from sbos_installer.views.hostname import HostnameView
 from sbos_installer.views.network import NetworkView
 from sbos_installer.views.timezone import TimezoneView
 from sbos_installer.views.user import UserView
+from sbos_installer.views.disk import DiskView
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
@@ -121,7 +122,7 @@ try:
     net_stat = NetworkView().val  # Setup network
     region, city = TimezoneView().val  # Setup timezone
     user_setup = UserView().val  # Setup user
-    disk_data, disk = disk_partitioning()  # Setup disk
+    disk_data, disk = DiskView().val  # Setup disk
     packages = setup_packages()  # Setup packages
 
     install_data = {
