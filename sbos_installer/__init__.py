@@ -18,6 +18,7 @@ from sbos_installer.views.user import UserView
 from sbos_installer.views.disk import DiskView
 from sbos_installer.views.package import PackageView
 from sbos_installer.views.overview import OverviewScreenView
+from sbos_installer.views.bootloader import BootloaderView
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
@@ -132,6 +133,7 @@ try:
     * Additional steps (graphical user interface)
     """
 
+    # General installation config steps
     os_type = OSTypeView().val  # Choose which edition of StrawberryOS you want to install
     hostname = HostnameView().val  # Setup hostname
     net_stat = NetworkView().val  # Setup network
@@ -153,6 +155,7 @@ try:
     install_data.update(user_setup)
     install_data.update(disk_data)
 
+    # Show overview of installation config
     OverviewScreenView(install_data, disk)
 
     clear_screen()
@@ -199,7 +202,7 @@ try:
         clear_screen()
         Header("Configuring users ...")
         configure_users(user_setup)  # Configure users
-        configure_bootloader(disk)  # Install & configure bootloader
+        BootloaderView(disk)  # Install & configure bootloader
         configure_desktop()  # Install desktop
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
