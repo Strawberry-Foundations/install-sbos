@@ -1,5 +1,5 @@
-from sbos_installer.var import version
 from sbos_installer.core.ui.screen import Screen
+from sbos_installer.var import version
 from sbos_installer.utils.colors import *
 
 from rich.text import Text
