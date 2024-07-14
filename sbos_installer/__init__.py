@@ -155,6 +155,10 @@ try:
 
     OverviewScreenView(install_data, disk)
 
+    clear_screen()
+    Header("Creating disk partitions ...")
+
+    # Create disk partitions and mount disk
     if not disk_data["disk"]["custom_partitioning"]:
         configure_partitions(disk, install_data)
         time.sleep(0.5)
@@ -168,19 +172,32 @@ try:
         run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
 
     if not DEV_FLAG_SKIP_BOOTSTRAP:
+        clear_screen()
+        Header("Installing base system ...")
+
         bootstrap(packages)
     if not DEV_FLAG_SKIP_INITRAMFS:
+        clear_screen()
+        Header("Installing & configuring Initramfs ...")
+
         setup_initramfs(install_data['disk'][disk]['user']['block'])
 
-    print(f"\n -- {GREEN}{BOLD} StrawberryOS base installation completed --{CRESET}")
-    print(f"{CYAN}{BOLD} Starting post-installation ... {CRESET}\n")
+    print(f"{GREEN}Finished.{CRESET}")
+    time.sleep(0.85)
+
+    clear_screen()
+    Header(" ")
 
     runner.run(f"mount --bind /dev {location}/dev")
     runner.run(f"mount --bind /sys {location}/sys")
     runner.run(f"mount --bind /proc {location}/proc")
 
     if not DEV_FLAG_SKIP_POST_SETUP:
+        clear_screen()
+        Header("Configuring timezone ...")
         configure_timezone_system(region, city)  # Configure timezone
+        clear_screen()
+        Header("Configuring users ...")
         configure_users(user_setup)  # Configure users
         configure_bootloader(disk)  # Install & configure bootloader
         configure_desktop()  # Install desktop
