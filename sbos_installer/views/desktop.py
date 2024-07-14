@@ -15,7 +15,7 @@ class DesktopView(Screen):
 
     def render(self):
         self.console.print(Padding(
-            "A graphical desktop can be installed.\nThis is useful if you want to use this computer as a desktop.",
+            "A graphical desktop can be installed.\nThis is useful if you want to use this computer as a desktop.\n",
             (0, 8))
         )
 
