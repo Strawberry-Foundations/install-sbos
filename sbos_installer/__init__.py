@@ -107,7 +107,7 @@ try:
 
                 try:
                     with open("/etc/motd", 'r') as _file:
-                        print(_file.read())
+                        print(_file.read(), end="")
                 except:
                     pass
 
