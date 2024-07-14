@@ -10,8 +10,6 @@ def setup_initramfs(data_block_device):
     location = "/mnt"
     binder = f"bwrap --bind {location} / --dev /dev --bind /sys /sys --bind /proc /proc --bind /tmp /tmp"
 
-    print(f"\n{CYAN}{BOLD}Starting StrawberryOS Initramfs configuration ...{CRESET}")
-
     print(f"\n{GREEN}{BOLD}Downloading initramfs tools ...{CRESET}")
     runner.run("wget https://github.com/Strawberry-Foundations/sbos-scripts/archive/refs/heads/main.tar.gz")
 
