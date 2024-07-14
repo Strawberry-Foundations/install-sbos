@@ -3,7 +3,6 @@ from sbos_installer.core.ui.screen import Screen
 from sbos_installer.utils.colors import *
 
 from rich.text import Text
-from rich.padding import Padding
 
 
 class AboutView(Screen):
