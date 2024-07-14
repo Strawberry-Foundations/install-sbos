@@ -42,7 +42,7 @@ if not check_uefi_capability():
     ErrorView(error_message="The StrawberryOS Installer currently only supports UEFI-capable computers")
 
 if DEV_FLAG_DEV_MODE:
-    WarningView("Developer mode is enabled\nSome functions could possibly be skipped. Only use this if you are sure.")
+    WarningView("Developer mode is enabled!\nSome functions could possibly be skipped. Only use this if you are sure!")
 
 try:
     runner = Runner(True)
