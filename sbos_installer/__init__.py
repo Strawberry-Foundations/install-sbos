@@ -31,6 +31,7 @@ from sbos_installer.steps.bootloader import configure_bootloader
 from sbos_installer.steps.general import configure_desktop
 
 from rich.console import Console
+from rich.text import Text
 
 import sys
 import time
@@ -209,5 +210,6 @@ try:
     print(f"\n -- {GREEN}{BOLD} StrawberryOS post installation completed {CRESET}--")
 
 except KeyboardInterrupt:
-    print(f"\n{YELLOW}Exited installation process{CRESET}")
+    console.clear()
+    console.print(Text.from_ansi(f"{YELLOW}{BOLD}Exited installation process{CRESET}"), justify="center")
     console.show_cursor(True)
