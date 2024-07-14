@@ -20,6 +20,7 @@ from sbos_installer.views.package import PackageView
 from sbos_installer.views.overview import OverviewScreenView
 from sbos_installer.views.bootloader import BootloaderView
 from sbos_installer.views.desktop import DesktopView
+from sbos_installer.views.finished import FinishView
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
@@ -237,7 +238,11 @@ try:
     runner.run(f"umount {location}/sys")
     runner.run(f"umount {location}/proc")
 
-    print(f"\n -- {GREEN}{BOLD} StrawberryOS post installation completed {CRESET}--")
+    runner.run(f"umount {location}/boot/efi")
+    runner.run(f"umount {location}/user")
+    runner.run(f"umount {location}")
+
+    FinishView()
 
 except KeyboardInterrupt:
     console.clear()
