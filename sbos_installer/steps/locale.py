@@ -87,5 +87,4 @@ def configure_timezone_system(region: str, city: str):
     location = "/mnt"
     runner = Runner(False)
 
-    print(f"{BOLD}{GREEN}Configuring timezone ...{CRESET}")
     runner.run(f"chroot {location} ln -sf /usr/share/zoneinfo/{region}/{city} /etc/localtime")
