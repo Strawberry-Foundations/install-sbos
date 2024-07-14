@@ -8,6 +8,8 @@ from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
 
 from sbos_installer.views.about import AboutView
+from sbos_installer.views.error import ErrorView
+from sbos_installer.views.warning import WarningView
 from sbos_installer.views.ostype import OSTypeView
 from sbos_installer.views.hostname import HostnameView
 from sbos_installer.views.network import NetworkView
@@ -34,18 +36,13 @@ import sys
 import time
 
 if not check_root_permissions():
-    print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  Requires root permissions{CRESET}")
-    sys.exit(1)
+    ErrorView(error_message="The Installer requires root permissions to continue.")
 
 if not check_uefi_capability():
-    print(
-        f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  The StrawberryOS Installer currently only supports "
-        f"UEFI-capable computers{CRESET}"
-    )
-    sys.exit(1)
+    ErrorView(error_message="The StrawberryOS Installer currently only supports UEFI-capable computers")
 
 if DEV_FLAG_DEV_MODE:
-    print(f"{YELLOW}{BOLD}Warning: Developer mode is enabled{CRESET}")
+    WarningView("Developer mode is enabled\nSome functions could possibly be skipped. Only use this if you are sure.")
 
 try:
     runner = Runner(True)
