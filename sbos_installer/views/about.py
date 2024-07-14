@@ -4,6 +4,8 @@ from sbos_installer.utils.colors import *
 
 from rich.text import Text
 
+import sys
+
 
 class AboutView(Screen):
     title = "About StrawberryOS Installer"
@@ -27,8 +29,9 @@ class AboutView(Screen):
             input()
         except KeyboardInterrupt:
             self.console.clear()
-            print(f"\n{YELLOW}Exited installation process{CRESET}")
+            self.console.print(Text.from_ansi(f"{YELLOW}{BOLD}Exited installation process{CRESET}"), justify="center")
             self.console.show_cursor(True)
+            sys.exit(1)
 
         print(CRESET)
         self.console.show_cursor(True)
