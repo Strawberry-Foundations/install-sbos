@@ -17,10 +17,11 @@ class AboutView(Screen):
         self.console.print(Text.from_ansi(
             f"StrawberryOS Installer v{version} (Nucleus)\n\n"
             "The StrawberryOS Installer is an easy to use installer \n"
-            "that allows you to install StrawberryOS according to your preferences. "
+            "that allows you to install StrawberryOS according to your preferences.\n\n"
+            f"{LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}"
         ), justify="center")
 
-        self.console.print(Text.from_ansi(f"\nPress Enter to return"), justify="center")
+        self.console.print("\nPress Enter to return", justify="center")
         input()
 
         print(CRESET)
