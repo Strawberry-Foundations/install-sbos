@@ -22,7 +22,7 @@ class FinishView(Screen):
         self.console.print(Padding(Text.from_ansi(
             f"The installation was completed successfully.\n"
             f"You can now restart your system or open a shell to make further configurations"
-        )))
+        ), (0, 8)))
 
         self.console.show_cursor(False)
 
