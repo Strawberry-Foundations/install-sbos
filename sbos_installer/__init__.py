@@ -35,6 +35,8 @@ from rich.console import Console
 import sys
 import time
 
+console = Console()
+
 if not check_root_permissions():
     ErrorView(error_message="The Installer requires root permissions to continue.")
 
@@ -53,7 +55,6 @@ try:
 
         Header("Welcome to the StrawberryOS Installer!")
 
-        console = Console()
         console.show_cursor(False)
 
         console.print(
@@ -209,3 +210,4 @@ try:
 
 except KeyboardInterrupt:
     print(f"\n{YELLOW}Exited installation process{CRESET}")
+    console.show_cursor(True)
