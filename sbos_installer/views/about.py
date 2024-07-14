@@ -22,7 +22,13 @@ class AboutView(Screen):
         ), justify="center")
 
         self.console.print("\nPress Enter to return", justify="center")
-        input()
+
+        try:
+            input()
+        except KeyboardInterrupt:
+            self.console.clear()
+            print(f"\n{YELLOW}Exited installation process{CRESET}")
+            self.console.show_cursor(True)
 
         print(CRESET)
         self.console.show_cursor(True)
