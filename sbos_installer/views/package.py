@@ -34,9 +34,10 @@ class PackageView(Screen):
             _packages = None
             _flag = True
             while _flag:
-                self.console.print(Padding(f"Available packages: {' '.join(package_list)}", (0, 8)))
+                self.console.print(Padding(Text.from_ansi(f"\nAvailable packages: {GRAY}{' '.join(package_list)}{CRESET}"), (0, 8)))
 
-                _packages = input("        Provide additional packages [init,base]:  ").split(",")
+                _packages = input(f"        Provide additional packages [init,base]:  {GRAY}").split(",")
+                print(CRESET, end="")
 
                 for package in _packages:
                     if package == '':
