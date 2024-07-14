@@ -8,6 +8,7 @@ from sbos_installer.dev import *
 
 from sbos_installer.core.ui.header import Header
 
+from sbos_installer.views.about import AboutView
 from sbos_installer.views.ostype import OSTypeView
 from sbos_installer.views.hostname import HostnameView
 from sbos_installer.views.network import NetworkView
@@ -33,7 +34,7 @@ from rich.console import Console
 import sys
 import time
 
-version = "1.1.9"
+version = "2.0.0"
 
 if not check_root_permissions():
     print(f"{BOLD}{BACK_RED}  ERROR  {BACK_RESET}  Requires root permissions{CRESET}")
