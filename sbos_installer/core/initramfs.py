@@ -1,18 +1,11 @@
 from sbos_installer.core.process import Runner
-from sbos_installer.cli.selection import ia_selection
-from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
 
 import os
 
 
 def setup_initramfs(data_block_device):
-    show_logs = parse_bool(ia_selection(
-        "The next step is to configure the initramfs. Would you like to view the logs during the installation?",
-        options=["No", "Yes"]
-    ))
-
-    runner = Runner(show_logs)
+    runner = Runner(True)
 
     location = "/mnt"
     binder = f"bwrap --bind {location} / --dev /dev --bind /sys /sys --bind /proc /proc --bind /tmp /tmp"
