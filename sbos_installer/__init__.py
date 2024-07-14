@@ -2,11 +2,10 @@ from sbos_installer.core.process import run, check_root_permissions, check_uefi_
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.core.ui.select_button import SelectButton, ia_selection
+from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
-
-from sbos_installer.core.ui.header import Header
 
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.ostype import OSTypeView
