@@ -19,5 +19,8 @@ class AboutView(Screen):
             ""
         ), justify="center")
 
+        self.console.print(Text.from_ansi(f"Press Enter to return"), justify="center")
+        input()
+
         print(CRESET)
         return None
