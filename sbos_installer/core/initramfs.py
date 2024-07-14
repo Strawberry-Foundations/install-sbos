@@ -31,6 +31,8 @@ def setup_initramfs(data_block_device):
     runner.run(f"mv sbos-scripts-main/overlay-hook {location}/etc/initramfs-tools/hooks/overlay")
     runner.run(f"mv sbos-scripts-main/overlay-init {location}/etc/initramfs-tools/scripts/init-bottom/overlay")
 
+    runner.run(f"cp sbos-scripts-main/bash_completion/* {location}/usr/share/bash-completion/completions/")
+
     runner.run(f"chmod a+x {location}/etc/initramfs-tools/hooks/overlay")
     runner.run(f"chmod a+x {location}/etc/initramfs-tools/scripts/init-bottom/overlay")
     runner.run(f"chmod 775 {location}/etc/initramfs-tools/hooks/overlay")
