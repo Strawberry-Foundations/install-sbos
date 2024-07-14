@@ -36,7 +36,7 @@ class FinishView(Screen):
 
         SelectButton(
             label=f"(>_) Open a console",
-            description="Open a console if you need to make changes to your new system."
+            description="Open a console if you need to make changes to your new system. "
                         "You can restart your computer by using the 'reboot' command",
             group=group
         )
