@@ -19,6 +19,7 @@ from sbos_installer.views.disk import DiskView
 from sbos_installer.views.package import PackageView
 from sbos_installer.views.overview import OverviewScreenView
 from sbos_installer.views.bootloader import BootloaderView
+from sbos_installer.views.desktop import DesktopView
 
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
@@ -203,7 +204,7 @@ try:
         Header("Configuring users ...")
         configure_users(user_setup)  # Configure users
         BootloaderView(disk)  # Install & configure bootloader
-        configure_desktop()  # Install desktop
+        DesktopView()  # Install desktop
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
     run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} /mnt/user")
