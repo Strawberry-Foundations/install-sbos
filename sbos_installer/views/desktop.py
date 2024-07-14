@@ -9,9 +9,7 @@ from rich.padding import Padding
 class DesktopView(Screen):
     title = "Additional post-install steps"
 
-    def __init__(self, disk):
-        self.disk = disk
-
+    def __init__(self):
         view = self.render
         super().__init__(title=self.title, view=view)
 
