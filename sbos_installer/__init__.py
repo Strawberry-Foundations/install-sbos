@@ -211,5 +211,7 @@ try:
 
 except KeyboardInterrupt:
     console.clear()
-    console.print(Text.from_ansi(f"{YELLOW}{BOLD}Exited installation process{CRESET}"), justify="center")
+    self.console.print(Text.from_ansi(
+        f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
+    ), justify="center")
     console.show_cursor(True)
