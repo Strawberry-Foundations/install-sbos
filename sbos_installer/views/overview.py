@@ -4,6 +4,7 @@ from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils.colors import *
 
 from rich.padding import Padding
+from rich.text import Text
 
 import sys
 
@@ -26,28 +27,52 @@ class OverviewScreenView(Screen):
 
         disk_data = self.data['disk'][self.disk]
 
-        print(f"{GRAY}{BOLD}* {CYAN}Hostname:{CRESET} {self.data['hostname']}")
-        print(f"{GRAY}{BOLD}* {CYAN}Network interface:{CRESET} {self.data['net_interface']}")
-        print(f"{GRAY}{BOLD}* {CYAN}Timezone:{CRESET} {self.data['timezone']['region']}/{self.data['timezone']['city']}")
-        print(f"{GRAY}{BOLD}* {CYAN}Users:{CRESET}")
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}* {CYAN}Hostname:{CRESET} {self.data['hostname']}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}* {CYAN}Network interface:{CRESET} {self.data['net_interface']}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}* {CYAN}Timezone:{CRESET} {self.data['timezone']['region']}/{self.data['timezone']['city']}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}* {CYAN}Users:{CRESET}"
+        ), (0, 8)))
 
         for user in self.data["users"]:
             suffix = ""
             if user != "root":
                 if self.data["users"][f"{user}"]["sudo_user"]:
                     suffix = f"{CRESET}({YELLOW}sudo{CRESET})"
-            print(f"{GRAY}{BOLD}    * {CYAN}{user} {suffix}{CRESET}")
+            self.console.print(Padding(Text.from_ansi(
+                f"{GRAY}{BOLD}    * {CYAN}{user} {suffix}{CRESET}"
+            ), (0, 8)))
 
-        print(f"{GRAY}{BOLD}* {CYAN}Disk:{CRESET} {self.disk}")
-        print(f"{GRAY}{BOLD}    * {CYAN}EFI on {CYAN}{disk_data['efi']['block']}{CRESET}: "
-              f"{disk_data['efi']['size'] / 1024}G ({disk_data['efi']['size']}M){CRESET}")
-        print(f"{GRAY}{BOLD}    * {CYAN}Swap on {CYAN}{disk_data['swap']['block']}{CRESET}: "
-              f"{disk_data['swap']['size'] / 1024}G ({disk_data['swap']['size']}M){CRESET}")
-        print(f"{GRAY}{BOLD}    * {CYAN}System on {CYAN}{disk_data['system']['block']}{CRESET}: "
-              f"{disk_data['system']['size'] / 1024}G ({disk_data['system']['size']}M){CRESET}")
-        print(f"{GRAY}{BOLD}    * {CYAN}User on {CYAN}{disk_data['user']['block']}{CRESET}: "
-              f"{disk_data['user']['size'] / 1024}G ({disk_data['user']['size']}M){CRESET}")
-        print(f"{GRAY}{BOLD}* {CYAN}Packages:{CRESET} {', '.join(self.data['packages'])}")
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}* {CYAN}Disk:{CRESET} {self.disk}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}    * {CYAN}EFI on {CYAN}{disk_data['efi']['block']}{CRESET}: "
+            f"{disk_data['efi']['size'] / 1024}G ({disk_data['efi']['size']}M){CRESET}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}    * {CYAN}Swap on {CYAN}{disk_data['swap']['block']}{CRESET}: "
+            f"{disk_data['swap']['size'] / 1024}G ({disk_data['swap']['size']}M){CRESET}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}    * {CYAN}System on {CYAN}{disk_data['system']['block']}{CRESET}: "
+            f"{disk_data['system']['size'] / 1024}G ({disk_data['system']['size']}M){CRESET}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}    * {CYAN}User on {CYAN}{disk_data['user']['block']}{CRESET}: "
+            f"{disk_data['user']['size'] / 1024}G ({disk_data['user']['size']}M){CRESET}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}* {CYAN}Packages:{CRESET} {', '.join(self.data['packages'])}"
+        ), (0, 8)))
+
+        print()
 
         confirm = parse_bool(ia_selection(
             question="Do you want to continue the installation?",
