@@ -20,3 +20,8 @@ class Screen:
 
     def render(self):
         return self.view()
+
+    def redraw(self):
+        self.console.clear()
+        Header(self.title)
+        self.val = self.render()
