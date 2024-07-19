@@ -16,11 +16,11 @@ class UserView(Screen):
         super().__init__(title=self.title, view=view)
 
     def render(self):
-        self.console.print(Padding(
+        self.console.print(Padding(Text.from_ansi(
             "User accounts are an important part of the installation of the operating system. "
-            "First enter a new root password, which is used for the root user.\n",
-            (0, 8))
-        )
+            "First enter a new root password, which is used for the root user.\n\n"
+            f"{YELLOW}[!]{GRAY} The password is not displayed for security reasons\n\n"
+        ), (0, 8)))
 
         root_password = None
 
