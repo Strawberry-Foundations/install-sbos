@@ -1,4 +1,5 @@
 from sbos_installer.core.ui.screen import Screen
+from sbos_installer.views.warning import WarningView
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
@@ -30,6 +31,9 @@ class UserView(Screen):
         while True:
             root_password = self.setup_password()
             if root_password.strip() == "":
+                WarningView("Password cannot be empty")
+                self.redraw()
+
                 self.console.print(Padding(Text.from_ansi(f"{YELLOW}{BOLD}Password cannot be empty{CRESET}"), (0, 8)))
                 print()
                 continue
