@@ -17,7 +17,15 @@ class TimezoneView(Screen):
 
     def render(self):
         self.console.print(Padding(
-            "To display the time correctly, you must specify the time zone in which you are located.\n",
+            Text.from_ansi(
+                "To display the time correctly, you must specify the time zone in which you are located.\n"
+                f"You can enter '{CYAN}?{RESET}' if you want to display the available time zones.\n\n"
+            ), (0, 8)
+        ))
+
+        self.console.print(Padding(
+            Text.from_ansi(
+                f"{YELLOW}[!] {GRAY}'{GREEN}Europe/Berlin{GRAY}' is automatically used if no input is made\n{CRESET}"),
             (0, 8)
         ))
 
@@ -32,7 +40,7 @@ class TimezoneView(Screen):
         region_input = "Europe"
 
         while True:
-            _region_input = input(f"        Which region are you in? (? for list) [Europe]:  {GRAY}")
+            _region_input = input(f"        Which region are you in?:  {GRAY}")
             print(CRESET)
             if _region_input == "?":
                 self.console.print(Padding(Text.from_ansi(list_zoneinfo(path="/usr/share/zoneinfo")), (0, 8)))
@@ -57,7 +65,7 @@ class TimezoneView(Screen):
         city_input = "Berlin"
 
         while True:
-            _city_input = input(f"        Which city are you in? (? for list) [Berlin]:  {GRAY}")
+            _city_input = input(f"        Which city are you in?:  {GRAY}")
             print(CRESET)
             if _city_input == "?":
                 try:
