@@ -52,4 +52,5 @@ class ErrorView:
 
         print(CRESET)
         self.console.show_cursor(True)
+        self.console.clear()
         sys.exit(1)
