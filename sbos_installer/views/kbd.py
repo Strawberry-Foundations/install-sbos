@@ -18,6 +18,18 @@ class KeyboardLayout(Screen):
         self.console.print("Please select your keyboard layout\n", justify="center")
         self.console.show_cursor(False)
 
+        self.console.print(
+            Text.from_ansi(
+                f"{GREEN}? {LIGHT_GRAY}Can't see your layout? Open an issue on our GitHub with your requested layout "
+                f"and we'll add it!\n"
+            ),
+            justify="center"
+        )
+
+        self.console.print(Text.from_ansi(
+            f"URL: {LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}\n\n",
+        ), justify="center")
+
         runner = Runner(True)
 
         group = []
@@ -49,7 +61,8 @@ class KeyboardLayout(Screen):
             self.console.print(Padding(
                 Text.from_ansi(
                     f"{YELLOW}[!] {GRAY}The entry of a non-existent keyboard layout is ignored and the default "
-                    f"layout is automatically used{CRESET}\n\n"),
+                    f"layout is automatically used{CRESET}\n\n"
+                ),
                 (0, 8)
             ))
             while True:
