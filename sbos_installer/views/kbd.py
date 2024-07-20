@@ -15,20 +15,18 @@ class KeyboardLayout(Screen):
 
         group = []
 
-        SingleSelectButton(
-            label=f"Deutsch (German)",
-            group=group
-        )
+        layouts = {
+            "Deutsch (German)": "de-latin1",
+            "British English (English)": "uk",
+            "American English (English)": "us",
+            "Netherlands (Dutch)": "nl",
+        }
 
-        SingleSelectButton(
-            label=f"English (English)",
-            group=group
-        )
-
-        SingleSelectButton(
-            label=f"Netherlands (Dutch)",
-            group=group
-        )
+        for lang, kbd in layouts.items():
+            SingleSelectButton(
+                label=lang,
+                group=group
+            )
 
         kbd_layout = ia_selection(
             question="",
