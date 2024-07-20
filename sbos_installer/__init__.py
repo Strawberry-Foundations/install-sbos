@@ -11,6 +11,7 @@ from sbos_installer.var import Vars
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
 from sbos_installer.views.warning import WarningView
+from sbos_installer.views.kbd import KeyboardLayout
 from sbos_installer.views.ostype import OSTypeView
 from sbos_installer.views.hostname import HostnameView
 from sbos_installer.views.network import NetworkView
@@ -136,6 +137,8 @@ try:
     * Bootloader
     * Additional steps (graphical user interface)
     """
+
+    KeyboardLayout()
 
     # General installation config steps
     v.os_type = OSTypeView().val  # Choose which edition of StrawberryOS you want to install
