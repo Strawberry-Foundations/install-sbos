@@ -71,8 +71,8 @@ def ia_selection(question: str, options: list = None, flags: list = None) -> str
 
 
 def _draw_ia_selection(options: list, flags: list = None):
-    __UNPOINTED = "      "
-    __POINTED = f"       {BACK_WHITE}"
+    __UNPOINTED = "                                         "
+    __POINTED = f"                                          {BACK_WHITE}"
     __INDEX = 0
     __LENGTH = len(options)
     __ARROWS = __UP, _ = 65, 66
@@ -81,13 +81,20 @@ def _draw_ia_selection(options: list, flags: list = None):
     if flags is None:
         flags = []
 
+    def spaces(length: int):
+        return " " * length
+
     def _choices_print():
         for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
             if i == __INDEX:
-                print(f" {__POINTED}{BLACK}[ {option.label} ]{CRESET}\n")
+                len_label = len(option.label)
+                remaining = 33 - len_label
+                print(f" {__POINTED}{BLACK}[ {option.label}{spaces(remaining)}]{CRESET}")
 
             else:
-                print(f" {__UNPOINTED} [ {option.label} ]{CRESET}\n")
+                len_label = len(option.label)
+                remaining = 33 - len_label
+                print(f" {__UNPOINTED} [ {option.label}{spaces(remaining)}]{CRESET}")
 
     def _choices_clear():
         nonlocal __LENGTH
