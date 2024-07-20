@@ -1,6 +1,7 @@
 from sbos_installer.core.ui.single_select_button import SingleSelectButton, ia_selection
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.process import Runner
+from sbos_installer.core.locales import kbd_layouts
 from sbos_installer.utils.colors import *
 
 from rich.padding import Padding
@@ -34,15 +35,7 @@ class KeyboardLayout(Screen):
 
         group = []
 
-        layouts = {
-            "Deutsch (German)": "de-latin1",
-            "British English (English)": "uk",
-            "American English (English)": "us",
-            "Netherlands (Dutch)": "nl",
-            "-> Manual input": "own_layout",
-        }
-
-        for lang, kbd in layouts.items():
+        for lang, kbd in kbd_layouts.items():
             SingleSelectButton(
                 label=lang,
                 group=group
@@ -51,7 +44,7 @@ class KeyboardLayout(Screen):
         kbd_layout = ia_selection(
             question="",
             options=group,
-            flags=list(layouts.values())
+            flags=list(kbd_layouts.values())
         )
 
         self.console.show_cursor(True)
