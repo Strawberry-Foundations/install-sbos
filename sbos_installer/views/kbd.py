@@ -31,11 +31,8 @@ class KeyboardLayout(Screen):
         kbd_layout = ia_selection(
             question="",
             options=group,
-            flags=[layouts.keys()]
+            flags=[layouts.values()]
         )
-        print(kbd_layout)
-        import time
-        time.sleep(23985623785)
 
         self.console.show_cursor(True)
 
