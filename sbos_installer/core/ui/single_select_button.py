@@ -1,4 +1,5 @@
 from sbos_installer.utils.colors import *
+from sbos_installer.utils.screen import get_terminal_width
 from sbos_installer.cli.selection import KeyGetter
 
 from rich.padding import Padding
@@ -71,8 +72,12 @@ def ia_selection(question: str, options: list = None, flags: list = None) -> str
 
 
 def _draw_ia_selection(options: list, flags: list = None):
-    __UNPOINTED = "                                         "
-    __POINTED = f"                                          {BACK_WHITE}"
+    width = get_terminal_width()
+    text_length = len("                                    ")
+    padding_left = (width - text_length) // 2
+
+    __UNPOINTED = " " * (padding_left - 2)
+    __POINTED = " " * (padding_left - 1) + f"{BACK_WHITE}"
     __INDEX = 0
     __LENGTH = len(options)
     __ARROWS = __UP, _ = 65, 66
