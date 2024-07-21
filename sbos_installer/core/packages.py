@@ -8,12 +8,17 @@ base_package_list = {
     "base": "zstd grub-efi kbd locales locales-all bash-completion sudo lvm2",
     "base-dev": "git gcc make g++ build-essential linux-headers-amd64",
     "utils": "neofetch htop btop",
-    "python3": "python3 python3-dev python3-pip python-is-python3"
+    "python3": "python3 python3-dev python3-pip python-is-python3",
+    "firmware-linux-free": "firmware-linux-free",
+    "firmware-linux-non-free": "firmware-linux-non-free firmware-misc-non-free"
 }
 
 
 package_list = {
     "Development Utilities": "base-dev",
-    "Utilities": "utils",
-    "Python Runtime": "python3"
+    "General Utilities": "utils",
+    "Python Runtime": "python3",
+    "Open Source Firmware": "firmware-linux-free",
+    "Proprietary Firmware": "firmware-linux-non-free",
+
 }
