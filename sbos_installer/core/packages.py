@@ -13,5 +13,7 @@ base_package_list = {
 
 
 package_list = {
-    "Development Utilities": "base-dev"
+    "Development Utilities": "base-dev",
+    "Utilities": "utils",
+    "Python Runtime": "python3"
 }
