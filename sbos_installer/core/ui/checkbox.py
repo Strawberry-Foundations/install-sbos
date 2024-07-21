@@ -109,8 +109,7 @@ def _draw_ia_selection(options: list, flags: list = None):
             if key == __ENTER:
                 _choices_clear()
                 _choices_print()
-                print(__SELECTS)
                 break
 
     _main_loop()
-    return flags[__INDEX]
+    return __SELECTS
