@@ -25,6 +25,12 @@ class PackageView(Screen):
             justify="center"
         )
 
+        self.console.print(
+            Text.from_ansi(
+                f"{YELLOW}[!] {GRAY}Use SPACE to select a package, ENTER to continue{CRESET}\n\n"
+            ), justify="center"
+        )
+
         groups = []
         flags = []
 
