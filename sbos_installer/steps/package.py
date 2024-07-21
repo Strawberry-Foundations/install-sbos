@@ -1,4 +1,4 @@
-from sbos_installer.core.packages import package_list
+from sbos_installer.core.packages import base_package_list
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.utils.colors import *
@@ -17,14 +17,14 @@ def setup_packages():
         _packages = None
         _flag = True
         while _flag:
-            print(f"Available packages: {' '.join(package_list)}")
+            print(f"Available packages: {' '.join(base_package_list)}")
 
             _packages = input("Provide additional packages [init,base]: ").split(",")
 
             for package in _packages:
                 if package == '':
                     _flag = False
-                if package not in package_list:
+                if package not in base_package_list:
                     print(f"{YELLOW}{BOLD}Package '{package}' is not available{CRESET}")
                 else:
                     _flag = False
