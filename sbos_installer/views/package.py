@@ -19,34 +19,27 @@ class PackageView(Screen):
 
     def render(self):
         self.packages = ["base"]
-        self.console.print(Padding(
+        self.console.print(
             "When installing StrawberryOS, you can choose whether you want to install additional packages. \n"
             "These can be utilities, but also development packages\n",
-            (0, 8))
+            justify="center"
         )
 
-        confirm = parse_bool(ia_selection(
-            question="Would you like to install other packages in addition to init & base?",
-            options=["Yes", "No"],
-            padding=8
-        ))
+        groups = []
+        flags = []
 
-        if confirm:
-            group = []
-            flags = []
-
-            for name, flag in package_list:
-                Checkbox(
-                    label=name,
-                    group=group
-                )
-                flags.extend(flag)
-
-            chb_selection(
-                question="",
-                options=group,
-                flags=flags
+        for name, flag in package_list.items():
+            Checkbox(
+                label=name,
+                group=groups
             )
+            flags.append(flag)
+
+        self.packages = chb_selection(
+            question="",
+            options=groups,
+            flags=flags
+        )
 
         return self.packages
 
@@ -71,5 +64,3 @@ class PackageView(Screen):
                         _flag = False
 
             self.packages.extend(_packages)"""
-
-
