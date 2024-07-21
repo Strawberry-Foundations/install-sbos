@@ -48,12 +48,12 @@ def _draw_ia_selection(options: list, flags: list = None):
             if i == __INDEX:
                 len_label = len(option.label)
                 remaining = 33 - len_label
-                print(f" {__POINTED}[{selected(flag)}] [ {option.label}{spaces(remaining)}]")
+                print(f" {__POINTED}{BLACK}[{selected(flag)}] [ {option.label}{spaces(remaining)}]{CRESET}")
 
             else:
                 len_label = len(option.label)
                 remaining = 33 - len_label
-                print(f" {__UNPOINTED} [{selected(flag)}] [ {option.label}{spaces(remaining)}]")
+                print(f" {__UNPOINTED} [{selected(flag)}] [ {option.label}{spaces(remaining)}]{CRESET}")
 
     def selected(flag: str):
         nonlocal __SELECTS
