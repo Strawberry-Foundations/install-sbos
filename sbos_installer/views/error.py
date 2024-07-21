@@ -1,5 +1,5 @@
 from sbos_installer import clear_screen
-from sbos_installer.utils.screen import line_of_chars
+from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
 
 from rich.console import Console
@@ -9,17 +9,9 @@ import sys
 
 
 class ErrorView:
-    class Header:
-        border_style = "red on black"
+    class Header(Header):
+        border_style = "red"
         text_style = "on red"
-
-        def __init__(self, title):
-            self.title = title
-            console = Console()
-
-            console.print(line_of_chars("▄"), style=self.border_style)
-            console.print(Text.from_ansi(f"{WHITE}{BOLD}{title}"), style=self.text_style, justify="center")
-            console.print(line_of_chars("▀"), style=self.border_style)
 
     title = "An error occurred"
     console = Console()
