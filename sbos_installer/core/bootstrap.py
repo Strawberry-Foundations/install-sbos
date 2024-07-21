@@ -1,4 +1,4 @@
-from sbos_installer.core.packages import package_list, init_package
+from sbos_installer.core.packages import base_package_list, init_package
 from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 
@@ -27,7 +27,7 @@ def bootstrap(install_packages: list):
 
     i = 1
     for package in packages:
-        command = runner.run(binder + " apt install -y " + package_list.get(package))
+        command = runner.run(binder + " apt install -y " + base_package_list.get(package))
 
         i += 1
         print("")
