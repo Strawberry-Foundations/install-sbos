@@ -6,7 +6,7 @@ from rich.text import Text
 
 
 class Header:
-    border_style = "cyan on black"
+    border_style = "cyan on white"
     text_style = "on cyan"
 
     def __init__(self, title):
