@@ -1,4 +1,5 @@
 from sbos_installer.core.ui.screen import Screen
+from sbos_installer.core.ui.checkbox import Checkbox, ia_selection as chb_selection
 from sbos_installer.core.packages import package_list
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.cli.selection import ia_selection
@@ -31,6 +32,26 @@ class PackageView(Screen):
         ))
 
         if confirm:
+            group = []
+            flags = []
+
+            for name, flag in package_list:
+                Checkbox(
+                    label=name,
+                    group=group
+                )
+                flags.extend(flag)
+
+            chb_selection(
+                question="",
+                options=group,
+                flags=flags
+            )
+
+        return self.packages
+
+
+"""                
             _packages = None
             _flag = True
             while _flag:
@@ -49,6 +70,6 @@ class PackageView(Screen):
                     else:
                         _flag = False
 
-            self.packages.extend(_packages)
+            self.packages.extend(_packages)"""
 
-        return self.packages
+
