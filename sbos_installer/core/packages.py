@@ -4,9 +4,14 @@ init_package = (
     "initramfs-tools,linux-image-amd64,busybox-static,network-manager,wget,curl"
 )
 
-package_list = {
+base_package_list = {
     "base": "zstd grub-efi kbd locales locales-all bash-completion sudo lvm2",
     "base-dev": "git gcc make g++ build-essential linux-headers-amd64",
     "utils": "neofetch htop btop",
     "python3": "python3 python3-dev python3-pip python-is-python3"
+}
+
+
+package_list = {
+    "Development Utilities": "base-dev"
 }
