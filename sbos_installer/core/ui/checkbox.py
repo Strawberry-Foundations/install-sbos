@@ -2,14 +2,7 @@ from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import get_terminal_width
 from sbos_installer.cli.selection import KeyGetter
 
-from rich.padding import Padding
-from rich.text import Text
-from rich.console import Console
-
-from io import StringIO
 from itertools import zip_longest
-
-import sys
 
 
 class Checkbox:
