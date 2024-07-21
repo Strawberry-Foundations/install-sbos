@@ -1,5 +1,6 @@
 from sbos_installer.core.ui.select_button import SelectButton, ia_selection
 from sbos_installer.core.ui.screen import Screen
+from sbos_installer.var import Versions
 
 
 class OSTypeView(Screen):
@@ -16,21 +17,21 @@ class OSTypeView(Screen):
         group = []
 
         SelectButton(
-            label=f"StrawberryOS Desktop (2024.07)",
+            label=f"StrawberryOS Desktop ({Versions.desktop})",
             description="The standard version of StrawberryOS - With all the necessary tools "
                         "from us and a selection of desktops",
             group=group
         )
 
         SelectButton(
-            label=f"StrawberryOS Desktop with Open Directory (2024.07)",
+            label=f"StrawberryOS Desktop with Open Directory ({Versions.desktop_sod})",
             description="StrawberryOS with configured Open Directory. Useful for schools, workplaces, and "
             "also the one or other private use",
             group=group
         )
 
         SelectButton(
-            label=f"StrawberryOS Server (2024.1)",
+            label=f"StrawberryOS Server ({Versions.server})",
             description="A minimal environment of StrawberryOS without a desktop. Includes additional server utilities",
             group=group
         )
