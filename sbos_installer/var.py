@@ -1,6 +1,12 @@
 version = "2.0.8"
 
 
+class Versions:
+    desktop = "2024.07"
+    desktop_sod = "2024.07"
+    server = "2024.1"
+
+
 class Vars:
     def __init__(self):
         self.os_type = None
