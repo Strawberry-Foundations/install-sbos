@@ -70,6 +70,12 @@ try:
             justify="center"
         )
 
+        console.print(
+            Text.from_ansi(
+                f"{GREEN}{BOLD}! {CRESET}Use UP and DOWN to navigate, ENTER to continue\n\n"
+            ), justify="center"
+        )
+
         group = []
 
         SelectButton(
