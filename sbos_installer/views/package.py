@@ -48,25 +48,3 @@ class PackageView(Screen):
         )
 
         return self.packages
-
-
-"""                
-            _packages = None
-            _flag = True
-            while _flag:
-                self.console.print(Padding(Text.from_ansi(f"\nAvailable packages: {GRAY}{' '.join(package_list)}{CRESET}"), (0, 8)))
-
-                _packages = input(f"        Provide additional packages [init,base]:  {GRAY}").split(",")
-                print(CRESET, end="")
-
-                for package in _packages:
-                    if package == '':
-                        _flag = False
-                    if package not in package_list:
-                        self.console.print(Padding(Text.from_ansi(
-                            f"{YELLOW}{BOLD}Package '{package}' is not available{CRESET}"), (0, 8)
-                        ))
-                    else:
-                        _flag = False
-
-            self.packages.extend(_packages)"""
