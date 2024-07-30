@@ -2,8 +2,8 @@ version = "2.1.0"
 
 
 class Versions:
-    desktop = "2024.07"
-    desktop_sod = "2024.07"
+    desktop = "2024.08"
+    desktop_sod = "2024.08"
     server = "2024.1"
 
 
