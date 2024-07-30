@@ -29,7 +29,7 @@ class BootloaderView(Screen):
         )
 
         if selection == "systemd-boot":
-            configure_systemd_boot()
+            configure_systemd_boot(self.disk)
         else:
             configure_grub(self.disk)
 
