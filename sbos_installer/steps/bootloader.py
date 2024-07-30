@@ -16,12 +16,12 @@ def configure_grub(disk: str):
     runner.run(f"chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg")
 
 
-
-
-def configure_systemd_boot():
+def configure_systemd_boot(disk: str):
     runner = Runner(True)
 
     print(f"{BOLD}{GREEN}Installing systemd-boot ...{CRESET}")
+    print(f"{BOLD}{YELLOW}systemd-boot is currently not supported.{CRESET}")
+    configure_grub(disk)
 
     runner.run(f"apt install -y systemd-boot")
     runner.run(f"bootctl --esp-path=/mnt/boot/efi install")
