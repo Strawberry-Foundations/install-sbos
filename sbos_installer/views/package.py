@@ -1,12 +1,9 @@
-from sbos_installer.core.ui.screen import Screen
-from sbos_installer.core.ui.checkbox import Checkbox, ia_selection as chb_selection
 from sbos_installer.core.packages import package_list
-from sbos_installer.cli.parser import parse_bool
-from sbos_installer.cli.selection import ia_selection
+from sbos_installer.core.ui.checkbox import Checkbox, ia_selection as chb_selection
+from sbos_installer.core.ui.screen import Screen
 from sbos_installer.utils.colors import *
 
 from rich.text import Text
-from rich.padding import Padding
 
 
 class PackageView(Screen):
