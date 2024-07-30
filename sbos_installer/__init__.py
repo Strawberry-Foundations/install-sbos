@@ -117,9 +117,10 @@ try:
                 clear_screen()
 
                 try:
-                    with open("/etc/motd", 'r') as _file:
-                        print(_file.read(), end="")
-                except:
+                    with open("/etc/motd", 'r') as _motd:
+                        print(_motd.read(), end="")
+
+                except (FileNotFoundError, Exception):
                     pass
 
                 sys.exit(0)
@@ -229,13 +230,15 @@ try:
     # Modify root's userspace PS1 variable
     with open(f"{ROOT_MNT}user/data/root/.bashrc", "a") as _file:
         _file.write(
-            r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'")
+            r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'"
+        )
         _file.write("\n")
 
     # Modify root's systemspace PS1 variable
     with open(f"{ROOT_MNT}root/.bashrc", "a") as _file:
         _file.write(
-            r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
+            r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '"
+        )
         _file.write("\n")
 
     with open(f"{ROOT_MNT}etc/issue", 'w') as file:
