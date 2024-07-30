@@ -133,7 +133,7 @@ try:
                 _selection()
 
             case "update":
-                run("update-installer")
+                os.system("update-installer")
                 clear_screen()
                 _selection()
 
