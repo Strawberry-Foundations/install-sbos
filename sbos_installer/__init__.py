@@ -142,7 +142,7 @@ try:
     v.net_stat = NetworkView().val  # Setup network
     v.region, v.city = TimezoneView().val  # Setup timezone
     v.user_setup = UserView().val  # Setup user
-    v.packages = PackageView().val  # Setup packages
+    v.packages = PackageView(v.os_type).val  # Setup packages
     v.disk_data, disk = DiskView().val  # Setup disk
 
     install_data = {
