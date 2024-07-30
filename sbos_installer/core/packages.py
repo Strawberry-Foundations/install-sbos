@@ -6,6 +6,7 @@ init_package = (
 
 base_package_list = {
     "base": "zstd grub-efi kbd locales locales-all bash-completion sudo lvm2",
+    "server": "git curl wget htop net-tools fail2ban openssh-server rsync screen openssl",
     "base-dev": "git gcc make g++ build-essential linux-headers-amd64",
     "utils": "neofetch htop btop",
     "python3": "python3 python3-dev python3-pip python-is-python3",
@@ -20,5 +21,4 @@ package_list = {
     "Python Runtime": "python3",
     "Open Source Firmware": "firmware-linux-free",
     "Proprietary Firmware": "firmware-linux-non-free",
-
 }
