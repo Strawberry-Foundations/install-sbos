@@ -227,6 +227,8 @@ try:
         Header("Configuring hostname ...")
         configure_hostname(v.hostname)  # Configure users
 
+        runner.run(f"cp /etc/os-release {ROOT_MNT}etc/os-release")
+
         BootloaderView(disk)  # Install & configure bootloader
         if not v.os_type == "server":
             DesktopView()  # Install desktop
@@ -254,8 +256,6 @@ try:
         file.write(r"StrawberryOS Chocolate Crisps \n \l"
                    "\n\n"
                    r"")
-
-    runner.run(f"cp /etc/os-release {ROOT_MNT}etc/os-release")
 
     runner.run(f"umount {ROOT_MNT}dev")
     runner.run(f"umount {ROOT_MNT}sys")
