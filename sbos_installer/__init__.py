@@ -142,8 +142,8 @@ try:
     v.net_stat = NetworkView().val  # Setup network
     v.region, v.city = TimezoneView().val  # Setup timezone
     v.user_setup = UserView().val  # Setup user
-    v.disk_data, disk = DiskView().val  # Setup disk
     v.packages = PackageView().val  # Setup packages
+    v.disk_data, disk = DiskView().val  # Setup disk
 
     install_data = {
         "hostname": v.hostname,
