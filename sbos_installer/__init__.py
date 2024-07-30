@@ -133,6 +133,7 @@ try:
     # todo:
     #  - add btrfs support
     #  - fix /etc/hosts (hostname)
+    #  - add StrawberryOS recovery
 
     KeyboardLayout()
 
@@ -240,7 +241,7 @@ try:
                    "\n\n"
                    r"")
 
-    # todo: Add StrawberryOS recovery (custom initramfs?)
+
 
     runner.run(f"cp /etc/os-release {ROOT_MNT}etc/os-release")
 
