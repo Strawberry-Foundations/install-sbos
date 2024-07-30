@@ -170,12 +170,12 @@ try:
         time.sleep(0.5)
         configure_lvm(disk, install_data)
 
-        run(f"mount --mkdir /dev/strawberryos/system /mnt")
-        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
+        run(f"mount --mkdir /dev/strawberryos/system {ROOT_MNT}")
+        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} {ROOT_MNT}boot/efi")
 
     else:
-        run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} /mnt")
-        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} /mnt/boot/efi")
+        run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} {ROOT_MNT}")
+        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} {ROOT_MNT}boot/efi")
 
     if not DEV_FLAG_SKIP_BOOTSTRAP:
         clear_screen()
@@ -219,30 +219,30 @@ try:
             DesktopView()  # Install desktop
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
-    run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} /mnt/user")
-    run(f"mkdir -p /mnt/user/data/root")
-    run(f"cp /mnt/root/.bashrc /mnt/user/data/root")
+    run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} {ROOT_MNT}user")
+    run(f"mkdir -p {ROOT_MNT}user/data/root")
+    run(f"cp {ROOT_MNT}/root/.bashrc {ROOT_MNT}user/data/root")
 
     # Modify root's userspace PS1 variable
-    with open("/mnt/user/data/root/.bashrc", "a") as _file:
+    with open(f"{ROOT_MNT}user/data/root/.bashrc", "a") as _file:
         _file.write(
             r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'")
         _file.write("\n")
 
     # Modify root's systemspace PS1 variable
-    with open("/mnt/root/.bashrc", "a") as _file:
+    with open(f"{ROOT_MNT}root/.bashrc", "a") as _file:
         _file.write(
             r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
         _file.write("\n")
 
-    with open("/mnt/etc/issue", 'w') as file:
+    with open(f"{ROOT_MNT}etc/issue", 'w') as file:
         file.write(r"StrawberryOS Chocolate Crisps \n \l"
                    "\n\n"
                    r"")
 
     # todo: Add StrawberryOS recovery (custom initramfs?)
 
-    runner.run(f"cp /etc/os-release /mnt/etc/os-release")
+    runner.run(f"cp /etc/os-release {ROOT_MNT}etc/os-release")
 
     runner.run(f"umount {ROOT_MNT}dev")
     runner.run(f"umount {ROOT_MNT}sys")
