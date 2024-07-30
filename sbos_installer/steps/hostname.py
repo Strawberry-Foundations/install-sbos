@@ -1,11 +1,6 @@
-from sbos_installer.utils.colors import *
+from sbos_installer.var import ROOT_MNT
 
 
-def setup_hostname():
-    print(f"{GREEN}{BOLD} -- Hostname configuration --{CRESET}")
-    hostname = input("Enter system hostname [strawberryos]: ")
-
-    if hostname.strip() == "":
-        return "strawberryos"
-
-    return hostname
+def configure_hostname(hostname: str):
+    with open(f"{ROOT_MNT}etc/hostname", 'w') as file:
+        file.write(hostname)
