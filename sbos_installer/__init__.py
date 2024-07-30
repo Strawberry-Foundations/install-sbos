@@ -135,10 +135,10 @@ try:
                 _selection()
 
             case "update":
-                os.system("update-installer")
+                run("update-installer")
                 clear_screen()
-                _selection()
-
+                python = sys.executable
+                os.execv(python, ['python3'] + sys.argv)
 
     _selection()
 
