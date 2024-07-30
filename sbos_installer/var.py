@@ -2,6 +2,9 @@ version = "2.2.3"
 
 ROOT_MNT = "/mnt/"
 
+CODENAME_FULL = "Chocolate Crisps"
+CODENAME_ASCII = "chocolatecrisps"
+
 
 class Versions:
     desktop = "2024.08"
