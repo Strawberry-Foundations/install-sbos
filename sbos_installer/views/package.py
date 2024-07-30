@@ -9,13 +9,19 @@ from rich.text import Text
 class PackageView(Screen):
     title = "Install additional packages"
 
-    def __init__(self):
+    def __init__(self, os_type: str):
         self.packages = None
+        self.os_type = os_type
+
         view = self.render
         super().__init__(title=self.title, view=view)
 
     def render(self):
-        self.packages = ["base"]
+        if self.os_type == "server":
+            self.packages = ["base", "server"]
+        else:
+            self.packages = ["base"]
+
         self.console.print(
             "When installing StrawberryOS, you can choose whether you want to install additional packages. \n"
             "These can be utilities, but also development packages\n",
