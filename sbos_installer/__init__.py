@@ -24,7 +24,7 @@ from sbos_installer.views.bootloader import BootloaderView
 from sbos_installer.views.desktop import DesktopView
 from sbos_installer.views.finished import FinishView
 
-from sbos_installer.steps.disk import disk_partitioning, configure_partitions
+from sbos_installer.steps.disk import configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
 from sbos_installer.steps.hostname import configure_hostname
 from sbos_installer.steps.locale import configure_timezone_system
