@@ -55,6 +55,7 @@ if DEV_FLAG_DEV_MODE:
 try:
     runner = Runner(True)
 
+
     def _selection():
         clear_screen()
 
@@ -127,6 +128,7 @@ try:
                 AboutView()
                 clear_screen()
                 _selection()
+
 
     _selection()
 
@@ -240,8 +242,6 @@ try:
         file.write(r"StrawberryOS Chocolate Crisps \n \l"
                    "\n\n"
                    r"")
-
-
 
     runner.run(f"cp /etc/os-release {ROOT_MNT}etc/os-release")
 
