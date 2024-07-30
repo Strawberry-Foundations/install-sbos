@@ -92,11 +92,17 @@ try:
             group=group
         )
 
+        SelectButton(
+            label=f"(!) Update StrawberryOS Installer",
+            description="Check whether there is a new update for the installer",
+            group=group
+        )
+
         try:
             selection = ia_selection(
                 question="",
                 options=group,
-                flags=["start", "console", "about"]
+                flags=["start", "console", "about", "update"]
             )
         except KeyboardInterrupt:
             console.clear()
@@ -123,6 +129,11 @@ try:
 
             case "about":
                 AboutView()
+                clear_screen()
+                _selection()
+
+            case "update":
+                run("update-installer")
                 clear_screen()
                 _selection()
 
