@@ -8,13 +8,14 @@ def configure_grub(disk: str):
 
     modify_file_entry("/mnt/etc/default/grub", 'GRUB_CMDLINE_LINUX=""', 'GRUB_CMDLINE_LINUX="overlay=yes"')
     modify_file_entry("/mnt/etc/default/grub", 'Debian', 'StrawberryOS')
+    modify_file_entry("/mnt/etc/grub.d/10_linux", 'GNU/Linux', '(Chocolate Crisps)')
 
     print(f"{BOLD}{GREEN}Installing GRUB ...{CRESET}")
     runner.run(
         f"grub-install --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot/ --bootloader-id=StrawberryOS {disk}")
     runner.run(f"chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg")
 
-    modify_file_entry("/mnt/boot/grub/grub.cfg", 'GNU/Linux', '(Chocolate Crisps)')
+
 
 
 def configure_systemd_boot():
