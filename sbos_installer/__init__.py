@@ -3,10 +3,11 @@ from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
 from sbos_installer.core.ui.select_button import SelectButton, ia_selection
 from sbos_installer.core.ui.header import Header
+from sbos_installer.utils import modify_file_entry
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
-from sbos_installer.var import Vars, ROOT_MNT
+from sbos_installer.var import Vars, ROOT_MNT, Versions
 
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
@@ -36,7 +37,6 @@ from rich.text import Text
 import sys
 import time
 import os
-
 
 console = Console()
 v = Vars()
@@ -140,6 +140,7 @@ try:
                 python = sys.executable
                 os.execv(python, ['python3'] + sys.argv)
 
+
     _selection()
 
     # todo:
@@ -227,7 +228,29 @@ try:
         Header("Configuring hostname ...")
         configure_hostname(v.hostname)  # Configure users
 
-        runner.run(f"cp /etc/os-release {ROOT_MNT}etc/os-release")
+        match v.os_type:
+            case "desktop":
+                os_release_version = Versions.desktop
+            case "desktop_sod":
+                os_release_version = Versions.desktop_sod
+            case "server":
+                os_release_version = Versions.server
+            case _:
+                os_release_version = Versions.desktop
+
+        with open(f"{ROOT_MNT}etc/os-release", 'w') as file:
+            file.write(
+                f'''PRETTY_NAME="StrawberryOS {os_release_version}"
+NAME="StrawberryOS"
+VERSION_ID="{os_release_version}"
+VERSION="{os_release_version} Beta"
+VERSION_CODENAME=chocolatecrisps"
+ID=strawberryos
+HOME_URL="https://strawberryfoundations.org"
+SUPPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
+BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
+'''
+            )
 
         BootloaderView(disk)  # Install & configure bootloader
         if not v.os_type == "server":
