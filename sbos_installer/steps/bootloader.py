@@ -8,7 +8,11 @@ def configure_grub(disk: str):
 
     modify_file_entry("/mnt/etc/default/grub", 'GRUB_CMDLINE_LINUX=""', 'GRUB_CMDLINE_LINUX="overlay=yes"')
     modify_file_entry("/mnt/etc/default/grub", 'Debian', 'StrawberryOS')
-    modify_file_entry("/mnt/etc/grub.d/10_linux", 'GNU/Linux', '(Chocolate Crisps)')
+    modify_file_entry(
+        file_path="/mnt/etc/grub.d/10_linux",
+        search_string='${GRUB_DISTRIBUTOR} GNU/Linux',
+        replace_string='${GRUB_DISTRIBUTOR} (Chocolate Crisps)'
+    )
 
     print(f"{BOLD}{GREEN}Installing GRUB ...{CRESET}")
     runner.run(
