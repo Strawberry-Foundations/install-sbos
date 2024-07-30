@@ -29,7 +29,6 @@ from sbos_installer.steps.lvm import configure_lvm
 from sbos_installer.steps.hostname import configure_hostname
 from sbos_installer.steps.locale import configure_timezone_system
 from sbos_installer.steps.user import configure_users
-from sbos_installer.steps.bootloader import configure_bootloader
 
 from rich.console import Console
 from rich.text import Text
