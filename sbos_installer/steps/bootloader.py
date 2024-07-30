@@ -1,20 +1,6 @@
 from sbos_installer.core.process import Runner
-from sbos_installer.cli.selection import ia_selection
 from sbos_installer.utils import modify_file_entry
 from sbos_installer.utils.colors import *
-
-
-def configure_bootloader(disk: str):
-    selection = ia_selection(
-        question="What bootloader would you like to use?",
-        options=["GRUB", "systemd-boot"],
-        flags=["(Recommended)", "(Experimental support)", ]
-    )
-
-    if selection == "systemd-boot":
-        configure_systemd_boot()
-    else:
-        configure_grub(disk)
 
 
 def configure_grub(disk: str):
