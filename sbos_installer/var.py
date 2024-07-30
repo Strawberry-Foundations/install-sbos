@@ -1,5 +1,7 @@
 version = "2.1.0"
 
+ROOT_MNT = "/mnt/"
+
 
 class Versions:
     desktop = "2024.08"
