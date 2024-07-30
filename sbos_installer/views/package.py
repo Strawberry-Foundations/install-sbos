@@ -44,10 +44,14 @@ class PackageView(Screen):
             )
             flags.append(flag)
 
-        self.packages = chb_selection(
+        packages = chb_selection(
             question="",
             options=groups,
             flags=flags
         )
+
+        self.packages.extend(packages)
+
+        print(self.packages)
 
         return self.packages
