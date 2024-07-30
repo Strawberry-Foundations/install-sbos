@@ -7,7 +7,7 @@ from sbos_installer.utils import modify_file_entry
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
-from sbos_installer.var import Vars, ROOT_MNT, Versions
+from sbos_installer.var import *
 
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
@@ -243,9 +243,10 @@ try:
                 f'''PRETTY_NAME="StrawberryOS {os_release_version}"
 NAME="StrawberryOS"
 VERSION_ID="{os_release_version}"
-VERSION="{os_release_version} Beta"
-VERSION_CODENAME=chocolatecrisps"
+VERSION="{os_release_version} ({CODENAME_FULL})"
+VERSION_CODENAME={CODENAME_ASCII}"
 ID=strawberryos
+ID_LIKE=debian
 HOME_URL="https://strawberryfoundations.org"
 SUPPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
 BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
