@@ -132,17 +132,9 @@ try:
 
     _selection()
 
-    """
-    -- Required Steps
-    * Hostname
-    * Network setup
-    * Timezone setup
-    * User setup (root password, additional user ...) (todo: add groups, login shell)
-    * Disk setup
-    * Package selection (base, base-dev, python3, utils, ...)
-    * Bootloader
-    * Additional steps (graphical user interface)
-    """
+    # todo:
+    #  - add btrfs support
+    #  - fix /etc/hosts (hostname)
 
     KeyboardLayout()
 
