@@ -6,7 +6,7 @@ from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
-from sbos_installer.var import Vars
+from sbos_installer.var import Vars, ROOT_MNT
 
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
@@ -54,7 +54,6 @@ if DEV_FLAG_DEV_MODE:
 
 try:
     runner = Runner(True)
-    location = "/mnt"
 
     def _selection():
         clear_screen()
@@ -196,9 +195,9 @@ try:
     clear_screen()
     Header("Post-installation")
 
-    runner.run(f"mount --bind /dev {location}/dev")
-    runner.run(f"mount --bind /sys {location}/sys")
-    runner.run(f"mount --bind /proc {location}/proc")
+    runner.run(f"mount --bind /dev {ROOT_MNT}dev")
+    runner.run(f"mount --bind /sys {ROOT_MNT}sys")
+    runner.run(f"mount --bind /proc {ROOT_MNT}proc")
 
     time.sleep(0.85)
 
@@ -245,13 +244,13 @@ try:
 
     runner.run(f"cp /etc/os-release /mnt/etc/os-release")
 
-    runner.run(f"umount {location}/dev")
-    runner.run(f"umount {location}/sys")
-    runner.run(f"umount {location}/proc")
+    runner.run(f"umount {ROOT_MNT}dev")
+    runner.run(f"umount {ROOT_MNT}sys")
+    runner.run(f"umount {ROOT_MNT}proc")
 
-    runner.run(f"umount {location}/boot/efi")
-    runner.run(f"umount {location}/user")
-    runner.run(f"umount {location}")
+    runner.run(f"umount {ROOT_MNT}boot/efi")
+    runner.run(f"umount {ROOT_MNT}user")
+    runner.run(f"umount {ROOT_MNT}")
 
     FinishView()
 
