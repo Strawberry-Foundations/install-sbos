@@ -194,19 +194,27 @@ try:
     time.sleep(0.85)
 
     clear_screen()
-    Header(" ")
+    Header("Post-installation")
 
     runner.run(f"mount --bind /dev {location}/dev")
     runner.run(f"mount --bind /sys {location}/sys")
     runner.run(f"mount --bind /proc {location}/proc")
 
+    time.sleep(0.85)
+
     if not DEV_FLAG_SKIP_POST_SETUP:
         clear_screen()
         Header("Configuring timezone ...")
         configure_timezone_system(v.region, v.city)  # Configure timezone
+
         clear_screen()
         Header("Configuring users ...")
         configure_users(v.user_setup)  # Configure users
+
+        clear_screen()
+        Header("Configuring hostname ...")
+        configure_hostname(v.hostname)  # Configure users
+
         BootloaderView(disk)  # Install & configure bootloader
         if not v.os_type == "server":
             DesktopView()  # Install desktop
