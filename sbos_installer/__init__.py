@@ -145,7 +145,6 @@ try:
 
     # todo:
     #  - add btrfs support
-    #  - fix /etc/hosts (hostname)
     #  - add StrawberryOS recovery
 
     KeyboardLayout()
