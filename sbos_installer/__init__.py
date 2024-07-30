@@ -27,10 +27,8 @@ from sbos_installer.views.finished import FinishView
 from sbos_installer.steps.disk import disk_partitioning, configure_partitions
 from sbos_installer.steps.lvm import configure_lvm
 from sbos_installer.steps.hostname import configure_hostname
-from sbos_installer.steps.network import setup_network
-from sbos_installer.steps.locale import setup_timezone, configure_timezone_system
-from sbos_installer.steps.user import setup_user, configure_users
-from sbos_installer.steps.package import setup_packages
+from sbos_installer.steps.locale import configure_timezone_system
+from sbos_installer.steps.user import configure_users
 from sbos_installer.steps.overview import overview
 from sbos_installer.steps.bootloader import configure_bootloader
 
