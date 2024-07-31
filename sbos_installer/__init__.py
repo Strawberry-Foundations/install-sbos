@@ -243,7 +243,7 @@ try:
 NAME="StrawberryOS"
 VERSION_ID="{os_release_version}"
 VERSION="{os_release_version} ({CODENAME_FULL})"
-VERSION_CODENAME={CODENAME_ASCII}"
+VERSION_CODENAME={CODENAME_ASCII}
 ID=strawberryos
 ID_LIKE=debian
 HOME_URL="https://strawberryfoundations.org"
