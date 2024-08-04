@@ -2,6 +2,7 @@ from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.process import Runner
 from sbos_installer.cli.parser import parse_bool
 from sbos_installer.cli.selection import ia_selection
+from sbos_installer.var import ROOT_MNT
 
 from rich.padding import Padding
 
@@ -28,6 +29,6 @@ class DesktopView(Screen):
 
         if confirm:
             runner = Runner(True)
-            runner.run(f"chroot /mnt tasksel")
+            runner.run(f"chroot {ROOT_MNT} tasksel")
 
         return None
