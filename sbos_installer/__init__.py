@@ -275,11 +275,13 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
         )
         _file.write("\n")
 
+    # Add custom /etc/issue
     with open(f"{ROOT_MNT}etc/issue", 'w') as file:
         file.write(r"StrawberryOS Chocolate Crisps \n \l"
                    "\n\n"
                    r"")
 
+    # Add /etc/strawberryos_version for easier version validation
     with open(f"{ROOT_MNT}etc/strawberryos_version", 'w') as file:
         file.write(r"chocolatecrisps")
 
