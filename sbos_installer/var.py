@@ -3,7 +3,7 @@ version = "2.2.4"
 ROOT_MNT = "/mnt/"
 
 CODENAME_FULL = "Chocolate Crisps"
-CODENAME_ASCII = "chocolatecrisps"
+CODENAME_LOWER = "chocolatecrisps"
 
 
 class Versions:
