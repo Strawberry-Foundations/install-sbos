@@ -1,5 +1,6 @@
 from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
+from sbos_installer.var import ROOT_MNT
 
 import os
 
@@ -17,8 +18,8 @@ def list_zoneinfo(path="/usr/share/zoneinfo"):
         print(f"Error occurred while listing timezones: {e}")
         return ""
 
+
 def configure_timezone_system(region: str, city: str):
-    location = "/mnt"
     runner = Runner(False)
 
-    runner.run(f"chroot {location} ln -sf /usr/share/zoneinfo/{region}/{city} /etc/localtime")
+    runner.run(f"chroot {ROOT_MNT} ln -sf /usr/share/zoneinfo/{region}/{city} /etc/localtime")
