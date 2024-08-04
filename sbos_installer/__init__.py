@@ -243,7 +243,7 @@ try:
 NAME="StrawberryOS"
 VERSION_ID="{os_release_version}"
 VERSION="{os_release_version} ({CODENAME_FULL})"
-VERSION_CODENAME={CODENAME_ASCII}
+VERSION_CODENAME={CODENAME_LOWER}
 ID=strawberryos
 ID_LIKE=debian
 HOME_URL="https://strawberryfoundations.org"
@@ -283,7 +283,7 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
 
     # Add /etc/strawberryos_version for easier version validation
     with open(f"{ROOT_MNT}etc/strawberryos_version", 'w') as file:
-        file.write(r"chocolatecrisps")
+        file.write(CODENAME_LOWER)
 
     runner.run(f"umount {ROOT_MNT}dev")
     runner.run(f"umount {ROOT_MNT}sys")
