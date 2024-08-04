@@ -280,6 +280,9 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
                    "\n\n"
                    r"")
 
+    with open(f"{ROOT_MNT}etc/strawberryos_version", 'w') as file:
+        file.write(r"chocolatecrisps")
+
     runner.run(f"umount {ROOT_MNT}dev")
     runner.run(f"umount {ROOT_MNT}sys")
     runner.run(f"umount {ROOT_MNT}proc")
