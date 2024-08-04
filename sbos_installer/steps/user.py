@@ -1,3 +1,5 @@
+from sbos_installer.var import ROOT_MNT
+
 import subprocess
 
 
@@ -5,7 +7,7 @@ def configure_users(user_data: dict):
     command = f'echo "root:{user_data["users"]["root"]["password"]}" | chpasswd'
 
     subprocess.run(
-        ['chroot', '/mnt', '/bin/bash', '-c', command],
+        ['chroot', f'{ROOT_MNT}', '/bin/bash', '-c', command],
         check=True,
         text=True,
         capture_output=True
@@ -23,7 +25,7 @@ def configure_users(user_data: dict):
                 command = f'useradd -m -s /bin/bash {username}'
 
             subprocess.run(
-                ['chroot', '/mnt', '/bin/bash', '-c', command],
+                ['chroot', f'{ROOT_MNT}', '/bin/bash', '-c', command],
                 check=True,
                 text=True,
                 capture_output=True
@@ -32,7 +34,7 @@ def configure_users(user_data: dict):
             command = f'echo "{username}:{user_data["users"][username]["password"]}" | chpasswd'
 
             subprocess.run(
-                ['chroot', '/mnt', '/bin/bash', '-c', command],
+                ['chroot', f'{ROOT_MNT}', '/bin/bash', '-c', command],
                 check=True,
                 text=True,
                 capture_output=True
