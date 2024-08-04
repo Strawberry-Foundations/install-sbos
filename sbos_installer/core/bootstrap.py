@@ -1,14 +1,14 @@
 from sbos_installer.core.packages import base_package_list, init_package
 from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
+from sbos_installer.var import ROOT_MNT
 
 
 def bootstrap(install_packages: list):
     runner = Runner(True)
 
     packages = ["base"]
-    location = "/mnt"
-    binder = f"bwrap --bind {location} / --dev /dev --bind /sys /sys --bind /proc /proc --bind /tmp /tmp"
+    binder = f"bwrap --bind {ROOT_MNT} / --dev /dev --bind /sys /sys --bind /proc /proc --bind /tmp /tmp"
 
     packages.extend(install_packages)
 
@@ -19,7 +19,7 @@ def bootstrap(install_packages: list):
 
     install_args = f"""/usr/sbin/debootstrap \
         --include={init_package} trixie \
-        {location} https://deb.debian.org/debian"""
+        {ROOT_MNT} https://deb.debian.org/debian"""
 
     runner.run(install_args)
 
