@@ -25,6 +25,7 @@ class OverviewScreenView(Screen):
             (0, 8))
         )
 
+        file_system = self.data['disk']["file_system"]
         disk_data = self.data['disk'][self.disk]
 
         self.console.print(Padding(Text.from_ansi(
@@ -67,6 +68,9 @@ class OverviewScreenView(Screen):
         self.console.print(Padding(Text.from_ansi(
             f"{GRAY}{BOLD}    * {CYAN}User on {CYAN}{disk_data['user']['block']}{CRESET}: "
             f"{disk_data['user']['size'] / 1024}G ({disk_data['user']['size']}M){CRESET}"
+        ), (0, 8)))
+        self.console.print(Padding(Text.from_ansi(
+            f"{GRAY}{BOLD}    * {CYAN}File system: {file_system}"
         ), (0, 8)))
         self.console.print(Padding(Text.from_ansi(
             f"{GRAY}{BOLD}* {CYAN}Packages:{CRESET} {', '.join(self.data['packages'])}"
