@@ -22,7 +22,7 @@ class DiskView(Screen):
         view = self.render
         super().__init__(title=self.title, view=view)
 
-    def finalize(self, disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size):
+    def finalize(self, disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size, file_system):
         print()
         continue_installation = parse_bool(ia_selection(
             question=f"Continue installation? (Deletes all data on the selected disk)",
@@ -47,6 +47,7 @@ class DiskView(Screen):
                 return {
                     "disk": {
                         "custom_partitioning": False,
+                        "file_system": file_system,
                         disk: {
                             "efi": {
                                 "block": f"{disk}{suffix}1",
@@ -75,6 +76,7 @@ class DiskView(Screen):
             self.render()
 
     def modify_disk_setup(self, disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size):
+        file_system = "btrfs"
         while True:
             print()
             modify_partition = ia_selection(
@@ -151,13 +153,23 @@ class DiskView(Screen):
                         f"\nModified partition scheme for StrawberryOS\n"
                         f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size / 1024}G ({efi_disk_size}M)\n"
                         f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size / 1024}G ({swap_disk_size}M)\n"
-                        f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
-                        f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"
+                        f"   {GREEN}{BOLD}System ({file_system}) on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
+                        f"   {GREEN}{BOLD}User ({file_system}) on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"
                     ), (0, 8)))
 
-            return self.finalize(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
+            return self.finalize(
+                disk=disk,
+                suffix=suffix,
+                efi_disk_size=efi_disk_size,
+                system_disk_size=system_disk_size,
+                user_disk_size=user_disk_size,
+                swap_disk_size=swap_disk_size,
+                file_system=file_system
+            )
 
     def render(self):
+        file_system = "btrfs"
+
         if DEV_FLAG_SKIP_DISK_INPUT:
             efi_disk = "/dev/sda1"
             system_disk = "/dev/strawberryos/system"
@@ -167,6 +179,7 @@ class DiskView(Screen):
             return {
                 "disk": {
                     "custom_partitioning": False,
+                    "file_system": file_system,
                     "/dev/sda": {
                         "efi": {
                             "block": efi_disk,
@@ -229,8 +242,8 @@ class DiskView(Screen):
                 f"\nPartition scheme for StrawberryOS\n"
                 f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size / 1024}G ({efi_disk_size}M)\n"
                 f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size / 1024}G ({swap_disk_size}M)\n"
-                f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
-                f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"),
+                f"   {GREEN}{BOLD}System ({file_system}) on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
+                f"   {GREEN}{BOLD}User ({file_system}) on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"),
                 (0, 8)
             ))
 
@@ -246,7 +259,15 @@ class DiskView(Screen):
             if modify_disk_setup:
                 return self.modify_disk_setup(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
             else:
-                return self.finalize(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
+                return self.finalize(
+                    disk=disk,
+                    suffix=suffix,
+                    efi_disk_size=efi_disk_size,
+                    system_disk_size=system_disk_size,
+                    user_disk_size=user_disk_size,
+                    swap_disk_size=swap_disk_size,
+                    file_system=file_system
+                )
 
         else:
             print()
@@ -277,6 +298,7 @@ class DiskView(Screen):
                 return {
                     "disk": {
                         "custom_partitioning": True,
+                        "file_system": file_system,
                         disk: {
                             "efi": {
                                 "block": efi_disk,
