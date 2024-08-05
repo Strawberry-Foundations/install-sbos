@@ -147,6 +147,7 @@ class DiskView(Screen):
                         options=group,
                         flags=["btrfs", "ext4"]
                     )
+                    continue
 
                 case "-> Done":
                     self.console.print(Padding(Text.from_ansi(
