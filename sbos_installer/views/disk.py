@@ -215,4 +215,5 @@ class DiskView(Screen):
                     f"{YELLOW}{BOLD}Custom disk setup for non-suitable disks is currently not supported.{CRESET}"),
                     (0, 8)
                 ))
+                time.sleep(3)
                 self.redraw()
