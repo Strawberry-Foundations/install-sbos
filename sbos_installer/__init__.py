@@ -301,4 +301,4 @@ except KeyboardInterrupt:
         f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
     ), justify="center")
     console.show_cursor(True)
-    sys.exit(0)
+    sys
