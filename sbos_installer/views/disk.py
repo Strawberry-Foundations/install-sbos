@@ -42,29 +42,32 @@ class DiskView(Screen):
                 runner.run(f"dd if=/dev/zero of={disk} bs=512 count=1")
                 time.sleep(0.5)
 
-            return {
-                "disk": {
-                    "custom_partitioning": False,
-                    disk: {
-                        "efi": {
-                            "block": f"{disk}{suffix}1",
-                            "size": efi_disk_size
-                        },
-                        "system": {
-                            "block": "/dev/strawberryos/system",
-                            "size": system_disk_size
-                        },
-                        "user": {
-                            "block": "/dev/strawberryos/user",
-                            "size": user_disk_size
-                        },
-                        "swap": {
-                            "block": f"{disk}{suffix}2",
-                            "size": swap_disk_size
+                return {
+                    "disk": {
+                        "custom_partitioning": False,
+                        disk: {
+                            "efi": {
+                                "block": f"{disk}{suffix}1",
+                                "size": efi_disk_size
+                            },
+                            "system": {
+                                "block": "/dev/strawberryos/system",
+                                "size": system_disk_size
+                            },
+                            "user": {
+                                "block": "/dev/strawberryos/user",
+                                "size": user_disk_size
+                            },
+                            "swap": {
+                                "block": f"{disk}{suffix}2",
+                                "size": swap_disk_size
+                            }
                         }
                     }
-                }
-            }, disk
+                }, disk
+
+            else:
+                self.render()
 
         else:
             self.render()
