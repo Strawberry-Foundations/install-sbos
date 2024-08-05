@@ -215,7 +215,7 @@ try:
 
     time.sleep(0.85)
 
-    if not DEV_FLAG_SKIP_POST_SETUP:
+    if not DEV_FLAG_SKIP_POST_SETUP or not DEV_DRY_RUN:
         clear_screen()
         Header("Configuring timezone ...")
         configure_timezone_system(v.region, v.city)  # Configure timezone
