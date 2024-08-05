@@ -210,7 +210,7 @@ class DiskView(Screen):
 
             print()
             modify_disk_setup = parse_bool(ia_selection(
-                question=f"Modify partition scheme?",
+                question=f"Modify partition scheme? (Size, file system, ..)",
                 options=["No", "Yes"],
                 padding=8
             ))
