@@ -1,4 +1,5 @@
 from sbos_installer.core.ui.screen import Screen
+from sbos_installer.core.ui.single_select_button import SingleSelectButton, ia_selection as ssb_ia_selection
 from sbos_installer.core.process import Runner
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
@@ -75,16 +76,17 @@ class DiskView(Screen):
 
     def modify_disk_setup(self, disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size):
         while True:
+            print()
             modify_partition = ia_selection(
-                question=f"Which partition do you want to modify",
-                options=["EFI", "Swap", "System", "Done"],
+                question=f"Select an action that you would like to perform",
+                options=["Change EFI size", "Change Swap size", "Change System size", "Change file system", "-> Done"],
                 flags=[f"({disk}{suffix}1)", f"({disk}{suffix}2)", "(/dev/strawberryos/system)"],
                 padding=8
             )
             print()
 
             match modify_partition:
-                case "EFI":
+                case "Change EFI size":
                     while True:
                         _size = parse_size(
                             input(f"        Input new EFI disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
@@ -96,7 +98,7 @@ class DiskView(Screen):
                     ), (0, 8)))
                     continue
 
-                case "Swap":
+                case "Change Swap size":
                     while True:
                         _size = parse_size(
                             input(f"        Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}2{CRESET}) size: "))
@@ -108,7 +110,7 @@ class DiskView(Screen):
                     ), (0, 8)))
                     continue
 
-                case "System":
+                case "Change System size":
                     while True:
                         _size = parse_size(
                             input(f"        Input new System disk ({CYAN}{BOLD}/dev/strawberryos/system{CRESET}) size: "))
@@ -120,7 +122,31 @@ class DiskView(Screen):
                     ), (0, 8)))
                     continue
 
-                case "Done":
+                case "Change file system":
+                    group = []
+
+                    SingleSelectButton(
+                        label="BTRFS",
+                        group=group
+                    )
+
+                    SingleSelectButton(
+                        label="EXT4",
+                        group=group
+                    )
+
+                    self.console.print(Padding(Text.from_ansi(
+                        f"StrawberryOS uses the BTRFS file system by default. "
+                        f"However, if you want to use EXT4 for whatever reason, you can change this here"
+                    ), (0, 8)))
+
+                    file_system = ssb_ia_selection(
+                        question="",
+                        options=group,
+                        flags=["btrfs", "ext4"]
+                    )
+
+                case "-> Done":
                     self.console.print(Padding(Text.from_ansi(
                         f"\nModified partition scheme for StrawberryOS\n"
                         f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size / 1024}G ({efi_disk_size}M)\n"
