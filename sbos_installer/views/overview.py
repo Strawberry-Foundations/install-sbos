@@ -70,7 +70,7 @@ class OverviewScreenView(Screen):
             f"{disk_data['user']['size'] / 1024}G ({disk_data['user']['size']}M){CRESET}"
         ), (0, 8)))
         self.console.print(Padding(Text.from_ansi(
-            f"{GRAY}{BOLD}    * {CYAN}File system: {file_system}"
+            f"{GRAY}{BOLD}    * {CYAN}File system:{CRESET} {file_system}"
         ), (0, 8)))
         self.console.print(Padding(Text.from_ansi(
             f"{GRAY}{BOLD}* {CYAN}Packages:{CRESET} {', '.join(self.data['packages'])}"
