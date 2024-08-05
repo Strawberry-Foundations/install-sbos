@@ -164,11 +164,11 @@ class DiskView(Screen):
             print()
             existing_partition = parse_bool(ia_selection(
                 question=f"Does your disk already have a partitioning scheme that is suitable for StrawberryOS?\n"
-                         f"A suitable partitioning scheme should look like this:\n"
-                         f"   EFI disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}FAT32{CRESET})\n"
-                         f"   Swap disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}Linux swap{CRESET})\n"
-                         f"   System disk on {CYAN}{BOLD}/dev/lvmgroup/system{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n"
-                         f"   User disk on {CYAN}{BOLD}/dev/lvmgroup/user{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n",
+                         f"        A suitable partitioning scheme should look like this:\n"
+                         f"           EFI disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}FAT32{CRESET})\n"
+                         f"           Swap disk on {CYAN}{BOLD}/dev/sdxX{CRESET} ({GREEN}{BOLD}Linux swap{CRESET})\n"
+                         f"           System disk on {CYAN}{BOLD}/dev/lvmgroup/system{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})\n"
+                         f"           User disk on {CYAN}{BOLD}/dev/lvmgroup/user{CRESET} ({GREEN}{BOLD}ext4/btrfs{CRESET})",
                 options=["Yes", "No"],
                 padding=8
             ))
@@ -215,4 +215,4 @@ class DiskView(Screen):
                     f"{YELLOW}{BOLD}Custom disk setup for non-suitable disks is currently not supported.{CRESET}"),
                     (0, 8)
                 ))
-                self.render()
+                self.redraw()
