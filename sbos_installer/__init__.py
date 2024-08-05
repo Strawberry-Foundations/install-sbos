@@ -145,7 +145,6 @@ try:
     _selection()
 
     # todo:
-    #  - add btrfs support
     #  - add StrawberryOS recovery
 
     KeyboardLayout()
