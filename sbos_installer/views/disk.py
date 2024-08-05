@@ -2,6 +2,7 @@ from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.process import Runner
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
+from sbos_installer.cli.input import parse_size
 from sbos_installer.steps.disk import get_block_device_size_in_gb, get_block_devices
 from sbos_installer.steps.lvm import get_partition_suffix
 from sbos_installer.utils.colors import *
@@ -71,6 +72,64 @@ class DiskView(Screen):
 
         else:
             self.render()
+
+    def modify_disk_setup(self, disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size):
+        while True:
+            modify_partition = ia_selection(
+                question=f"Which partition do you want to modify",
+                options=["EFI", "Swap", "System", "Done"],
+                flags=[f"({disk}{suffix}1)", f"({disk}{suffix}2)", "(/dev/strawberryos/system)"],
+                padding=8
+            )
+            print()
+
+            match modify_partition:
+                case "EFI":
+                    while True:
+                        _size = parse_size(
+                            input(f"        Input new EFI disk ({CYAN}{BOLD}{disk}{suffix}1{CRESET}) size: "))
+                        if _size:
+                            efi_disk_size = _size
+                            break
+                    self.console.print(Padding(Text.from_ansi(
+                        f"EFI disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})"
+                    ), (0, 8)))
+                    continue
+
+                case "Swap":
+                    while True:
+                        _size = parse_size(
+                            input(f"        Input new Swap disk ({CYAN}{BOLD}{disk}{suffix}2{CRESET}) size: "))
+                        if _size:
+                            swap_disk_size = _size
+                            break
+                    self.console.print(Padding(Text.from_ansi(
+                        f"Swap disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})"
+                    ), (0, 8)))
+                    continue
+
+                case "System":
+                    while True:
+                        _size = parse_size(
+                            input(f"        Input new System disk ({CYAN}{BOLD}/dev/strawberryos/system{CRESET}) size: "))
+                        if _size:
+                            system_disk_size = _size
+                            break
+                    self.console.print(Padding(Text.from_ansi(
+                        f"System disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})"
+                    ), (0, 8)))
+                    continue
+
+                case "Done":
+                    self.console.print(Padding(Text.from_ansi(
+                        f"\nModified partition scheme for StrawberryOS\n"
+                        f"   {GREEN}{BOLD}EFI on {CYAN}{disk}{suffix}1:{CRESET} {efi_disk_size / 1024}G ({efi_disk_size}M)\n"
+                        f"   {GREEN}{BOLD}Swap on {CYAN}{disk}{suffix}2:{CRESET} {swap_disk_size / 1024}G ({swap_disk_size}M)\n"
+                        f"   {GREEN}{BOLD}System on {CYAN}/dev/strawberryos/system:{CRESET} {system_disk_size / 1024}G ({system_disk_size}M)\n"
+                        f"   {GREEN}{BOLD}User on {CYAN}/dev/strawberryos/user:{CRESET} {user_disk_size / 1024}G ({user_disk_size}M)"
+                    ), (0, 8)))
+
+            return self.finalize(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
 
     def render(self):
         if DEV_FLAG_SKIP_DISK_INPUT:
@@ -159,7 +218,7 @@ class DiskView(Screen):
             print(CRESET, end="")
 
             if modify_disk_setup:
-                return self.finalize(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
+                return self.modify_disk_setup(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
             else:
                 return self.finalize(disk, suffix, efi_disk_size, system_disk_size, user_disk_size, swap_disk_size)
 
