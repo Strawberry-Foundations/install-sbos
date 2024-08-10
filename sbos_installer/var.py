@@ -7,7 +7,7 @@ CODENAME_LOWER = "chocolatecrisps"
 
 
 class Versions:
-    desktop = "2024.08"
+    desktop = "2024.08.1"
     desktop_sod = "2024.08"
     server = "2024.1"
 
