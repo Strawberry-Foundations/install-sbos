@@ -1,3 +1,5 @@
+import copy
+
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.ui.single_select_button import SingleSelectButton, ia_selection as ssb_ia_selection
 from sbos_installer.core.process import Runner
@@ -117,7 +119,9 @@ class DiskView(Screen):
                         _size = parse_size(
                             input(f"        Input new System disk ({CYAN}{BOLD}/dev/strawberryos/system{CRESET}) size: "))
                         if _size:
+                            old_system_disk_size = copy.deepcopy(system_disk_size)
                             system_disk_size = _size
+                            user_disk_size = user_disk_size - (system_disk_size - old_system_disk_size)
                             break
                     self.console.print(Padding(Text.from_ansi(
                         f"System disk size is now {GREEN}{BOLD}{_size / 1024}G{CRESET} ({GREEN}{BOLD}{_size}M{CRESET})"
