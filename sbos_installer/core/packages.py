@@ -20,4 +20,5 @@ package_list = {
     "General Utilities": "utils",
     "Python Runtime": "python3",
     "Open Source Firmware": "firmware-linux-free",
+    "AMD Graphics": "firmware-amd-graphics libgl1-mesa-dri libglx-mesa0 mesa-vulkan-drivers xserver-xorg-video-all",
 }
