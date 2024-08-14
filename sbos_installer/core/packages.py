@@ -11,7 +11,8 @@ base_package_list = {
     "utils": "neofetch htop btop",
     "python3": "python3 python3-dev python3-pip python-is-python3",
     "firmware-linux-free": "firmware-linux-free",
-    "firmware-linux-non-free": "firmware-linux-non-free firmware-misc-non-free"
+    "firmware-linux-non-free": "firmware-linux-non-free firmware-misc-non-free",
+    "amd-graphics": "firmware-amd-graphics libgl1-mesa-dri libglx-mesa0 mesa-vulkan-drivers xserver-xorg-video-all",
 }
 
 
@@ -20,5 +21,5 @@ package_list = {
     "General Utilities": "utils",
     "Python Runtime": "python3",
     "Open Source Firmware": "firmware-linux-free",
-    "AMD Graphics": "firmware-amd-graphics libgl1-mesa-dri libglx-mesa0 mesa-vulkan-drivers xserver-xorg-video-all",
+    "AMD Graphics": "amd-graphics",
 }
