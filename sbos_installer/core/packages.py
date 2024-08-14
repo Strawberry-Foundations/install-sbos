@@ -20,5 +20,4 @@ package_list = {
     "General Utilities": "utils",
     "Python Runtime": "python3",
     "Open Source Firmware": "firmware-linux-free",
-    "Proprietary Firmware": "firmware-linux-non-free",
 }
