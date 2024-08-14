@@ -23,6 +23,11 @@ def bootstrap(install_packages: list):
 
     runner.run(install_args)
 
+    print(f"\n{GREEN}{BOLD}Configuring apt ...{CRESET}")
+    with open(f"{ROOT_MNT}etc/apt/sources.list", 'w') as file:
+        file.write(f'deb https://deb.debian.org/debian trixie main contrib non-free non-free-firmware"')
+    runner.run(binder + " apt update")
+
     print(f"\n{GREEN}{BOLD}Installing additional packages ...{CRESET}")
 
     i = 1
