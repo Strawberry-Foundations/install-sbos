@@ -78,8 +78,6 @@ def bootstrap(install_packages: list):
 
     print(f"\n{GREEN}{BOLD}Installing spkg ...{CRESET}")
 
-    runner.run(binder + " wget https://spkg.strawberryfoundations.org/setup/spkg-git.deb -O /root/spkg-git.deb")
-    runner.run(binder + " apt install /root/spkg-git.deb")
-    runner.run(binder + " rm /root/spkg-git.deb")
+    runner.run(binder + " apt install spkg -y")
 
     print(f"\n{CYAN}{BOLD}Finished bootstrap of base system{CRESET}")
