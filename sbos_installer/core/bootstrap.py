@@ -54,12 +54,16 @@ def bootstrap(install_packages: list):
         i += 1
         print("")
 
-    print(f"\n{MAGENTA}{BOLD}Cleaning up system ...{CRESET}")
+    clear_screen()
+    Header("Cleaning up system ...")
     runner.run(binder + " apt update")
     runner.run(binder + " apt upgrade -y")
     runner.run(binder + " apt clean all")
     runner.run(binder + " apt autoclean")
     runner.run(binder + " apt autoremove -y")
+
+    clear_screen()
+    Header("Post-package setup ...")
 
     print(f"\n{GREEN}{BOLD}Installing StrawberryOS utils ...{CRESET}")
 
