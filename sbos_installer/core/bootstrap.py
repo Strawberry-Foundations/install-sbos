@@ -1,5 +1,7 @@
 from sbos_installer.core.packages import base_package_list, init_package
 from sbos_installer.core.process import Runner
+from sbos_installer.core.ui.screen import clear_screen
+from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
 from sbos_installer.var import ROOT_MNT
 
@@ -23,16 +25,31 @@ def bootstrap(install_packages: list):
 
     runner.run(install_args)
 
-    print(f"\n{GREEN}{BOLD}Configuring apt ...{CRESET}")
+    clear_screen()
+    Header("Configuring apt ...")
+    print("Configuring /etc/apt/sources.list")
+
     with open(f"{ROOT_MNT}etc/apt/sources.list", 'w') as file:
-        file.write(f'deb https://deb.debian.org/debian trixie main contrib non-free non-free-firmware"')
+        file.write(
+            f'deb https://deb.debian.org/debian trixie main contrib non-free non-free-firmware\n'
+            f'deb http://security.debian.org/debian-security trixie-security main non-free-firmware\n'
+            f'deb http://deb.debian.org/debian/ trixie-updates main non-free-firmware\n'
+            f'deb https://dl.strawberryfoundations.org/deb mainstream main'
+        )
+
+    print("Fetching StrawberryOS apt repo key ...")
+    runner.run(binder + " wget https://dl.strawberryfoundations.org/deb/key.public -O /etc/apt/trusted.gpg.d/strawberryos.asc")
+    print("Updating apt ...")
     runner.run(binder + " apt update")
 
-    print(f"\n{GREEN}{BOLD}Installing additional packages ...{CRESET}")
+    clear_screen()
+    Header("Installing additional packages ...")
 
     i = 1
     for package in packages:
-        command = runner.run(binder + " apt install -y " + base_package_list.get(package))
+        clear_screen()
+        Header(f"Installing additional packages ({i}/{len(base_package_list)}) ...")
+        runner.run(binder + " apt install -y " + base_package_list.get(package))
 
         i += 1
         print("")
