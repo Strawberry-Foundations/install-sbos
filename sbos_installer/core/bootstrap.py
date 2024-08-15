@@ -54,6 +54,7 @@ def bootstrap(install_packages: list):
         i += 1
         print("")
 
+    run("setfont")
     clear_screen()
     Header("Cleaning up system ...")
     runner.run(binder + " apt update")
