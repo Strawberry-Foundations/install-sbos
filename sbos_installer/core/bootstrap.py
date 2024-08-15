@@ -1,5 +1,5 @@
 from sbos_installer.core.packages import base_package_list, init_package
-from sbos_installer.core.process import Runner
+from sbos_installer.core.process import Runner, run
 from sbos_installer.core.ui.screen import clear_screen
 from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
