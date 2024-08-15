@@ -48,7 +48,7 @@ def bootstrap(install_packages: list):
     i = 1
     for package in packages:
         clear_screen()
-        Header(f"Installing additional packages ({i}/{len(base_package_list)}) ...")
+        Header(f"Installing additional packages ({i}/{len(packages)}) ...")
         runner.run(binder + " apt install -y " + base_package_list.get(package))
 
         i += 1
