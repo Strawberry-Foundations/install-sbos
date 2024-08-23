@@ -146,6 +146,7 @@ try:
 
     # todo:
     #  - add StrawberryOS recovery
+    #  - replace installation of custom files (e.g. /etc/motd) with binpkg
 
     KeyboardLayout()
 
@@ -275,6 +276,12 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
         _file.write("\n")
 
     # Add custom /etc/issue
+    with open(f"{ROOT_MNT}etc/issue", 'w') as file:
+        file.write(r"StrawberryOS Chocolate Crisps \n \l"
+                   "\n\n"
+                   r"")
+
+    # Add custom /etc/motd
     with open(f"{ROOT_MNT}etc/issue", 'w') as file:
         file.write(r"StrawberryOS Chocolate Crisps \n \l"
                    "\n\n"
