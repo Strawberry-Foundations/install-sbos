@@ -146,6 +146,7 @@ try:
 
     # todo:
     #  - add StrawberryOS recovery
+    #  - add custom /etc/motd (via binpkg)
     #  - replace installation of custom files (e.g. /etc/motd) with binpkg
 
     KeyboardLayout()
