@@ -36,9 +36,6 @@ class WarningView:
             input()
         except KeyboardInterrupt:
             self.console.clear()
-            self.console.print(Text.from_ansi(
-                f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
-            ), justify="center")
             self.console.show_cursor(True)
             sys.exit(1)
 
