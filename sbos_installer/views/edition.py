@@ -3,7 +3,7 @@ from sbos_installer.core.ui.screen import Screen
 from sbos_installer.var import Versions
 
 
-class OSTypeView(Screen):
+class EditionView(Screen):
     title = "Choose the type of installation"
 
     def __init__(self):
@@ -36,7 +36,7 @@ class OSTypeView(Screen):
             group=group
         )
 
-        ostype_select = ia_selection(
+        edition_select = ia_selection(
             question="",
             options=group,
             flags=["desktop", "desktop_sod", "server"]
@@ -44,4 +44,4 @@ class OSTypeView(Screen):
 
         self.console.show_cursor(True)
 
-        return ostype_select
+        return edition_select
