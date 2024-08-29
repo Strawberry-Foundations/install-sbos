@@ -1,5 +1,3 @@
-import rich.text
-
 from sbos_installer.core.process import run, check_root_permissions, check_uefi_capability, Runner
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
