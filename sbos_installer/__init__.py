@@ -12,6 +12,7 @@ from sbos_installer.var import *
 from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
 from sbos_installer.views.warning import WarningView
+from sbos_installer.views.start import StartView
 from sbos_installer.views.kbd import KeyboardLayout
 from sbos_installer.views.ostype import OSTypeView
 from sbos_installer.views.hostname import HostnameView
@@ -54,95 +55,7 @@ if DEV_FLAG_DEV_MODE:
 try:
     runner = Runner(True)
 
-
-    def _selection():
-        clear_screen()
-
-        Header("Welcome to the StrawberryOS Installer!")
-
-        console.show_cursor(False)
-
-        console.print(
-            f"Thanks for choosing StrawberryOS!\n"
-            f"The StrawberryOS Installer will guide you through the installation process.\n",
-            justify="center"
-        )
-
-        console.print(
-            Text.from_ansi(
-                f"{GREEN}{BOLD}! {CRESET}Use UP and DOWN to navigate, ENTER to continue\n\n"
-            ), justify="center"
-        )
-
-        group = []
-
-        SelectButton(
-            label=f"(->) Start installation",
-            description="Start with the installation of StrawberryOS",
-            group=group
-        )
-
-        SelectButton(
-            label=f"(>_) Open a console",
-            description="Open a console if you need to make changes beforehand. "
-                        "You can start the installer again using 'setup-strawberryos'",
-            group=group
-        )
-
-        SelectButton(
-            label=f"(?) About StrawberryOS Installer",
-            description="Learn more about the new StrawberryOS Installer (NucleusV2)",
-            group=group
-        )
-
-        SelectButton(
-            label=f"(!) Update StrawberryOS Installer",
-            description="Check whether there is a new update for the installer",
-            group=group
-        )
-
-        try:
-            selection = ia_selection(
-                question="",
-                options=group,
-                flags=["start", "console", "about", "update"]
-            )
-        except KeyboardInterrupt:
-            console.clear()
-            console.print(Text.from_ansi(
-                f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
-            ), justify="center")
-            console.show_cursor(True)
-            sys.exit(0)
-
-        console.show_cursor(True)
-
-        match selection:
-            case "console":
-                clear_screen()
-
-                try:
-                    with open("/etc/motd", 'r') as _motd:
-                        print(_motd.read(), end="")
-
-                except (FileNotFoundError, Exception):
-                    pass
-
-                sys.exit(0)
-
-            case "about":
-                AboutView()
-                clear_screen()
-                _selection()
-
-            case "update":
-                run("update-installer")
-                clear_screen()
-                python = sys.executable
-                os.execv(python, ['python3'] + sys.argv)
-
-
-    _selection()
+    StartView()
 
     # todo:
     #  - add StrawberryOS recovery
