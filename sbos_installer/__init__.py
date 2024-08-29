@@ -65,12 +65,12 @@ try:
     KeyboardLayout()
 
     # General installation config steps
-    v.os_type = EditionView().val  # Choose which edition of StrawberryOS you want to install
+    v.edition = EditionView().val  # Choose which edition of StrawberryOS you want to install
     v.hostname = HostnameView().val  # Setup hostname
     v.net_stat = NetworkView().val  # Setup network
     v.region, v.city = TimezoneView().val  # Setup timezone
     v.user_setup = UserView().val  # Setup user
-    v.packages = PackageView(v.os_type).val  # Setup packages
+    v.packages = PackageView(v.edition).val  # Setup packages
     v.disk_data, disk = DiskView().val  # Setup disk
 
     install_data = {
@@ -141,7 +141,7 @@ try:
         Header("Configuring hostname ...")
         configure_hostname(v.hostname)  # Configure users
 
-        match v.os_type:
+        match v.edition:
             case "desktop":
                 os_release_version = Versions.desktop
             case "desktop_sod":
@@ -167,7 +167,7 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
             )
 
         BootloaderView(disk)  # Install & configure bootloader
-        if not v.os_type == "server":
+        if not v.edition == "server":
             DesktopView()  # Install desktop
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
