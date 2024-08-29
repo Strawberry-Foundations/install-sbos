@@ -14,7 +14,7 @@ class Versions:
 
 class Vars:
     def __init__(self):
-        self.os_type = None
+        self.edition = None
         self.hostname = None
         self.net_stat = None
         self.region = None
