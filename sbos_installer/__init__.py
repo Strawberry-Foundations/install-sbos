@@ -1,3 +1,5 @@
+import rich.text
+
 from sbos_installer.core.process import run, check_root_permissions, check_uefi_capability, Runner
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
@@ -208,8 +210,9 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
     FinishView()
 
 except KeyboardInterrupt:
-    console.clear()
-    InfoView(warning_message="Exited installation process")
+    InfoView(
+        f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}'"
+    )
     console.clear()
     console.show_cursor(True)
     sys.exit(0)
