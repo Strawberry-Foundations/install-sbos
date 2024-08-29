@@ -33,7 +33,6 @@ from sbos_installer.steps.locale import configure_timezone_system
 from sbos_installer.steps.user import configure_users
 
 from rich.console import Console
-from rich.text import Text
 
 import sys
 import time
