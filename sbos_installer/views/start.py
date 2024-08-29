@@ -58,20 +58,11 @@ class StartView(Screen):
             group=group
         )
 
-        try:
-            selection = ia_selection(
-                question="",
-                options=group,
-                flags=["start", "console", "about", "update"]
-            )
-
-        except KeyboardInterrupt:
-            self.console.clear()
-            self.console.print(Text.from_ansi(
-                f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
-            ), justify="center")
-            self.console.show_cursor(True)
-            sys.exit(0)
+        selection = ia_selection(
+            question="",
+            options=group,
+            flags=["start", "console", "about", "update"]
+        )
 
         match selection:
             case "console":
