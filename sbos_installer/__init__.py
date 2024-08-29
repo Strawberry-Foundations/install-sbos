@@ -9,7 +9,6 @@ from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
 from sbos_installer.var import *
 
-from sbos_installer.views.about import AboutView
 from sbos_installer.views.error import ErrorView
 from sbos_installer.views.warning import WarningView
 from sbos_installer.views.start import StartView
