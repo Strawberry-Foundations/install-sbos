@@ -1,6 +1,7 @@
 from sbos_installer import clear_screen
 from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
+from sbos_installer.views.info import InfoView
 
 from rich.console import Console
 from rich.text import Text
@@ -32,15 +33,7 @@ class ErrorView:
 
         self.console.print("\nPress Enter to exit the installer", justify="center")
 
-        try:
-            input()
-        except KeyboardInterrupt:
-            self.console.clear()
-            self.console.print(Text.from_ansi(
-                f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
-            ), justify="center")
-            self.console.show_cursor(True)
-            sys.exit(1)
+        input()
 
         print(CRESET)
         self.console.show_cursor(True)
