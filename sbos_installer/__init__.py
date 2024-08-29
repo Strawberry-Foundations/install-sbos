@@ -16,7 +16,7 @@ from sbos_installer.views.warning import WarningView
 from sbos_installer.views.info import InfoView
 from sbos_installer.views.start import StartView
 from sbos_installer.views.kbd import KeyboardLayout
-from sbos_installer.views.ostype import OSTypeView
+from sbos_installer.views.edition import EditionView
 from sbos_installer.views.hostname import HostnameView
 from sbos_installer.views.network import NetworkView
 from sbos_installer.views.timezone import TimezoneView
@@ -65,7 +65,7 @@ try:
     KeyboardLayout()
 
     # General installation config steps
-    v.os_type = OSTypeView().val  # Choose which edition of StrawberryOS you want to install
+    v.os_type = EditionView().val  # Choose which edition of StrawberryOS you want to install
     v.hostname = HostnameView().val  # Setup hostname
     v.net_stat = NetworkView().val  # Setup network
     v.region, v.city = TimezoneView().val  # Setup timezone
