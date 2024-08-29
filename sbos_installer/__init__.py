@@ -11,6 +11,7 @@ from sbos_installer.var import *
 
 from sbos_installer.views.error import ErrorView
 from sbos_installer.views.warning import WarningView
+from sbos_installer.views.info import InfoView
 from sbos_installer.views.start import StartView
 from sbos_installer.views.kbd import KeyboardLayout
 from sbos_installer.views.ostype import OSTypeView
@@ -209,8 +210,7 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
 
 except KeyboardInterrupt:
     console.clear()
-    console.print(Text.from_ansi(
-        f"-- {YELLOW}{BOLD}Exited installation process{CRESET} --"
-    ), justify="center")
+    InfoView(warning_message="Exited installation process")
+    console.clear()
     console.show_cursor(True)
-    sys
+    sys.exit(0)
