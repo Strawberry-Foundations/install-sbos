@@ -1,4 +1,4 @@
-version = "2.2.11"
+version = "2.2.12"
 
 ROOT_MNT = "/mnt/"
 
@@ -7,9 +7,9 @@ CODENAME_LOWER = "chocolatecrisps"
 
 
 class Versions:
-    desktop = "2024.08.1"
-    desktop_sod = "2024.08"
-    server = "2024.1"
+    desktop = "2024.09"
+    desktop_sod = "2024.09"
+    server = "2024.1.1"
 
 
 class Vars:
