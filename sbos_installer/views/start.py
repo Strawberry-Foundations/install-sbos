@@ -75,6 +75,7 @@ class StartView(Screen):
                 except (FileNotFoundError, Exception):
                     pass
 
+                self.console.show_cursor(True)
                 sys.exit(0)
 
             case "about":
