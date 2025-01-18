@@ -1,15 +1,15 @@
-version = "2.2.12"
+version = "2.2.13"
 
 ROOT_MNT = "/mnt/"
 
-CODENAME_FULL = "Chocolate Crisps"
-CODENAME_LOWER = "chocolatecrisps"
+CODENAME_FULL = "Lemon Tea"
+CODENAME_LOWER = "lemontea"
 
 
 class Versions:
-    desktop = "2024.09"
-    desktop_sod = "2024.09"
-    server = "2024.1.1"
+    desktop = "2025.01"
+    desktop_sod = "2025.01"
+    server = "2025.1.0"
 
 
 class Vars:
