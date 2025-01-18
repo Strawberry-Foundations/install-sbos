@@ -1,4 +1,4 @@
-version = "2.2.13"
+VERSION = "2.2.13"
 
 ROOT_MNT = "/mnt/"
 
@@ -12,11 +12,11 @@ class Versions:
     server = "2025.1.0"
 
 
-class Vars:
+class Setup:
     def __init__(self):
         self.edition = None
         self.hostname = None
-        self.net_stat = None
+        self.net_interface = None
         self.region = None
         self.city = None
         self.user_setup = None
