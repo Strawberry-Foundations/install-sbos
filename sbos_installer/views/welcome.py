@@ -10,7 +10,7 @@ import sys
 import os
 
 
-class StartView(Screen):
+class WelcomeView(Screen):
     title = "Welcome to the StrawberryOS Installer!"
 
     def __init__(self):
