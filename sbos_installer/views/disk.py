@@ -47,26 +47,24 @@ class DiskView(Screen):
                 time.sleep(0.5)
 
                 return {
-                    "disk": {
-                        "custom_partitioning": False,
-                        "file_system": file_system,
-                        disk: {
-                            "efi": {
-                                "block": f"{disk}{suffix}1",
-                                "size": efi_disk_size
-                            },
-                            "system": {
-                                "block": "/dev/strawberryos/system",
-                                "size": system_disk_size
-                            },
-                            "user": {
-                                "block": "/dev/strawberryos/user",
-                                "size": user_disk_size
-                            },
-                            "swap": {
-                                "block": f"{disk}{suffix}2",
-                                "size": swap_disk_size
-                            }
+                    "custom_partitioning": False,
+                    "file_system": file_system,
+                    disk: {
+                        "efi": {
+                            "block": f"{disk}{suffix}1",
+                            "size": efi_disk_size
+                        },
+                        "system": {
+                            "block": "/dev/strawberryos/system",
+                            "size": system_disk_size
+                        },
+                        "user": {
+                            "block": "/dev/strawberryos/user",
+                            "size": user_disk_size
+                        },
+                        "swap": {
+                            "block": f"{disk}{suffix}2",
+                            "size": swap_disk_size
                         }
                     }
                 }, disk
