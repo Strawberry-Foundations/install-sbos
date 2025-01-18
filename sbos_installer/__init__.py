@@ -1,9 +1,7 @@
 from sbos_installer.core.process import run, check_root_permissions, check_uefi_capability, Runner
 from sbos_installer.core.bootstrap import bootstrap
 from sbos_installer.core.initramfs import setup_initramfs
-from sbos_installer.core.ui.select_button import SelectButton, ia_selection
 from sbos_installer.core.ui.header import Header
-from sbos_installer.utils import modify_file_entry
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import *
 from sbos_installer.dev import *
@@ -12,7 +10,7 @@ from sbos_installer.var import *
 from sbos_installer.views.error import ErrorView
 from sbos_installer.views.warning import WarningView
 from sbos_installer.views.info import InfoView
-from sbos_installer.views.start import StartView
+from sbos_installer.views.welcome import WelcomeView
 from sbos_installer.views.kbd import KeyboardLayout
 from sbos_installer.views.edition import EditionView
 from sbos_installer.views.hostname import HostnameView
@@ -39,80 +37,67 @@ import time
 
 
 console = Console()
-v = Vars()
+setup = Setup()
 
 if not check_root_permissions():
-    ErrorView(error_message="The Installer requires root permissions to continue.")
+    ErrorView("The Installer requires root permissions to continue.")
 
 if not check_uefi_capability():
-    ErrorView(error_message="The StrawberryOS Installer currently only supports UEFI-capable computers")
+    ErrorView("The StrawberryOS Installer currently only supports UEFI-capable computers")
 
 if DEV_FLAG_DEV_MODE:
     WarningView("Developer mode is enabled!\nSome functions could possibly be skipped. Only use this if you are sure!")
 
+"""
+# Todo:
+  - Add StrawberryOS recovery
+  - Add custom /etc/motd (via binpkg)
+  - Replace installation of custom files (e.g. /etc/motd) with binpkg
+"""
+
 try:
     runner = Runner(True)
 
-    StartView()
-
-    # todo:
-    #  - add StrawberryOS recovery
-    #  - add custom /etc/motd (via binpkg)
-    #  - replace installation of custom files (e.g. /etc/motd) with binpkg
-
+    WelcomeView()
     KeyboardLayout()
 
     # General installation config steps
-    v.edition = EditionView().val  # Choose which edition of StrawberryOS you want to install
-    v.hostname = HostnameView().val  # Setup hostname
-    v.net_stat = NetworkView().val  # Setup network
-    v.region, v.city = TimezoneView().val  # Setup timezone
-    v.user_setup = UserView().val  # Setup user
-    v.packages = PackageView(v.edition).val  # Setup packages
-    v.disk_data, disk = DiskView().val  # Setup disk
-
-    install_data = {
-        "hostname": v.hostname,
-        "net_interface": v.net_stat,
-        "timezone": {
-            "region": v.region,
-            "city": v.city
-        },
-        "packages": v.packages
-    }
-
-    install_data.update(v.user_setup)
-    install_data.update(v.disk_data)
+    setup.edition = EditionView().val
+    setup.hostname = HostnameView().val  # Setup hostname
+    setup.net_interface = NetworkView().val  # Setup network
+    setup.region, setup.city = TimezoneView().val  # Setup timezone
+    setup.user_setup = UserView().val  # Setup user
+    setup.packages = PackageView(setup.edition).val  # Setup packages
+    setup.disk_data, setup.disk = DiskView().val  # Setup disk
 
     # Show overview of installation config
-    OverviewScreenView(install_data, disk)
+    OverviewScreenView(setup)
 
     clear_screen()
     Header("Creating disk partitions ...")
 
     # Create disk partitions and mount disk
-    if not v.disk_data["disk"]["custom_partitioning"]:
-        configure_partitions(disk, install_data)
+    if not setup.disk_data["disk"]["custom_partitioning"]:
+        configure_partitions(setup)
         time.sleep(0.5)
-        configure_lvm(disk, install_data)
+        configure_lvm(setup)
 
         run(f"mount --mkdir /dev/strawberryos/system {ROOT_MNT}")
-        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} {ROOT_MNT}boot/efi")
+        run(f"mount --mkdir {setup.disk_data[setup.disk]['efi']['block']} {ROOT_MNT}boot/efi")
 
     else:
-        run(f"mount --mkdir {install_data['disk'][disk]['system']['block']} {ROOT_MNT}")
-        run(f"mount --mkdir {install_data['disk'][disk]['efi']['block']} {ROOT_MNT}boot/efi")
+        run(f"mount --mkdir {setup.disk_data[setup.disk]['system']['block']} {ROOT_MNT}")
+        run(f"mount --mkdir {setup.disk_data[setup.disk]['efi']['block']} {ROOT_MNT}boot/efi")
 
     if not DEV_FLAG_SKIP_BOOTSTRAP:
         clear_screen()
         Header("Installing base system ...")
-
-        bootstrap(v.packages)
+        bootstrap(setup.packages)
+        
     if not DEV_FLAG_SKIP_INITRAMFS:
         clear_screen()
         Header("Installing & configuring Initramfs ...")
-
-        setup_initramfs(install_data['disk'][disk]['user']['block'])
+        setup_initramfs(setup.disk_data[setup.disk]['user']['block'])
 
     print(f"{GREEN}Finished.{CRESET}")
     time.sleep(0.85)
@@ -129,17 +114,17 @@ try:
     if not DEV_FLAG_SKIP_POST_SETUP or not DEV_DRY_RUN:
         clear_screen()
         Header("Configuring timezone ...")
-        configure_timezone_system(v.region, v.city)  # Configure timezone
+        configure_timezone_system(setup.region, setup.city)  # Configure timezone
 
         clear_screen()
         Header("Configuring users ...")
-        configure_users(v.user_setup)  # Configure users
+        configure_users(setup.user_setup)  # Configure users
 
         clear_screen()
         Header("Configuring hostname ...")
-        configure_hostname(v.hostname)  # Configure users
+        configure_hostname(setup.hostname)  # Configure users
 
-        match v.edition:
+        match setup.edition:
             case "desktop":
                 os_release_version = Versions.desktop
             case "desktop_sod":
@@ -164,27 +149,24 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
 '''
             )
 
-        BootloaderView(disk)  # Install & configure bootloader
-        if not v.edition == "server":
+        BootloaderView(setup.disk)  # Install & configure bootloader
+        
+        if not setup.edition == "server":
             DesktopView()  # Install desktop
 
     # Mount userspace & copy root's .bashrc from systemspace to userspace
-    run(f"mount --mkdir {install_data['disk'][disk]['user']['block']} {ROOT_MNT}user")
+    run(f"mount --mkdir {setup.disk_data[setup.disk]['user']['block']} {ROOT_MNT}user")
     run(f"mkdir -p {ROOT_MNT}user/data/root")
     run(f"cp {ROOT_MNT}/root/.bashrc {ROOT_MNT}user/data/root")
 
     # Modify root's userspace PS1 variable
     with open(f"{ROOT_MNT}user/data/root/.bashrc", "a") as _file:
-        _file.write(
-            r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'"
-        )
+        _file.write(r"PS1='\[\e[0m\][\[\e[0;1;91m\]\u\[\e[0;1;38;5;226m\]@\[\e[0;1;96m\]\H \[\e[0;1;38;5;161m\]\w\[\e[0m\]] \[\e[0;1m\]\$ \[\e[0m\]'")
         _file.write("\n")
 
     # Modify root's systemspace PS1 variable
     with open(f"{ROOT_MNT}root/.bashrc", "a") as _file:
-        _file.write(
-            r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '"
-        )
+        _file.write(r"PS1='\[\e[92;1m\][ System ] \[\e[91m\]\u\[\e[93m\]@\[\e[91m\]\H\[\e[0m\] \[\e[96;1m\]\w\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '")
         _file.write("\n")
 
     # Add custom /etc/issue

@@ -1,6 +1,7 @@
 from sbos_installer.core.process import Runner
 from sbos_installer.utils.colors import *
 from sbos_installer.views.error import ErrorView
+from sbos_installer.var import Setup
 
 
 def get_partition_suffix(device):
@@ -10,19 +11,19 @@ def get_partition_suffix(device):
         return ""
 
 
-def configure_lvm(disk, disk_data):
+def configure_lvm(setup: Setup):
     runner = Runner(True)
-    suffix = get_partition_suffix(disk)
+    suffix = get_partition_suffix(setup.disk)
+    disk_data = setup.disk_data[setup.disk]
     file_system = disk_data["disk"]["file_system"]
-    disk_data = disk_data["disk"][disk]
 
     print(f"\n{GREEN}{BOLD}Formatting base partitions ...{CRESET}")
-    runner.run(f"mkfs.fat -F 32 {disk}{suffix}1")
-    runner.run(f"mkswap {disk}{suffix}2")
+    runner.run(f"mkfs.fat -F 32 {setup.disk}{suffix}1")
+    runner.run(f"mkswap {setup.disk}{suffix}2")
 
     print(f"\n{GREEN}{BOLD}Creating LVM group ...{CRESET}")
-    runner.run(f"pvcreate {disk}{suffix}3 -ff -y ")
-    runner.run(f"vgcreate strawberryos {disk}{suffix}3")
+    runner.run(f"pvcreate {setup.disk}{suffix}3 -ff -y ")
+    runner.run(f"vgcreate strawberryos {setup.disk}{suffix}3")
     runner.run(f"lvcreate -L {disk_data['system']['size']}M -n system strawberryos")
     runner.run(f"lvcreate -l 100%FREE -n user strawberryos")
 
