@@ -34,6 +34,7 @@ from rich.console import Console
 
 import sys
 import time
+import traceback
 
 
 console = Console()
@@ -198,10 +199,12 @@ except KeyboardInterrupt:
     sys.exit(0)
 
 except Exception as e:
+    error_trace = traceback.format_exc()
     ErrorView(
         "Something went wrong during the installation of StrawberryOS and the installation cannot continue.\n\n"
         f"{YELLOW}Error Details{CRESET}\n"
         f"Exception in sbos_installer: {e}\n\n"
+        f"Full traceback:\n{error_trace}\n\n"
         f"{YELLOW}Important{CRESET}\n"
         "This is not normal behavior and should be reported to the StrawberryOS team.\nTry updating the installer to the latest version.\n"
         "If the issue persists, please report it to the developers.\n\n"
