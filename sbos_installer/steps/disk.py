@@ -1,10 +1,5 @@
 from sbos_installer.core.process import Runner
-from sbos_installer.steps.lvm import get_partition_suffix
-from sbos_installer.cli.selection import ia_selection
-from sbos_installer.cli.parser import parse_bool
-from sbos_installer.cli.input import parse_size
 from sbos_installer.utils.colors import *
-from sbos_installer.dev import DEV_FLAG_SKIP_DISK_INPUT
 from sbos_installer.var import Setup
 
 import subprocess
