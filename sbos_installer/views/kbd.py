@@ -44,8 +44,7 @@ class KeyboardLayout(Screen):
             print()
             self.console.print(Padding(
                 Text.from_ansi(
-                    f"{YELLOW}[!] {GRAY}The entry of a non-existent keyboard layout is ignored and the default "
-                    f"layout is automatically used{CRESET}\n\n"
+                    f"{YELLOW}[!] {GRAY}The entry of a non-existent keyboard layout can cause problems{CRESET}\n\n"
                 ),
                 (0, 8)
             ))
