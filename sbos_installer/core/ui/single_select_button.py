@@ -46,7 +46,7 @@ class SingleSelectButtonGroup:
             return " " * length
 
         def _choices_print():
-            for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
+            for i, (option, _) in enumerate(zip_longest(options, flags, fillvalue='')):
                 if i == __INDEX:
                     len_label = len(option.label)
                     remaining = 33 - len_label
@@ -69,12 +69,16 @@ class SingleSelectButtonGroup:
         def _main_loop():
             kg = KeyGetter()
             _choices_print()
+            
             while True:
                 key = ord(kg.getch())
+                
                 if key in __ARROWS:
                     _move_pointer(key)
+                    
                 _choices_clear()
                 _choices_print()
+                
                 if key == __ENTER:
                     _choices_clear()
                     _choices_print()
