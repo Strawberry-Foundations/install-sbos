@@ -1,6 +1,6 @@
 from sbos_installer.core.ui.screen import clear_screen
 from sbos_installer.core.process import run
-from sbos_installer.core.ui.select_button import SelectButton, ia_selection
+from sbos_installer.core.ui.select_button import SelectButton, SelectButtonGroup
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.utils.colors import *
 
@@ -26,26 +26,24 @@ class FinishView(Screen):
 
         self.console.show_cursor(False)
 
-        group = []
+        group = SelectButtonGroup()
 
-        SelectButton(
-            label=f"(->) Reboot",
-            description="Restart your computer to start your new system",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"(->) Reboot",
+                description="Restart your computer to start your new system"
+            )
         )
 
-        SelectButton(
-            label=f"(>_) Open a console",
-            description="Open a console if you need to make changes to your new system. "
-                        "You can restart your computer by using the 'reboot' command",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"(>_) Open a console",
+                description="Open a console if you need to make changes to your new system. "
+                "You can restart your computer by using the 'reboot' command"
+            )
         )
 
-        action = ia_selection(
-            question="",
-            options=group,
-            flags=["reboot", "console"]
-        )
+        action = group.selection(flags=["reboot", "console"])
 
         match action:
             case "reboot":

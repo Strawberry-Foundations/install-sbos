@@ -1,5 +1,5 @@
 from sbos_installer.core.ui.screen import Screen
-from sbos_installer.core.ui.select_button import SelectButton, ia_selection
+from sbos_installer.core.ui.select_button import SelectButton, SelectButtonGroup
 from sbos_installer.core.process import run
 from sbos_installer.views.about import AboutView
 from sbos_installer.utils.colors import *
@@ -31,38 +31,39 @@ class WelcomeView(Screen):
             ), justify="center"
         )
 
-        group = []
-
-        SelectButton(
-            label=f"(->) Start installation",
-            description="Start with the installation of StrawberryOS",
-            group=group
+        group = SelectButtonGroup()
+        
+        group.append(
+            SelectButton(
+                label=f"(->) Start installation",
+                description="Start with the installation of StrawberryOS"
+            )
         )
 
-        SelectButton(
-            label=f"(>_) Open a console",
-            description="Open a console if you need to make changes beforehand. "
-                        "You can start the installer again using 'setup-strawberryos'",
-            group=group
+        
+        group.append(
+            SelectButton(
+                label=f"(>_) Open a console",
+                description="Open a console if you need to make changes beforehand. "
+                            "You can start the installer again using 'setup-strawberryos'"
+            )
         )
 
-        SelectButton(
-            label=f"(?) About StrawberryOS Installer",
-            description="Learn more about the new StrawberryOS Installer (NucleusV2)",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"(?) About StrawberryOS Installer",
+                description="Learn more about the new StrawberryOS Installer (NucleusV2)"
+            )
         )
 
-        SelectButton(
-            label=f"(!) Update StrawberryOS Installer",
-            description="Check whether there is a new update for the installer",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"(!) Update StrawberryOS Installer",
+                description="Check whether there is a new update for the installer"
+            )
         )
 
-        selection = ia_selection(
-            question="",
-            options=group,
-            flags=["start", "console", "about", "update"]
-        )
+        selection = group.selection(flags=["start", "console", "about", "update"])
 
         match selection:
             case "console":

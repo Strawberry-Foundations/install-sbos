@@ -1,4 +1,4 @@
-from sbos_installer.core.ui.select_button import SelectButton, ia_selection
+from sbos_installer.core.ui.select_button import SelectButton, SelectButtonGroup
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.var import Versions
 
@@ -14,33 +14,34 @@ class EditionView(Screen):
         self.console.print("StrawberryOS has different editions to choose from\n", justify="center")
         self.console.show_cursor(False)
 
-        group = []
+        group = SelectButtonGroup()
 
-        SelectButton(
-            label=f"StrawberryOS Desktop ({Versions.desktop})",
-            description="The standard version of StrawberryOS - With all the necessary tools "
-                        "from us and a selection of desktops",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"StrawberryOS Desktop ({Versions.desktop})",
+                description="The standard version of StrawberryOS - With all the necessary tools "
+                "from us and a selection of desktops"
+            )
         )
 
-        SelectButton(
-            label=f"StrawberryOS Desktop with Open Directory ({Versions.desktop_sod})",
-            description="StrawberryOS with configured Open Directory. Useful for schools, workplaces, and "
-            "also the one or other private use",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"StrawberryOS Desktop with Open Directory ({Versions.desktop_sod})",
+                description="StrawberryOS with configured Open Directory. Useful for schools, workplaces, and "
+                "also the one or other private use"
+            )
         )
 
-        SelectButton(
-            label=f"StrawberryOS Server ({Versions.server})",
-            description="A minimal environment of StrawberryOS without a desktop. Includes additional server utilities",
-            group=group
+        group.append(
+            SelectButton(
+                label=f"StrawberryOS Server ({Versions.server})",
+                description="A minimal environment of StrawberryOS without a desktop. Includes additional server utilities",
+                group=group
+            )
         )
 
-        edition_select = ia_selection(
-            question="",
-            options=group,
-            flags=["desktop", "desktop_sod", "server"]
-        )
+
+        edition_select = group.selection(flags=["desktop", "desktop_sod", "server"])
 
         self.console.show_cursor(True)
 
