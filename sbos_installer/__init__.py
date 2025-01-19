@@ -191,9 +191,7 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
     FinishView()
 
 except KeyboardInterrupt:
-    InfoView(
-        f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}'"
-    )
+    InfoView(f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}'")
     console.clear()
     console.show_cursor(True)
     sys.exit(0)
@@ -204,7 +202,7 @@ except Exception as e:
         "Something went wrong during the installation of StrawberryOS and the installation cannot continue.\n\n"
         f"{YELLOW}Error Details{CRESET}\n"
         f"Exception in sbos_installer: {e}\n\n"
-        f"Full traceback:\n{error_trace}\n\n"
+        f"{YELLOW}Full traceback{CRESET}\n{error_trace}\n\n"
         f"{YELLOW}Important{CRESET}\n"
         "This is not normal behavior and should be reported to the StrawberryOS team.\nTry updating the installer to the latest version.\n"
         "If the issue persists, please report it to the developers.\n\n"
