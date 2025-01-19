@@ -61,6 +61,13 @@ class WelcomeView(Screen):
                 description="Check whether there is a new update for the installer"
             )
         )
+        
+        group.append(
+            SelectButton(
+                label=f"(->) Reboot",
+                description="Restart your computer"
+            )
+        )
 
         selection = group.selection(flags=["start", "console", "about", "update"])
 
@@ -88,6 +95,9 @@ class WelcomeView(Screen):
                 self.console.clear()
                 python = sys.executable
                 os.execv(python, ['python3'] + sys.argv)
+                
+            case "reboot":
+                run("reboot")
 
         self.console.show_cursor(True)
         return None
