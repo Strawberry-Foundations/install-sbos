@@ -33,7 +33,7 @@ class SelectButtonGroup:
         print(question)
         return self._draw_ia_selection(self.buttons, flags)
 
-    def _print_and_measure_text(text):
+    def _print_and_measure_text(self, text):
         console = Console()
         rich_text = Text.from_ansi(f"{GRAY}{text}{RESET}")
         rich_text = Padding(rich_text, (0, 8))
@@ -51,7 +51,7 @@ class SelectButtonGroup:
 
         return num_lines
 
-    def _measure_text(options):
+    def _measure_text(self, options):
         length = 0
 
         console = Console()
