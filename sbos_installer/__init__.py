@@ -200,9 +200,9 @@ except KeyboardInterrupt:
 except Exception as e:
     ErrorView(
         "Something went wrong during the installation of StrawberryOS and the installation cannot continue.\n\n"
-        f"{YELLOW}{UNDERLINE}Error Details{CRESET}\n"
+        f"{YELLOW}Error Details{CRESET}\n"
         f"Exception in sbos_installer: {e}\n\n"
-        f"{YELLOW}{UNDERLINE}Important{CRESET}\n"
+        f"{YELLOW}Important{CRESET}\n"
         "This is not normal behavior and should be reported to the StrawberryOS team.\nTry updating the installer to the latest version.\n"
         "If the issue persists, please report it to the developers.\n\n"
         "Please provide the error details above and the output of the installer to the developers.\n"

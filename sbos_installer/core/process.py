@@ -25,11 +25,11 @@ def check_uefi_capability():
 def show_error(command: subprocess.CompletedProcess[bytes]):
     ErrorView(
         "Something went wrong during the installation of StrawberryOS and the installation cannot continue.\n\n"
-        f"{YELLOW}{UNDERLINE}Error Details{CRESET}\n"
+        f"{YELLOW}Error Details{CRESET}\n"
         f"Command '{GREEN}{command.args}{CRESET}' returned with return code {RED}{command.returncode}{CRESET}\n\n"
-        f"{YELLOW}{UNDERLINE}Command Output{CRESET}\n{command.stdout}\n\n"
-        f"{YELLOW}{UNDERLINE}Command Error{CRESET}\n{command.stderr}\n\n"
-        f"{YELLOW}{UNDERLINE}Important{CRESET}\n"
+        f"{YELLOW}Command Output{CRESET}\n{command.stdout}\n\n"
+        f"{YELLOW}Command Error{CRESET}\n{command.stderr}\n\n"
+        f"{YELLOW}Important{CRESET}\n"
         "This is not normal behavior and should be reported to the StrawberryOS team.\n"
         "Please provide the error details above and the output of the installer to the developers.\n"
         f"{LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}"
