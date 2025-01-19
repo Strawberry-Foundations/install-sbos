@@ -35,8 +35,7 @@ class EditionView(Screen):
         group.append(
             SelectButton(
                 label=f"StrawberryOS Server ({Versions.server})",
-                description="A minimal environment of StrawberryOS without a desktop. Includes additional server utilities",
-                group=group
+                description="A minimal environment of StrawberryOS without a desktop. Includes additional server utilities"
             )
         )
 
