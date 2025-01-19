@@ -11,7 +11,8 @@ class Checkbox:
 
     def __str__(self):
         return f"{self.label}"
-    
+
+
 class CheckboxGroup:
     def __init__(self):
         self.checkboxes = []
@@ -28,100 +29,107 @@ class CheckboxGroup:
     def __len__(self):
         return len(self.checkboxes)
 
-
     def selection(self, question: str = "", flags: list = None) -> str:
         print(question)
-        return _draw_ia_selection(self.checkboxes, flags)
+        return self._draw_ia_selection(self.checkboxes, flags)
 
 
-def _draw_ia_selection(options: list, flags: list = None):
-    width = get_terminal_width()
-    text_length = len("                                    ")
-    padding_left = (width - text_length) // 2
+    def _draw_ia_selection(self, options: list, flags: list = None):
+        width = get_terminal_width()
+        text_length = len("                                    ")
+        padding_left = (width - text_length) // 2
 
-    __UNPOINTED = " " * (padding_left - 2)
-    __POINTED = " " * (padding_left - 1) + f"{BACK_WHITE}"
-    __INDEX = 0
-    __LENGTH = len(options)
-    __ARROWS = __UP, _ = 65, 66
-    __ENTER = 10
-    __SPACE = 32
+        __UNPOINTED = " " * (padding_left - 2)
+        __POINTED = " " * (padding_left - 1) + f"{BACK_WHITE}"
+        __INDEX = 0
+        __LENGTH = len(options)
+        __ARROWS = __UP, _ = 65, 66
+        __ENTER = 10
+        __SPACE = 32
 
-    __SELECTS = []
+        __SELECTS = []
 
-    if flags is None:
-        flags = []
+        if flags is None:
+            flags = []
 
-    def spaces(length: int):
-        return " " * length
+        def spaces(length: int):
+            return " " * length
 
-    def _choices_print():
-        for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
-            if i == __INDEX:
-                len_label = len(option.label)
-                remaining = 33 - len_label
-                print(f" {__POINTED}{BLACK}[{selected(flag)}] [ {option.label}{spaces(remaining)}]{CRESET}")
+        def _choices_print():
+            for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
+                if i == __INDEX:
+                    len_label = len(option.label)
+                    remaining = 33 - len_label
+                    print(f" {__POINTED}{BLACK}[{selected(flag)}] [ {option.label}{spaces(remaining)}]{CRESET}")
 
-            else:
-                len_label = len(option.label)
-                remaining = 33 - len_label
-                print(f" {__UNPOINTED} [{selected(flag)}] [ {option.label}{spaces(remaining)}]{CRESET}")
-
-    def selected(flag: str):
-        nonlocal __SELECTS
-        if flag in __SELECTS:
-            return "X"
-        return " "
-
-    def check(index: int):
-        nonlocal __SELECTS
-        obj = enumerate(zip_longest(options, flags, fillvalue=''))
-        for i, (_, flag) in obj:
-            if i == index:
-                if flag in __SELECTS:
-                    disable(index)
                 else:
-                    enable(index)
+                    len_label = len(option.label)
+                    remaining = 33 - len_label
+                    print(f" {__UNPOINTED} [{selected(flag)}] [ {option.label}{spaces(remaining)}]{CRESET}")
 
-    def enable(index: int):
-        nonlocal __SELECTS
-        obj = enumerate(zip_longest(options, flags, fillvalue=''))
-        for i, (_, flag) in obj:
-            if i == index:
-                __SELECTS.append(flag)
+        def selected(flag: str):
+            nonlocal __SELECTS
+            if flag in __SELECTS:
+                return "X"
+            return " "
 
-    def disable(index: int):
-        nonlocal __SELECTS
-        obj = enumerate(zip_longest(options, flags, fillvalue=''))
-        for i, (_, flag) in obj:
-            if i == index:
-                __SELECTS.remove(flag)
+        def check(index: int):
+            nonlocal __SELECTS
+            obj = enumerate(zip_longest(options, flags, fillvalue=''))
+            
+            for i, (_, flag) in obj:
+                if i == index:
+                    if flag in __SELECTS:
+                        disable(index)
+                    else:
+                        enable(index)
 
-    def _choices_clear():
-        nonlocal __LENGTH
-        print(f"\033[{__LENGTH}A\033[J", end='')
+        def enable(index: int):
+            nonlocal __SELECTS
+            obj = enumerate(zip_longest(options, flags, fillvalue=''))
+            
+            for i, (_, flag) in obj:
+                if i == index:
+                    __SELECTS.append(flag)
 
-    def _move_pointer(ch_ord: int):
-        nonlocal __INDEX
-        __INDEX = max(0, __INDEX - 1) if ch_ord == __UP else min(__INDEX + 1, __LENGTH - 1)
+        def disable(index: int):
+            nonlocal __SELECTS
+            obj = enumerate(zip_longest(options, flags, fillvalue=''))
+            
+            for i, (_, flag) in obj:
+                if i == index:
+                    __SELECTS.remove(flag)
 
-    def _main_loop():
-        kg = KeyGetter()
-        _choices_print()
-        while True:
-            key = ord(kg.getch())
-            if key in __ARROWS:
-                _move_pointer(key)
-            _choices_clear()
+        def _choices_clear():
+            nonlocal __LENGTH
+            print(f"\033[{__LENGTH}A\033[J", end='')
+
+        def _move_pointer(ch_ord: int):
+            nonlocal __INDEX
+            __INDEX = max(0, __INDEX - 1) if ch_ord == __UP else min(__INDEX + 1, __LENGTH - 1)
+
+        def _main_loop():
+            kg = KeyGetter()
             _choices_print()
-            if key == __SPACE:
-                check(__INDEX)
+            
+            while True:
+                key = ord(kg.getch())
+                
+                if key in __ARROWS:
+                    _move_pointer(key)
+                    
                 _choices_clear()
                 _choices_print()
-            if key == __ENTER:
-                _choices_clear()
-                _choices_print()
-                break
+                
+                if key == __SPACE:
+                    check(__INDEX)
+                    _choices_clear()
+                    _choices_print()
+                    
+                if key == __ENTER:
+                    _choices_clear()
+                    _choices_print()
+                    break
 
-    _main_loop()
-    return __SELECTS
+        _main_loop()
+        return __SELECTS
