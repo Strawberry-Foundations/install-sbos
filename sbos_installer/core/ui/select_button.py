@@ -86,15 +86,15 @@ class SelectButtonGroup:
             flags = []
 
         def _choices_print():
-            for i, (option, flag) in enumerate(zip_longest(options, flags, fillvalue='')):
+            for i, (option, _) in enumerate(zip_longest(options, flags, fillvalue='')):
                 if i == __INDEX:
                     print(f" {__POINTED}{BLACK}[ {option.label} ]{CRESET}\n")
-                    _len = self._print_and_measure_text(option.raw_description_text)
+                    self._print_and_measure_text(option.raw_description_text)
                     print()
 
                 else:
                     print(f" {__UNPOINTED} [ {option.label} ]{CRESET}\n")
-                    _len = self._print_and_measure_text(option.raw_description_text)
+                    self._print_and_measure_text(option.raw_description_text)
                     print()
 
         def _choices_clear():
@@ -108,12 +108,16 @@ class SelectButtonGroup:
         def _main_loop():
             kg = KeyGetter()
             _choices_print()
+            
             while True:
                 key = ord(kg.getch())
+                
                 if key in __ARROWS:
                     _move_pointer(key)
+                    
                 _choices_clear()
                 _choices_print()
+                
                 if key == __ENTER:
                     _choices_clear()
                     _choices_print()
