@@ -68,8 +68,22 @@ class WelcomeView(Screen):
                 description="Restart your computer"
             )
         )
+        
+        group.append(
+            SelectButton(
+                label=f"(^) Shutdown",
+                description="Turn off your computer"
+            )
+        )
+        
+        group.append(
+            SelectButton(
+                label=f"(x) Exit",
+                description="Exit the installer"
+            )
+        )
 
-        selection = group.selection(flags=["start", "console", "about", "update"])
+        selection = group.selection(flags=["start", "console", "about", "update", "reboot", "shutdown", "exit"])
 
         match selection:
             case "console":
@@ -98,6 +112,14 @@ class WelcomeView(Screen):
                 
             case "reboot":
                 run("reboot")
+                
+            case "shutdown":
+                run("shutdown now")
+                
+            case "exit":
+                self.console.show_cursor(True)
+                self.console.clear()
+                sys.exit(0)
 
         self.console.show_cursor(True)
         return None
