@@ -42,12 +42,23 @@ class FinishView(Screen):
                 "You can restart your computer by using the 'reboot' command"
             )
         )
+        
+        group.append(
+            SelectButton(
+                label=f"(^) Shutdown",
+                description="Turn off your computer. Turn it back on to start your new system"
+            )
+        )
 
-        action = group.selection(flags=["reboot", "console"])
+        action = group.selection(flags=["reboot", "console", "shutdown"])
 
         match action:
             case "reboot":
                 run("reboot")
+                
+            case "shutdown":
+                run("shutdown now")
+                
             case "console":
                 clear_screen()
                 self.console.show_cursor(True)
