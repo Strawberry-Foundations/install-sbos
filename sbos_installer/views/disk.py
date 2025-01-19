@@ -4,8 +4,7 @@ from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.ui.single_select_button import SingleSelectButton, SingleSelectButtonGroup
 from sbos_installer.core.process import Runner
 from sbos_installer.core.ui.selection import ia_selection
-from sbos_installer.cli.parser import parse_bool
-from sbos_installer.cli.input import parse_size
+from sbos_installer.cli.parser import parse_bool, parse_size
 from sbos_installer.steps.disk import get_block_device_size_in_gb, get_block_devices
 from sbos_installer.steps.lvm import get_partition_suffix
 from sbos_installer.utils.colors import *
