@@ -1,6 +1,6 @@
+from sbos_installer.core.ui import KeyGetter
 from sbos_installer.utils.colors import *
 from sbos_installer.utils.screen import get_terminal_width
-from sbos_installer.core.ui.selection import KeyGetter
 
 from itertools import zip_longest
 

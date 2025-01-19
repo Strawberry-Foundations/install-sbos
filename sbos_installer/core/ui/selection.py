@@ -1,30 +1,5 @@
+from sbos_installer.core.ui import KeyGetter
 from itertools import zip_longest
-
-import atexit
-import termios
-import tty
-import sys
-
-
-class KeyGetter:
-    def __init__(self):
-        self.old_term = None
-
-    def arm(self):
-        self.old_term = termios.tcgetattr(sys.stdin)
-        tty.setcbreak(sys.stdin)
-
-        atexit.register(self.disarm)
-
-    def disarm(self):
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.old_term)
-
-    def getch(self):
-        self.arm()
-        ch = sys.stdin.read(1)[0]
-        self.disarm()
-        return ch
-
 
 def ia_selection(question: str, options: list = None, flags: list = None, padding: int = 0) -> str:
     print(" " * padding + question)
