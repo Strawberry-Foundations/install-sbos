@@ -118,7 +118,7 @@ class WelcomeView(Screen):
                 run("shutdown now")
                 
             case "exit":
-                InfoView(f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}'")
+                InfoView(f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}' or by pressing {GRAY}Ctrl+D{CRESET}")   
                 self.console.show_cursor(True)
                 self.console.clear()
                 sys.exit(0)

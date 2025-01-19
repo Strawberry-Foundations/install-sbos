@@ -191,7 +191,7 @@ BUG_REPORT_URL="https://github.com/Strawberry-Foundations/sbos-live-iso"
     FinishView()
 
 except KeyboardInterrupt:
-    InfoView(f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}'")
+    InfoView(f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}' or by pressing {GRAY}Ctrl+D{CRESET}")
     console.clear()
     console.show_cursor(True)
     sys.exit(0)
