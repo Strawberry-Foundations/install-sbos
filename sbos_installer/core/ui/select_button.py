@@ -1,5 +1,5 @@
 from sbos_installer.utils.colors import *
-from sbos_installer.cli.selection import KeyGetter
+from sbos_installer.core.ui.selection import KeyGetter
 
 from rich.padding import Padding
 from rich.text import Text

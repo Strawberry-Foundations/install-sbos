@@ -1,6 +1,6 @@
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.cli.parser import parse_bool
-from sbos_installer.cli.selection import ia_selection
+from sbos_installer.core.ui.selection import ia_selection
 from sbos_installer.steps.network import \
     get_network_interfaces, get_connected_interface, check_internet_connection, \
     scan_wifi_networks, connect_to_wifi

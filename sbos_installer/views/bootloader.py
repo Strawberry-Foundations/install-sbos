@@ -1,5 +1,5 @@
 from sbos_installer.core.ui.screen import Screen
-from sbos_installer.cli.selection import ia_selection
+from sbos_installer.core.ui.selection import ia_selection
 from sbos_installer.steps.bootloader import configure_systemd_boot, configure_grub
 
 from rich.padding import Padding
