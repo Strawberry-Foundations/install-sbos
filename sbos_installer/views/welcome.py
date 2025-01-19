@@ -2,6 +2,7 @@ from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.ui.select_button import SelectButton, SelectButtonGroup
 from sbos_installer.core.process import run
 from sbos_installer.views.about import AboutView
+from sbos_installer.views.info import InfoView
 from sbos_installer.utils.colors import *
 
 from rich.text import Text
@@ -117,6 +118,7 @@ class WelcomeView(Screen):
                 run("shutdown now")
                 
             case "exit":
+                InfoView(f"Exited installation process.\nYou can start the installer again using '{GRAY}setup-strawberryos{CRESET}'")
                 self.console.show_cursor(True)
                 self.console.clear()
                 sys.exit(0)
