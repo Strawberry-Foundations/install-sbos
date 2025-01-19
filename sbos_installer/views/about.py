@@ -18,7 +18,7 @@ class AboutView(Screen):
     def render(self):
         self.console.show_cursor(False)
         self.console.print(Text.from_ansi(
-            f"StrawberryOS Installer v{VERSION} (Nucleus)\n\n"
+            f"StrawberryOS Installer {CYAN}v{VERSION}{RESET} (Nucleus)\n\n"
             "The StrawberryOS Installer is an easy to use installer \n"
             "that allows you to install StrawberryOS according to your preferences.\n\n"
             f"{LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}"

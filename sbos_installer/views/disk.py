@@ -1,7 +1,7 @@
 import copy
 
 from sbos_installer.core.ui.screen import Screen
-from sbos_installer.core.ui.single_select_button import SingleSelectButton, ia_selection as ssb_ia_selection
+from sbos_installer.core.ui.single_select_button import SingleSelectButton, SingleSelectButtonGroup
 from sbos_installer.core.process import Runner
 from sbos_installer.cli.selection import ia_selection
 from sbos_installer.cli.parser import parse_bool
@@ -127,28 +127,16 @@ class DiskView(Screen):
                     continue
 
                 case "Change file system":
-                    group = []
+                    group = SingleSelectButtonGroup()
 
-                    SingleSelectButton(
-                        label="BTRFS",
-                        group=group
-                    )
-
-                    SingleSelectButton(
-                        label="EXT4",
-                        group=group
-                    )
-
+                    group.append(SingleSelectButton(label="BTRFS"))
+                    group.append(SingleSelectButton(label="EXT4"))
                     self.console.print(Padding(Text.from_ansi(
                         f"StrawberryOS uses the BTRFS file system by default. "
                         f"However, if you want to use EXT4 for whatever reason, you can change this here"
                     ), (0, 8)))
 
-                    file_system = ssb_ia_selection(
-                        question="",
-                        options=group,
-                        flags=["btrfs", "ext4"]
-                    )
+                    file_system = group.selection(flags=["btrfs", "ext4"])
                     continue
 
                 case "-> Done":
