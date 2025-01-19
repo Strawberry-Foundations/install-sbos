@@ -6,20 +6,32 @@ from itertools import zip_longest
 
 
 class Checkbox:
-    def __init__(self, label, group=None):
+    def __init__(self, label):
         self.label = label
-        self.group = group
-
-        if group is not None:
-            group.append(self)
 
     def __str__(self):
         return f"{self.label}"
+    
+class CheckboxGroup:
+    def __init__(self):
+        self.checkboxes = []
+
+    def append(self, checkbox):
+        self.checkboxes.append(checkbox)
+
+    def __iter__(self):
+        return iter(self.checkboxes)
+
+    def __getitem__(self, index):
+        return self.checkboxes[index]
+
+    def __len__(self):
+        return len(self.checkboxes)
 
 
-def ia_selection(question: str, options: list = None, flags: list = None) -> str:
-    print(question)
-    return _draw_ia_selection(options, flags)
+    def selection(self, question: str = "", flags: list = None) -> str:
+        print(question)
+        return _draw_ia_selection(self.checkboxes, flags)
 
 
 def _draw_ia_selection(options: list, flags: list = None):

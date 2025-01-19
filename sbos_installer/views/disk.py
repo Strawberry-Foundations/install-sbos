@@ -131,6 +131,7 @@ class DiskView(Screen):
 
                     group.append(SingleSelectButton(label="BTRFS"))
                     group.append(SingleSelectButton(label="EXT4"))
+                    
                     self.console.print(Padding(Text.from_ansi(
                         f"StrawberryOS uses the BTRFS file system by default. "
                         f"However, if you want to use EXT4 for whatever reason, you can change this here"

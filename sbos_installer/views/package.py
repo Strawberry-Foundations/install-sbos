@@ -1,5 +1,5 @@
 from sbos_installer.core.packages import package_list
-from sbos_installer.core.ui.checkbox import Checkbox, ia_selection as chb_selection
+from sbos_installer.core.ui.checkbox import Checkbox, CheckboxGroup
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.utils.colors import *
 
@@ -34,21 +34,14 @@ class PackageView(Screen):
             ), justify="center"
         )
 
-        groups = []
+        group = CheckboxGroup()
         flags = []
 
         for name, flag in package_list.items():
-            Checkbox(
-                label=name,
-                group=groups
-            )
+            group.append(Checkbox(label=name))
             flags.append(flag)
 
-        packages = chb_selection(
-            question="",
-            options=groups,
-            flags=flags
-        )
+        packages = group.selection(flags=flags)
 
         self.packages.extend(packages)
 
