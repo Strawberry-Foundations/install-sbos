@@ -39,7 +39,6 @@ class WelcomeView(Screen):
                 description="Start with the installation of StrawberryOS"
             )
         )
-
         
         group.append(
             SelectButton(

@@ -1,11 +1,8 @@
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.var import VERSION
 from sbos_installer.utils.colors import *
-from sbos_installer.views.info import InfoView
 
 from rich.text import Text
-
-import sys
 
 
 class AboutView(Screen):

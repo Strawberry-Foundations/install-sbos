@@ -1,4 +1,4 @@
-VERSION = "2.2.13"
+VERSION = "2.3.0"
 
 ROOT_MNT = "/mnt/"
 
