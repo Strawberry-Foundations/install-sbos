@@ -1,4 +1,4 @@
-from sbos_installer.core.ui.single_select_button import SingleSelectButton, ia_selection
+from sbos_installer.core.ui.single_select_button import SingleSelectButton, SingleSelectButtonGroup, ia_selection
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.process import Runner
 from sbos_installer.core.locales import kbd_layouts
@@ -16,7 +16,7 @@ class KeyboardLayout(Screen):
         super().__init__(title=self.title, view=view)
 
     def render(self):
-        self.console.print("Please select your keyboard layout\n", justify="center")
+        self.console.print("Please select your keyboard layout\nThis is used only during installation\n", justify="center")
         self.console.show_cursor(False)
 
         self.console.print(
@@ -27,25 +27,17 @@ class KeyboardLayout(Screen):
             justify="center"
         )
 
-        self.console.print(Text.from_ansi(
-            f"URL: {LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}\n\n",
-        ), justify="center")
+        self.console.print(Text.from_ansi(f"URL: {LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}\n\n"), justify="center")
 
         runner = Runner(True)
+        
+        group = SingleSelectButtonGroup()
 
-        group = []
+        for lang, _ in kbd_layouts.items():
+            group.append(SingleSelectButton(label=lang))
 
-        for lang, kbd in kbd_layouts.items():
-            SingleSelectButton(
-                label=lang,
-                group=group
-            )
 
-        kbd_layout = ia_selection(
-            question="",
-            options=group,
-            flags=list(kbd_layouts.values())
-        )
+        kbd_layout = group.selection(flags=list(kbd_layouts.values()))
 
         self.console.show_cursor(True)
 

@@ -55,15 +55,25 @@ def measure_text(options):
 
 
 class SingleSelectButton:
-    def __init__(self, label, group=None):
+    def __init__(self, label):
         self.label = label
-        self.group = group
-
-        if group is not None:
-            group.append(self)
 
     def __str__(self):
         return f"{self.label}"
+    
+class SingleSelectButtonGroup:
+    def __init__(self):
+        self.buttons = []
+
+    def append(self, button: SingleSelectButton):
+        self.buttons.append(button)
+
+    def __iter__(self):
+        return iter(self.buttons)
+    
+    def selection(self, question: str = "", flags: list = None) -> str:
+        print(question)
+        return _draw_ia_selection(options=self.buttons, flags=flags)
 
 
 def ia_selection(question: str, options: list = None, flags: list = None) -> str:
