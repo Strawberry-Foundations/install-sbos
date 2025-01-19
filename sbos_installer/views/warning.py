@@ -26,9 +26,7 @@ class WarningView:
 
     def render(self):
         self.console.show_cursor(False)
-        self.console.print(Text.from_ansi(
-            f"{self.warning}"
-        ), justify="center")
+        self.console.print(Text.from_ansi(f"{self.warning}"), justify="center")
 
         self.console.print("\nPress Enter to continue", justify="center")
 

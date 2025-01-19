@@ -27,9 +27,7 @@ class ErrorView:
 
     def render(self):
         self.console.show_cursor(False)
-        self.console.print(Text.from_ansi(
-            f"{self.error}"
-        ), justify="center")
+        self.console.print(Text.from_ansi(f"{self.error}"), justify="center")
 
         self.console.print("\nPress Enter to exit the installer", justify="center")
 
