@@ -76,11 +76,6 @@ class SingleSelectButtonGroup:
         return _draw_ia_selection(options=self.buttons, flags=flags)
 
 
-def ia_selection(question: str, options: list = None, flags: list = None) -> str:
-    print(question)
-    return _draw_ia_selection(options, flags)
-
-
 def _draw_ia_selection(options: list, flags: list = None):
     width = get_terminal_width()
     text_length = len("                                    ")

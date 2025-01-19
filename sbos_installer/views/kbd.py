@@ -1,4 +1,4 @@
-from sbos_installer.core.ui.single_select_button import SingleSelectButton, SingleSelectButtonGroup, ia_selection
+from sbos_installer.core.ui.single_select_button import SingleSelectButton, SingleSelectButtonGroup
 from sbos_installer.core.ui.screen import Screen
 from sbos_installer.core.process import Runner
 from sbos_installer.core.locales import kbd_layouts
@@ -35,7 +35,6 @@ class KeyboardLayout(Screen):
 
         for lang, _ in kbd_layouts.items():
             group.append(SingleSelectButton(label=lang))
-
 
         kbd_layout = group.selection(flags=list(kbd_layouts.values()))
 
