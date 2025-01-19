@@ -1,7 +1,6 @@
-from sbos_installer import clear_screen
+from sbos_installer.utils.screen import clear_screen
 from sbos_installer.core.ui.header import Header
 from sbos_installer.utils.colors import *
-from sbos_installer.views.info import InfoView
 
 from rich.console import Console
 from rich.text import Text
