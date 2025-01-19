@@ -18,7 +18,10 @@ class AboutView(Screen):
             f"StrawberryOS Installer {CYAN}v{VERSION}{RESET} (Nucleus)\n\n"
             "The StrawberryOS Installer is an easy to use installer \n"
             "that allows you to install StrawberryOS according to your preferences.\n\n"
-            f"{LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}"
+            "This installer is a part of the StrawberryOS project.\n"
+            f"{LIGHT_BLUE}https://github.com/Strawberry-Foundations/install-sbos{CRESET}\n\n"
+            "StrawberryOS Installer uses open source libraries, the main ones being:\n"
+            f"* {LIGHT_BLUE}https://github.com/Textualize/rich{CRESET}"
         ), justify="center")
 
         self.console.print("\nPress Enter to return", justify="center")
