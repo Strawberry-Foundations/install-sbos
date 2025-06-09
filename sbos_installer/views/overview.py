@@ -47,7 +47,7 @@ class OverviewScreenView(Screen):
         for user in self.setup.user_setup:
             suffix = ""
             if user != "root":
-                if self.setup.user_setup["users"][f"{user}"]["sudo_user"]:
+                if self.setup.user_setup[f"{user}"]["sudo_user"]:
                     suffix = f"{CRESET}({YELLOW}sudo{CRESET})"
                     
             self.console.print(Padding(Text.from_ansi(
