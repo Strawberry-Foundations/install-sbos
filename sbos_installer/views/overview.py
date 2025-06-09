@@ -43,8 +43,11 @@ class OverviewScreenView(Screen):
         self.console.print(Padding(Text.from_ansi(
             f"{GRAY}{BOLD}* {CYAN}Users:{CRESET}"
         ), (0, 8)))
+        
+        with open("/debug_user_setup.txt", "w") as f:
+            f.write(str(self.setup.user_setup))
 
-        for user in self.setup.user_setup:
+        for user in self.setup.user_setup["users"]:
             suffix = ""
             if user != "root":
                 if self.setup.user_setup["users"][f"{user}"]["sudo_user"]:
