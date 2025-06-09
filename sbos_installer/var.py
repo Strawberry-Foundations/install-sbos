@@ -1,4 +1,4 @@
-VERSION = "2.3.0"
+VERSION = "2.3.1"
 
 ROOT_MNT = "/mnt/"
 
@@ -7,8 +7,8 @@ CODENAME_LOWER = "lemontea"
 
 
 class Versions:
-    desktop = "2025.01"
-    desktop_sod = "2025.01"
+    desktop = "2025.06"
+    desktop_sod = "2025.06"
     server = "2025.1.0"
 
 
