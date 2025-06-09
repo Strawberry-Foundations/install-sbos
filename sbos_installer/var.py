@@ -2,13 +2,13 @@ VERSION = "2.3.1"
 
 ROOT_MNT = "/mnt/"
 
-CODENAME_FULL = "Lemon Tea"
-CODENAME_LOWER = "lemontea"
+CODENAME_FULL = "Spicy Latte"
+CODENAME_LOWER = "spicylatte"
 
 
 class Versions:
-    desktop = "2025.06"
-    desktop_sod = "2025.06"
+    desktop = "2025.07"
+    desktop_sod = "2025.07"
     server = "2025.1.0"
 
 
