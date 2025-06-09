@@ -77,7 +77,6 @@ try:
     clear_screen()
     Header("Creating disk partitions ...")
 
-    # Create disk partitions and mount disk
     try:
         custom_partitioning = setup.disk_data.get("custom_partitioning", False)
         
@@ -85,15 +84,17 @@ try:
             configure_partitions(setup)
             time.sleep(0.5)
             configure_lvm(setup)
-
+    
             run(f"mount --mkdir /dev/strawberryos/system {ROOT_MNT}")
             run(f"mount --mkdir {setup.disk_data[setup.disk]['efi']['block']} {ROOT_MNT}boot/efi")
-
+    
         else:
             run(f"mount --mkdir {setup.disk_data[setup.disk]['system']['block']} {ROOT_MNT}")
             run(f"mount --mkdir {setup.disk_data[setup.disk]['efi']['block']} {ROOT_MNT}boot/efi")
             
     except KeyError as ke:
+        print(f"DEBUG: setup.disk_data = {setup.disk_data}")
+        print(f"DEBUG: setup.disk = {setup.disk}")
         ErrorView(f"Disk configuration error: Missing key {ke}")
 
     if not DEV_FLAG_SKIP_BOOTSTRAP:
